@@ -1,0 +1,22 @@
+<resources>
+    <dimen name="padding_room_item">8dp</dimen>
+    <dimen name="padding_layout">20dp</dimen>
+    <dimen name="marging_layout">20dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="circle_size">38dp</dimen>
+    <dimen name="text_margin">15dp</dimen>
+    <dimen name="item_text_size">14sp</dimen>
+    <dimen name="radius_size">10dp</dimen>
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="text_spinner_size">15sp</dimen>
+    <dimen name="chip_group_margin">8dp</dimen>
+    <dimen name="text_size_detail">30sp</dimen>
+    <dimen name="padding_layout_detail">30dp</dimen>
+    <dimen name="padding_layout_detail_left">30dp</dimen>
+    <dimen name="padding_layout_detail_top">80dp</dimen>
+    <dimen name="padding_detail">30dp</dimen>
+    <dimen name="padding_detail_left">30dp</dimen>
+    <dimen name="padding_detail_top">30dp</dimen>
+    <dimen name="margin_detail">20dp</dimen>
+    <dimen name="marging_detail_top">40dp</dimen>
+</resources>

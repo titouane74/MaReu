@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Ma réu</string>
+    <string name="action_remove_filter">Enlever le filtre</string>
+    <string name="action_sort">Trier par</string>
+    <string name="action_filter">Filtrer par</string>
+    <string name="sort_date">Date</string>
+    <string name="sort_room">Salle</string>
+    <string name="filter_date">Date sélectionnée</string>
+    <string name="filter_room">Salle sélectionnée</string>
+    <string name="text_divider"> - </string>
+    <string name="action_add_meeting">Réunion ajoutée</string>
+    <string name="action_add_meeting_missing_field">Ajout impossible. Des éléments sont manquants ou erronés.</string>
+    <string name="empty_list">Pas de réunion programmée</string>
+    <string name="meeting_topic">Sujet de la réunion</string>
+    <string name="meeting_email">Adresse mail</string>
+    <string name="meeting_date">Date</string>
+    <string name="meeting_from">De</string>
+    <string name="meeting_to">A</string>
+    <string name="meeting_room">Salle de réunion</string>
+    <string name="meeting_list_participant">Emails des participants</string>
+    <string name="err_empty_field">Le champ ne peut pas être vide</string>
+    <string name="err_invalid_email_address">Entrez une adresse mail valide</string>
+    <string name="err_list_participants">La liste des participants ne peut pas être vide</string>
+    <string name="err_topic_length">Libellé du sujet trop long</string>
+    <string name="err_meeting_room_not_choose">Choisissez une salle de réunion</string>
+    <string name="err_anterior_date">La date ne peut pas être antérieur à aujourd\'hui</string>
+    <string name="err_end_before_start">L\'heure de fin ne peut pas être antérieure à l\'heure début</string>
+    <string name="err_start_before_now">L\'heure de début ne peut pas être antérieure à maintenant</string>
+    <string name="err_meeting_room_not_free">La salle de réunion n\'est pas disponible</string>
+    <string name="err_meeting_date_empty">Veuillez saisir la date de la réunion</string>
+    <string name="err_meeting_list_empty">Tri ou filtre impossible. La liste est vide.</string>
+    <string name="msg_delete_meeting">Voulez-vous supprimer la réunion ?</string>
+    <string name="meeting_deleted">Réunion supprimée</string>
+    <string name="btn_yes">Oui</string>
+    <string name="btn_no">Non</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
+    <string name="meeting_room_selected">Sélection de salles de réunion</string>
+    <string name="exit_app_back_pressed">Appuyez encore une fois pour quitter</string>
+    <string name="select_room">Sélectionnez une salle de réunion</string>
+    <string name="date_time">Date - Heure</string>
+    <string name="participants">Participants</string>
+
+    <string name="s_color_room1">toto</string>
+    <string name="colorRoom2">#F57555</string>
+    <string name="colorRoom3">#FFEB3B</string>
+    <string name="colorRoom4">#8BC34A</string>
+    <string name="colorRoom5">#009688</string>
+    <string name="colorRoom6">#00BCD4</string>
+    <string name="colorRoom7">#3F51B5</string>
+    <string name="colorRoom8">#673AB7</string>
+    <string name="colorRoom9">#9C27B0</string>
+    <string name="colorRoom10">#E91E63</string>
+
+</resources>
