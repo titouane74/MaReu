@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
 
-        this.configureAndShowMeetingListFragment();
+        this.configureAndShowListFragment();
+
+        mAddFab.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, AddActivity.class) ));
+
     }
 
     /**
@@ -84,15 +89,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem pItem) {
         switch (pItem.getItemId()) {
             case R.id.action_remove_filter:
-//                ConfigureAdapter.configureAdapter(this, SORT_DEFAULT, mRecyclerView,mEmptyList);
+//                ConfigureAdapter.configureAdapter(this, SORT_DEFAULT, mRecyclerView);
                 return true;
             case R.id.action_sort:
                 return true;
             case R.id.sort_date:
-//                ConfigureAdapter.configureAdapter(this, SORT_DATE,mRecyclerView,mEmptyList);
+//                ConfigureAdapter.configureAdapter(this, SORT_DATE,mRecyclerView);
                 return true;
             case R.id.sort_room:
-//                ConfigureAdapter.configureAdapter(this, SORT_ROOM,mRecyclerView,mEmptyList);
+//                ConfigureAdapter.configureAdapter(this, SORT_ROOM,mRecyclerView);
                 return true;
             case R.id.action_filter:
                 return true;
@@ -126,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         mBackPressedTime = System.currentTimeMillis();
     }
 
-    private void configureAndShowMeetingListFragment() {
+    private void configureAndShowListFragment() {
         mListFragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.frame_list);
         if (mListFragment == null) {
             mListFragment = new ListFragment();
