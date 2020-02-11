@@ -21,7 +21,7 @@ import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
  */
-public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter.Listener{
+public class ListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private MeetingRecyclerViewAdapter mListAdapter;
@@ -38,7 +38,7 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
         View lView = inflater.inflate(R.layout.fragment_list,container,false);
         mRecyclerView = (RecyclerView) lView;
         configurerecyclerView();
-        configureOnClickRecyclerView();
+
         return lView;
 
     }
@@ -46,29 +46,11 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
     private void configurerecyclerView() {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), SORT_DEFAULT, this);
+        mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), SORT_DEFAULT);
         mRecyclerView.setAdapter(mListAdapter);
     }
 
     private void updateListUI() {
         mListAdapter.notifyDataSetChanged();
-    }
-
-
-    private void configureOnClickRecyclerView() {
-        ItemClickSupport.addTo(mRecyclerView,R.layout.fragment_meeting_item)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Meeting lMeeting = mListAdapter.getMeeting(position);
-                        Toast.makeText(getContext(), "REUNION  : " + lMeeting.getRoom().getNameRoom(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    @Override
-    public void onClickDeleteButton(int pPosition) {
-        Meeting lMeeting = mListAdapter.getMeeting(pPosition);
-        Toast.makeText(getActivity(), "DELETE REUNION CLICK", Toast.LENGTH_SHORT).show();
     }
 }

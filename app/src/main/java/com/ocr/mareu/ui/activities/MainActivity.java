@@ -14,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ocr.mareu.R;
 import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
+import com.ocr.mareu.ui.fragments.RightFragment;
 import com.ocr.mareu.utils.ConfigureAdapter;
 
 import butterknife.BindView;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListFragment mListFragment;
     private AddFragment mAddFragment;
+    private RightFragment mRightFragment;
     private long mBackPressedTime;
     private Toast mBackToast;
     private Context mContext;
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         this.configureAndShowListFragment();
-        this.configureAndShowAddFragment();
+        //this.configureAndShowAddFragment();
+        this.configureAndShowRightFragment();
 
         mAddFab.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AddActivity.class) ));
@@ -146,12 +149,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void configureAndShowAddFragment() {
+    public void configureAndShowAddFragment() {
         mAddFragment = (AddFragment) getSupportFragmentManager().findFragmentById(R.id.frame_add);
         if (mAddFragment == null && findViewById(R.id.frame_add) != null) {
             mAddFragment = AddFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame_add, mAddFragment)
+                    .commit();
+        }
+
+    }
+
+    private void configureAndShowRightFragment() {
+        mRightFragment = (RightFragment) getSupportFragmentManager().findFragmentById(R.id.frame_add);
+        if (mRightFragment == null && findViewById(R.id.frame_add) != null) {
+            mRightFragment = RightFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.frame_add, mRightFragment )
                     .commit();
         }
 
