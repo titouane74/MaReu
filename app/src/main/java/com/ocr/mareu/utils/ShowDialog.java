@@ -23,8 +23,7 @@ import java.util.List;
 //import static com.ocr.mareu.ui.MeetingListActivity.sCalendarSelected;
 //import static com.ocr.mareu.ui.MeetingListActivity.sListRoomSelected;
 import static com.ocr.mareu.di.DI.sMeetingApiService;
-import static com.ocr.mareu.utils.SortFilters.FILTER_DATE;
-import static com.ocr.mareu.utils.SortFilters.FILTER_ROOM;
+import static com.ocr.mareu.utils.SortOrFilter.FILTER_ROOM;
 
 /**
  * Created by Florence LE BOURNOT on 07/02/2020
@@ -34,7 +33,7 @@ public class ShowDialog {
     /**
      * Affichage de la boîte de dialogue contenant les salles de réunion pour l'application du filtre par salle
      */
-    public static void showDialogRooms(Context pContext, RecyclerView pRecyclerView, TextView pEmptyList) {
+    public static void showDialogRooms(Context pContext, RecyclerView pRecyclerView) {
 
         AlertDialog.Builder lBuilder = new AlertDialog.Builder(pContext);
         lBuilder.setTitle(R.string.meeting_room_selected);
@@ -55,8 +54,7 @@ public class ShowDialog {
                 if (isChecked)
                     lRoomsSelected.add(lRooms.get(which));
 //                sListRoomSelected = lRoomsSelected;
-//                ConfigureAdapter.configureAdapter(pContext, FILTER_ROOM, pRecyclerView, pEmptyList);
-                ConfigureAdapter.configureAdapter(pContext, FILTER_ROOM, pRecyclerView);
+//                ConfigureAdapter.configureAdapter(pContext, FILTER_ROOM, pRecyclerView);
             }
         });
         lBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -75,7 +73,7 @@ public class ShowDialog {
      * Affichage du calendrier pour l'application du filtre par date
      * @param pContext
      */
-    public static void showCalendarDialog(Context pContext, RecyclerView pRecyclerView, TextView pEmptyList) {
+    public static void showCalendarDialog(Context pContext, RecyclerView pRecyclerView) {
 
         Calendar lCalendar = Calendar.getInstance();
 
@@ -92,7 +90,7 @@ public class ShowDialog {
                         sCalendarSelected.set(year,month,dayOfMonth);
                             Toast.makeText(pContext, R.string.err_anterior_date, Toast.LENGTH_SHORT).show();
                         } else {
-                            ConfigureAdapter.configureAdapter(pContext, FILTER_DATE, pRecyclerView,pEmptyList);
+                            ConfigureAdapter.configureAdapter(pContext, FILTER_DATE, pRecyclerView);
                         }
 */
                     }

@@ -5,11 +5,14 @@ import android.graphics.Color;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ocr.mareu.utils.SortFilters.sortOrFilter;
+import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
+//import static com.ocr.mareu.utils.SortOrFilter.sortOrFilter;
 
 /**
  * Created by Florence LE BOURNOT on 16/01/2020
@@ -18,6 +21,10 @@ public class FakeMeetingApiService implements MeetingApiService {
 
     private List<Meeting> mMeetings ;
     private final List<Room> mRooms;
+
+    public static final String CST_FORMAT_DATE = "dd/MM/yyyy";
+    public static final String CST_FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss:SS";
+    public static final String CST_FORMAT_TIME = "HH:mm:ss:SS";
 
     /**
      * Constructor initialisant les listes de réunion et de salle
@@ -54,11 +61,13 @@ public class FakeMeetingApiService implements MeetingApiService {
      * @param pOrder : string : ordre de trie ou de filtre
      * @return : objet : liste des réunions triées ou filtrées
      */
+/*
     @Override
     public List<Meeting> getMeetingsSortOrFilter(String pOrder) {
 
         return sortOrFilter(mMeetings,pOrder);
     }
+*/
 
     /**
      * Récupère la liste des salles de réunion
@@ -133,4 +142,32 @@ public class FakeMeetingApiService implements MeetingApiService {
     public void resetMeetings() {
         mMeetings = new ArrayList<>();
     }
+
+
+    public void addFakeMeeting()  {
+        List<String> lStringList = Arrays.asList("toto@gmail.com","titi@gmail.com");
+        Room lRoomTest = new Room("POSEIDON", Color.argb(100,103,58,183));
+        List<String> lStringList2 = Arrays.asList("toto@gmail.com","titi@gmail.com");
+        Room lRoomTest2 = new Room("ARES", Color.argb(100,244,67,54));
+
+        try {
+            sMeetingApiService.addMeeting(
+                    new Meeting(lRoomTest,
+                            "Sujet",
+                            convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
+                            convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
+                            convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
+                            lStringList));
+            sMeetingApiService.addMeeting(
+                    new Meeting(lRoomTest2,
+                            "Sujet2",
+                            convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
+                            convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
+                            convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 11:00:00:00"),
+                            lStringList2));
+        } catch (MeetingApiServiceException | ParseException pE) {
+            pE.printStackTrace();
+        }
+    }
+
 }

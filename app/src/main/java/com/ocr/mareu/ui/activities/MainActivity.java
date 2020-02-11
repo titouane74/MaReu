@@ -12,12 +12,15 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ocr.mareu.R;
+import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
+import com.ocr.mareu.utils.ConfigureAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar mToolbar;
 
     private ListFragment mListFragment;
+    private AddFragment mAddFragment;
     private long mBackPressedTime;
     private Toast mBackToast;
     private Context mContext;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         this.configureAndShowListFragment();
+        this.configureAndShowAddFragment();
 
         mAddFab.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AddActivity.class) ));
@@ -102,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_filter:
                 return true;
             case R.id.filter_date:
-//                showCalendarDialog(mContext,mRecyclerView,mEmptyList);
+//                showCalendarDialog(mContext,mRecyclerView);
                 return true;
             case R.id.filter_room:
-//                showDialogRooms(mContext,mRecyclerView,mEmptyList);
+//                showDialogRooms(mContext,mRecyclerView);
                 return true;
             default :
                 return super.onOptionsItemSelected(pItem);
@@ -137,6 +142,16 @@ public class MainActivity extends AppCompatActivity {
             mListFragment = new ListFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame_list, mListFragment)
+                    .commit();
+        }
+    }
+
+    private void configureAndShowAddFragment() {
+        mAddFragment = (AddFragment) getSupportFragmentManager().findFragmentById(R.id.frame_add);
+        if (mAddFragment == null && findViewById(R.id.frame_add) != null) {
+            mAddFragment = AddFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.frame_add, mAddFragment)
                     .commit();
         }
 

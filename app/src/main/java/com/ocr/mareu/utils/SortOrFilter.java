@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Florence LE BOURNOT on 27/01/2020
  */
 
-public class SortFilters {
+public class SortOrFilter {
 
     public static final String SORT_ROOM = "SORT_ROOM";
     public static final String SORT_DATE = "SORT_DATE";
@@ -34,7 +34,7 @@ public class SortFilters {
      * @param pOrder : string : indicateur de trie ou de filtre
      * @return : list : liste des réunions triée ou filtrée
      */
-    public static List<Meeting> sortOrFilter(List<Meeting> pMeetings, String pOrder) {
+    public List<Meeting> sortOrFilter(List<Meeting> pMeetings, String pOrder) {
         if (pOrder.contains("SORT")) {
             return sortMeeting(pMeetings, pOrder);
         } else if (pOrder.contains("FILTER")) {
@@ -50,7 +50,7 @@ public class SortFilters {
      * @param pOrder : string : indicateur de filtre
      * @return : list : liste des réunions filtrée
      */
-    private static List<Meeting> filterMeeting(List<Meeting> pMeetings,String pOrder) {
+    public List<Meeting> filterMeeting(List<Meeting> pMeetings,String pOrder) {
         List<Meeting> lMeetingRoomFiltered = new ArrayList<>();
 
         switch (pOrder) {
@@ -90,7 +90,7 @@ public class SortFilters {
      * @param pOrder : string : indicateur de trie
      * @return : list : liste des réunions triée
      */
-    private static List<Meeting>sortMeeting(List<Meeting> pMeetings,String pOrder) {
+    public List<Meeting>sortMeeting(List<Meeting> pMeetings,String pOrder) {
 
         switch (pOrder) {
             case SORT_ROOM:

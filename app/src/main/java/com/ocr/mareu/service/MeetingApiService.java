@@ -21,7 +21,7 @@ public interface MeetingApiService {
      * @param pOrder : string : ordre de trie ou de filtre
      * @return : objet : liste des réunions triées ou filtrées
      */
-    List<Meeting> getMeetingsSortOrFilter(String pOrder);
+//    List<Meeting> getMeetingsSortOrFilter(String pOrder);
 
 
     /**
@@ -53,4 +53,6 @@ public interface MeetingApiService {
      * Purge de la liste des réunions suite à rotation de l'écran ou sortie de l'application
      */
     void resetMeetings();
+
+    void addFakeMeeting();
 }

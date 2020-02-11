@@ -29,14 +29,12 @@ public class AddActivity extends AppCompatActivity {
 
         configureAndShowAddFragment();
 
-
     }
 
     private void configureAndShowAddFragment() {
         mAddFragment = (AddFragment) getSupportFragmentManager().findFragmentById(R.id.frame_add);
         if (mAddFragment == null) {
-//            mAddFragment = new AddFragment();
-            mAddFragment = AddFragment.newInstance(getApplicationContext());
+            mAddFragment = AddFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame_add, mAddFragment)
                     .commit();

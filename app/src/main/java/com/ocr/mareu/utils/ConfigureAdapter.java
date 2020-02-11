@@ -23,21 +23,20 @@ public class ConfigureAdapter {
      * @param pOrder : string : indicateur de trie ou de filtre
      *
      */
-//    public static void configureAdapter(Context pContext, String pOrder, RecyclerView pRecyclerView, TextView pEmpty) {
     public static void configureAdapter(Context pContext, String pOrder, RecyclerView pRecyclerView) {
 
         pRecyclerView.setLayoutManager(new LinearLayoutManager(pContext));
-        MeetingRecyclerViewAdapter lListAdapter = new MeetingRecyclerViewAdapter(pContext, pOrder);
+        MeetingRecyclerViewAdapter lListAdapter = new MeetingRecyclerViewAdapter(pContext, pOrder );
         pRecyclerView.setAdapter(lListAdapter);
 
 /*
         if (lListAdapter.getItemCount() != 0) {
-//            pEmpty.setVisibility(View.INVISIBLE);
             isMenuEnabled = true;
         } else {
-//            pEmpty.setVisibility(View.VISIBLE);
             isMenuEnabled = false;
         }
 */
+
+
     }
 }

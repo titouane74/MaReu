@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
+import com.ocr.mareu.utils.SortOrFilter;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -32,11 +34,14 @@ import static com.ocr.mareu.di.DI.sMeetingApiService;
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
  */
-public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.ViewHolder>{
+public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.ViewHolder> {
+
+
+
 
     private Context mContext;
     private List<Meeting> mMeetings;
-
+    private int mPosition;
     /**
      * Constructor de l'adapter du RecyclerView
      * @param pContext : context : context
@@ -44,11 +49,12 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, String pOrder) {
         mContext = pContext;
-        if (pOrder.contains("DEFAULT")) {
-            mMeetings = sMeetingApiService.getMeetings();
-        } else {
-            mMeetings = sMeetingApiService.getMeetingsSortOrFilter(pOrder);
-        }
+        sMeetingApiService.addFakeMeeting();
+        SortOrFilter lSortOrFilter = new SortOrFilter();
+
+        mMeetings = sMeetingApiService.getMeetings();
+
+        mMeetings = lSortOrFilter.sortOrFilter(mMeetings,pOrder);
     }
 
     /**
@@ -74,6 +80,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Meeting lMeeting = mMeetings.get(position);
+        mPosition = position;
 
         @SuppressLint("SimpleDateFormat")
         String lDescription = TextUtils.join(" - ", Arrays.asList(
@@ -133,6 +140,13 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     @Override
     public int getItemCount() {
         return mMeetings.size();
+    }
+
+    public Meeting getMeeting(int pPosition) {
+        return mMeetings.get(pPosition);
+    }
+    private int getAdapterPosition() {
+        return mPosition;
     }
 
     /**

@@ -26,6 +26,7 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.MeetingApiServiceException;
+import com.ocr.mareu.ui.activities.AddActivity;
 import com.ocr.mareu.utils.Validation;
 
 import java.text.DateFormat;
@@ -79,7 +80,7 @@ public class AddFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static AddFragment newInstance(Context pContext) {
+    public static AddFragment newInstance() {
         AddFragment fragment = new AddFragment();
         return fragment;
     }
@@ -91,7 +92,10 @@ public class AddFragment extends Fragment {
         mNow = Calendar.getInstance();
         //Les salles
         List<Room> lRooms = sMeetingApiService.getRooms();
+        System.out.println("ROOMS  :  " + lRooms.size());
 
+        mContext = Objects.requireNonNull(getActivity()).getApplicationContext();
+        System.out.println("CONTEXT   :   " + mContext);
 /*
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
         mListRoom.setAdapter(lAdapter);
@@ -99,7 +103,9 @@ public class AddFragment extends Fragment {
             mListRoom.showDropDown();
         });
 */
+
         //Les participants
+
 /*
         mEmailEt.setOnKeyListener((v,keyCode,event) -> {
             if(event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -125,6 +131,7 @@ public class AddFragment extends Fragment {
             return false;
         });
 */
+
     }
 
     @Override
