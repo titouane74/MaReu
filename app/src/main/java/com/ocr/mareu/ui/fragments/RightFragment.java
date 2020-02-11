@@ -14,15 +14,11 @@ import androidx.fragment.app.Fragment;
 
 import com.ocr.mareu.R;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
  * Created by Florence LE BOURNOT on 11/02/2020
  */
 public class RightFragment extends Fragment implements View.OnClickListener {
 
-    @BindView(R.id.btn_add)
     Button mBtnAdd;
 
     private Context mContext;
@@ -51,6 +47,13 @@ public class RightFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View lView = inflater.inflate(R.layout.fragment_right, container, false);
+        mBtnAdd = lView.findViewById(R.id.btn_add);
+        mBtnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "TEST", Toast.LENGTH_SHORT).show();
+            }
+        });
         return lView;
     }
 
@@ -58,6 +61,13 @@ public class RightFragment extends Fragment implements View.OnClickListener {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
+/*
+        try {
+            mCallback = (OnButtonClickedListener) getContext();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListener");
+        }
+*/
     }
 
     @Override
