@@ -19,8 +19,6 @@ import com.ocr.mareu.R;
  */
 public class RightFragment extends Fragment implements View.OnClickListener {
 
-    Button mBtnAdd;
-
     private Context mContext;
 
     public RightFragment() {
@@ -29,7 +27,7 @@ public class RightFragment extends Fragment implements View.OnClickListener {
     private OnButtonClickedListener mCallback;
 
     public interface OnButtonClickedListener {
-        public void onButtonClicked(View pView);
+        public void onButtonClicked(View pView, String pActivateFragment);
     }
 
     public static RightFragment newInstance() {
@@ -47,13 +45,27 @@ public class RightFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View lView = inflater.inflate(R.layout.fragment_right, container, false);
-        mBtnAdd = lView.findViewById(R.id.btn_add);
+        Button mBtnAdd = lView.findViewById(R.id.btn_add);
+        Button mBtnView = lView.findViewById(R.id.btn_view);
+
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "TEST", Toast.LENGTH_SHORT).show();
+                mCallback.onButtonClicked(v, "ADD");
+                Toast.makeText(mContext, "TEST ADD", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+        mBtnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onButtonClicked(v, "VIEW");
+                Toast.makeText(mContext, "TEST VIEW", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         return lView;
     }
 
@@ -61,19 +73,16 @@ public class RightFragment extends Fragment implements View.OnClickListener {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
-/*
         try {
             mCallback = (OnButtonClickedListener) getContext();
         } catch (ClassCastException e) {
             throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListener");
         }
-*/
     }
+
 
     @Override
     public void onClick(View v) {
-        mCallback.onButtonClicked(v);
-        Toast.makeText(mContext, "COUCOU", Toast.LENGTH_SHORT).show();
     }
 
 

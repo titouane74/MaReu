@@ -21,7 +21,7 @@
             />
 
         <FrameLayout
-            android:id="@+id/frame_add"
+            android:id="@+id/frame_right"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -24,9 +24,10 @@ public class RightActivity  extends AppCompatActivity implements RightFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_right);
 
-        configureAndShowRightFragment();
+//        configureAndShowRightFragment();
     }
 
+/*
     private void configureAndShowRightFragment() {
         mRightFragment = (RightFragment) getSupportFragmentManager().findFragmentById(R.id.frame_right);
         if (mRightFragment == null ) {
@@ -38,27 +39,31 @@ public class RightActivity  extends AppCompatActivity implements RightFragment.O
 
     }
 
-    @Override
-    public void onButtonClicked(View pView) {
-
-        if (mRightFragment != null && mRightFragment.isVisible()) {
-            // TABLET
-            configureAndShowAddFragment();
-        } else {
-            // SMARTPHONE
-            Intent lIntent = new Intent(this, AddActivity.class);
-            startActivity(lIntent);
-        }
-    }
 
     public void configureAndShowAddFragment() {
-        mAddFragment = (AddFragment) getSupportFragmentManager().findFragmentById(R.id.frame_add);
-        if (mAddFragment == null && findViewById(R.id.frame_add) != null) {
+        mAddFragment = (AddFragment) getSupportFragmentManager().findFragmentById(R.id.frame_right);
+        if (mAddFragment == null && findViewById(R.id.frame_right) != null) {
             mAddFragment = AddFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.frame_add, mAddFragment)
+                    .add(R.id.frame_right, mAddFragment)
                     .commit();
         }
 
     }
+*/
+@Override
+public void onButtonClicked(View pView, String pActivateFragment) {
+
+/*
+    if (mRightFragment != null && mRightFragment.isVisible()) {
+        // TABLET
+        configureAndShowAddFragment();
+    } else {
+        // SMARTPHONE
+        Intent lIntent = new Intent(this, AddActivity.class);
+        startActivity(lIntent);
+    }
+*/
+}
+
 }

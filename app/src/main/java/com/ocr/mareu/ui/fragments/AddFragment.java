@@ -81,8 +81,8 @@ public class AddFragment extends Fragment {
     }
 
     public static AddFragment newInstance() {
-        AddFragment fragment = new AddFragment();
-        return fragment;
+        AddFragment lFragment = new AddFragment();
+        return lFragment;
     }
 
     @Override
@@ -92,10 +92,8 @@ public class AddFragment extends Fragment {
         mNow = Calendar.getInstance();
         //Les salles
         List<Room> lRooms = sMeetingApiService.getRooms();
-        System.out.println("ROOMS  :  " + lRooms.size());
 
         mContext = Objects.requireNonNull(getActivity()).getApplicationContext();
-        System.out.println("CONTEXT   :   " + mContext);
 /*
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
         mListRoom.setAdapter(lAdapter);
