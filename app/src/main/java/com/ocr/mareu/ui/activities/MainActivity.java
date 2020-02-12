@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnB
 
     @BindView(R.id.add_fab) FloatingActionButton mAddFab;
     @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.main_layout) View mMainLayout;
 
     private ListFragment mListFragment;
     private RightFragment mRightFragment;
@@ -56,17 +57,11 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnB
         mAddFragment = new AddFragment();
         mDetailFragment = new DetailFragment();
 
+
+        if (mMainLayout.getTag() == getString(R.string.tablet))
+            mAddFab.setVisibility(View.INVISIBLE);
         mAddFab.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AddActivity.class)));
-/*
-        if (!mRightFragment.isVisible()) {
-            mAddFab.setVisibility(View.VISIBLE);
-            mAddFab.setOnClickListener(v ->
-                    startActivity(new Intent(MainActivity.this, AddActivity.class)));
-        } else {
-            mAddFab.setVisibility(View.INVISIBLE);
-        }
-*/
     }
 
     /**
@@ -208,16 +203,5 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnB
         lFragmentTransaction.addToBackStack(null);
         lFragmentTransaction.commit();
     }
-
-/*
-toolbar detail
-            if (getSupportActionBar()!= null) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setElevation(0);
-        getSupportActionBar().setTitle("");
-    }
-*/
-
 
 }

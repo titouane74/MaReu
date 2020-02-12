@@ -31,12 +31,14 @@ import com.ocr.mareu.utils.Validation;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
@@ -93,8 +95,8 @@ public class AddFragment extends Fragment {
         //Les salles
         List<Room> lRooms = sMeetingApiService.getRooms();
 
-        mContext = Objects.requireNonNull(getActivity()).getApplicationContext();
 /*
+        mContext = Objects.requireNonNull(getActivity()).getApplicationContext();
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
         mListRoom.setAdapter(lAdapter);
         mListRoom.setOnClickListener((View v)-> {
@@ -138,6 +140,54 @@ public class AddFragment extends Fragment {
         // Inflate the layout for this fragment
         View lView = inflater.inflate(R.layout.fragment_add, container, false);
         mContext = lView.getContext();
+
+        ButterKnife.bind(getActivity());
+
+        mNow = Calendar.getInstance();
+        //Les salles
+        List<Room> lRooms = sMeetingApiService.getRooms();
+
+        List<String> lList = new ArrayList<>();
+        lList.add("Toto");
+        lList.add("Titi");
+        lList.add("Tutu");
+        lList.add("Tutu");
+/*
+        ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
+         mListRoom.setAdapter(lAdapter);
+        mListRoom.setOnClickListener((View v)-> {
+            mListRoom.showDropDown();
+        });
+*/
+
+        //Les participants
+
+/*
+        mEmailEt.setOnKeyListener((v,keyCode,event) -> {
+            if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    String lEmailText = Objects.requireNonNull(mEmailEt.getText()).toString().trim();
+
+                    if (!Validation.validationTextInputLayout(getContext(), CST_EMAIL, mEmail)) {
+                        return false;
+                    } else {
+                        final Chip lChipEmail = new Chip(getContext());
+                        lChipEmail.setText(lEmailText);
+                        lChipEmail.setCloseIconVisible(true);
+                        lChipEmail.setOnCloseIconClickListener(v1 -> mEmailGroup.removeView(lChipEmail));
+
+                        mEmailGroup.addView(lChipEmail);
+                        mEmailGroup.setVisibility(View.VISIBLE);
+                        mEmailEt.setText("");
+                        mEmail.setError(null);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+*/
+
         return lView;
     }
 

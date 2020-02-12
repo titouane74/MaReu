@@ -51,8 +51,7 @@
     <string name="colorRoom8">#673AB7</string>
     <string name="colorRoom9">#9C27B0</string>
     <string name="colorRoom10">#E91E63</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tablet">tablet</string>
+    <string name="phone">phone</string>
 
 </resources>

@@ -142,13 +142,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         return mMeetings.size();
     }
 
-    public Meeting getMeeting(int pPosition) {
-        return mMeetings.get(pPosition);
-    }
-    private int getAdapterPosition() {
-        return mPosition;
-    }
-
     /**
      * Class ViewHolder
      */
