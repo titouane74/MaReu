@@ -5,12 +5,15 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -75,6 +78,12 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private Calendar mTimeEndFormated;
     private Context mContext;
 
+    private AddFragment.OnListenerAdd mCallback;
+
+    public interface OnListenerAdd {
+        public void onButtonClickedAdd(View pView, String pActivateFragment);
+    }
+
     public AddFragment() {
         // Required empty public constructor
     }
@@ -104,6 +113,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
         mListRoom.setAdapter(lAdapter);
+        mListRoom.setShowSoftInputOnFocus(false);
         mListRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,35 +148,44 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 return false;
             }
         });
-
         mDateEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displayCalendarDialog ();
             }
         });
-
         mTimeStartEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displayTimeDialog(v);
             }
         });
-
         mTimeEndEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displayTimeDialog(v);
             }
         });
-
+        mBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onButtonClickedAdd(v, "RIGHT");
+            }
+        });
+        mBtnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addMeeting();
+                mCallback.onButtonClickedAdd(v, "RIGHT");
+            }
+        });
         return lView;
     }
 
     /**
      * OnClick du champs meeting_date_et : affiche la boîte de dialogue calendrier
      */
-    void displayCalendarDialog () {
+    private void displayCalendarDialog () {
         Calendar lCalendar = Calendar.getInstance();
 
         DatePickerDialog lDatePickerDialog = new DatePickerDialog(
@@ -201,7 +220,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * de heures
      * @param pView : view : vue
      */
-    void displayTimeDialog(View pView) {
+    private void displayTimeDialog(View pView) {
         final int lId = pView.getId();
         Calendar lTime = Calendar.getInstance();
 
@@ -309,4 +328,16 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+        try {
+            mCallback = (AddFragment.OnListenerAdd) getContext();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListenerAdd");
+        }
+    }
+
 }

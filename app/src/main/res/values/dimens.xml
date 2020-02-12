@@ -2,7 +2,7 @@
     <dimen name="padding_room_item">8dp</dimen>
     <dimen name="padding_button">8dp</dimen>
     <dimen name="padding_layout">20dp</dimen>
-    <dimen name="marging_layout">20dp</dimen>
+    <dimen name="marging_layout">14dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="circle_size">38dp</dimen>
     <dimen name="text_margin">15dp</dimen>

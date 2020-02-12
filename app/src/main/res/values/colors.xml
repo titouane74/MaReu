@@ -7,6 +7,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorText">#000000</color>
     <color name="colorCircle">#557DF5</color>
+    <color name="colorButton">#9950AEFA</color>
     <color name="colorRoom1">#F44336</color>
     <color name="colorRoom2">#F57555</color>
     <color name="colorRoom3">#FFEB3B</color>

@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 
-public class MainActivity extends AppCompatActivity implements RightFragment.OnButtonClickedListener {
+public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd {
 
     @BindView(R.id.add_fab) FloatingActionButton mAddFab;
     @BindView(R.id.toolbar) Toolbar mToolbar;
@@ -185,10 +185,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnB
             } else if (pActivateFragment == "VIEW") {
                 showFragment(mDetailFragment);
             }
-        } else {
-            // SMARTPHONE
-//            Intent lIntent = new Intent(this, AddActivity.class);
-//            startActivity(lIntent);
         }
         if (getSupportActionBar()!= null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -200,8 +196,21 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnB
         final FragmentManager lFragmentManager = getSupportFragmentManager();
         final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
         lFragmentTransaction.replace(R.id.frame_right,pFragment);
-        lFragmentTransaction.addToBackStack(null);
         lFragmentTransaction.commit();
+    }
+
+    @Override
+    public void onButtonClickedAdd(View pView, String pActivateFragment) {
+        if (mAddFragment != null && mAddFragment.isVisible()) {
+            // TABLET
+            if (pActivateFragment == "RIGHT") {
+                showFragment(mRightFragment);
+            }
+        }
+        if (getSupportActionBar()!= null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
     }
 
 }

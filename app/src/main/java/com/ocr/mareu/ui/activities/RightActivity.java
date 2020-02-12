@@ -1,6 +1,5 @@
 package com.ocr.mareu.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,7 +13,7 @@ import com.ocr.mareu.ui.fragments.RightFragment;
 /**
  * Created by Florence LE BOURNOT on 11/02/2020
  */
-public class RightActivity  extends AppCompatActivity implements RightFragment.OnButtonClickedListener{
+public class RightActivity  extends AppCompatActivity implements RightFragment.OnRightListener {
 
     private RightFragment mRightFragment;
     private AddFragment mAddFragment;

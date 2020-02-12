@@ -3,11 +3,9 @@ package com.ocr.mareu.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,12 +19,11 @@ public class RightFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
 
-    public RightFragment() {
-    }
+    public RightFragment() {    }
 
-    private OnButtonClickedListener mCallback;
+    private OnRightListener mCallback;
 
-    public interface OnButtonClickedListener {
+    public interface OnRightListener {
         public void onButtonClicked(View pView, String pActivateFragment);
     }
 
@@ -52,8 +49,6 @@ public class RightFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 mCallback.onButtonClicked(v, "ADD");
-                Toast.makeText(mContext, "TEST ADD", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -61,8 +56,6 @@ public class RightFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 mCallback.onButtonClicked(v, "VIEW");
-                Toast.makeText(mContext, "TEST VIEW", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -74,9 +67,9 @@ public class RightFragment extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         mContext = context;
         try {
-            mCallback = (OnButtonClickedListener) getContext();
+            mCallback = (OnRightListener) getContext();
         } catch (ClassCastException e) {
-            throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListener");
+            throw new ClassCastException(e.toString()+ " must implement OnRightListener");
         }
     }
 

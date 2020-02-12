@@ -1,8 +1,11 @@
 package com.ocr.mareu.ui.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,4 +83,7 @@ public class AddActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(pItem);
         }
     }
+
+
+
 }
