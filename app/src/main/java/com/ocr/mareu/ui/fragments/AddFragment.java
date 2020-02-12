@@ -3,7 +3,6 @@ package com.ocr.mareu.ui.fragments;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -26,20 +26,14 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.MeetingApiServiceException;
-import com.ocr.mareu.ui.activities.AddActivity;
 import com.ocr.mareu.utils.Validation;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.Validation.CST_DATETIME;
@@ -56,21 +50,24 @@ import static com.ocr.mareu.utils.Validation.CST_TOPIC;
  * Use the {@link AddFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddFragment extends Fragment {
+public class AddFragment extends Fragment implements View.OnClickListener {
 
-    @BindView(R.id.room_list_layout) TextInputLayout mListLayout;
-    @BindView(R.id.room_list) AutoCompleteTextView mListRoom ;
-    @BindView(R.id.email_address)TextInputLayout mEmail;
-    @BindView(R.id.email_address_et) TextInputEditText mEmailEt;
-    @BindView(R.id.email_group_cg) ChipGroup mEmailGroup;
-    @BindView(R.id.meeting_topic) TextInputLayout mTopic;
-    @BindView(R.id.meeting_topic_et) TextInputEditText mTopicEt;
-    @BindView(R.id.meeting_date) TextInputLayout mDate;
-    @BindView(R.id.meeting_date_et) TextInputEditText mDateEt;
-    @BindView(R.id.meeting_start) TextInputLayout mTimeStart;
-    @BindView(R.id.meeting_start_et) TextInputEditText mTimeStartEt;
-    @BindView(R.id.meeting_end) TextInputLayout mTimeEnd;
-    @BindView(R.id.meeting_end_et) TextInputEditText mTimeEndEt;
+
+    private AutoCompleteTextView mListRoom;
+    private TextInputLayout mListLayout ;
+    private TextInputLayout mEmail ;
+    private TextInputEditText mEmailEt  ;
+    private ChipGroup mEmailGroup ;
+    private TextInputLayout mTopic ;
+    private TextInputEditText mTopicEt ;
+    private TextInputLayout mDate ;
+    private TextInputEditText mDateEt ;
+    private TextInputLayout mTimeStart ;
+    private TextInputEditText mTimeStartEt ;
+    private TextInputLayout mTimeEnd ;
+    private TextInputEditText mTimeEndEt ;
+    private Button mBtnCancel;
+    private Button mBtnSave;
 
     private Calendar mNow;
     private Calendar mDateCal;
@@ -90,48 +87,6 @@ public class AddFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mNow = Calendar.getInstance();
-        //Les salles
-        List<Room> lRooms = sMeetingApiService.getRooms();
-
-/*
-        mContext = Objects.requireNonNull(getActivity()).getApplicationContext();
-        ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
-        mListRoom.setAdapter(lAdapter);
-        mListRoom.setOnClickListener((View v)-> {
-            mListRoom.showDropDown();
-        });
-*/
-
-        //Les participants
-
-/*
-        mEmailEt.setOnKeyListener((v,keyCode,event) -> {
-            if(event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    String lEmailText = Objects.requireNonNull(mEmailEt.getText()).toString().trim();
-
-                    if (!Validation.validationTextInputLayout(getContext(), CST_EMAIL, mEmail)) {
-                        return false;
-                    } else {
-                        final Chip lChipEmail = new Chip(getContext());
-                        lChipEmail.setText(lEmailText);
-                        lChipEmail.setCloseIconVisible(true);
-                        lChipEmail.setOnCloseIconClickListener(v1 -> mEmailGroup.removeView(lChipEmail));
-
-                        mEmailGroup.addView(lChipEmail);
-                        mEmailGroup.setVisibility(View.VISIBLE);
-                        mEmailEt.setText("");
-                        mEmail.setError(null);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
-*/
-
     }
 
     @Override
@@ -141,52 +96,69 @@ public class AddFragment extends Fragment {
         View lView = inflater.inflate(R.layout.fragment_add, container, false);
         mContext = lView.getContext();
 
-        ButterKnife.bind(getActivity());
+        bindObjectToCode(lView);
 
         mNow = Calendar.getInstance();
         //Les salles
         List<Room> lRooms = sMeetingApiService.getRooms();
 
-        List<String> lList = new ArrayList<>();
-        lList.add("Toto");
-        lList.add("Titi");
-        lList.add("Tutu");
-        lList.add("Tutu");
-/*
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
-         mListRoom.setAdapter(lAdapter);
-        mListRoom.setOnClickListener((View v)-> {
-            mListRoom.showDropDown();
+        mListRoom.setAdapter(lAdapter);
+        mListRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListRoom.showDropDown();
+            }
         });
-*/
 
         //Les participants
+        mEmailEt.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                        String lEmailText = Objects.requireNonNull(mEmailEt.getText()).toString().trim();
 
-/*
-        mEmailEt.setOnKeyListener((v,keyCode,event) -> {
-            if(event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    String lEmailText = Objects.requireNonNull(mEmailEt.getText()).toString().trim();
+                        if (!Validation.validationTextInputLayout(getContext(), CST_EMAIL, mEmail)) {
+                            return false;
+                        } else {
+                            final Chip lChipEmail = new Chip(getContext());
+                            lChipEmail.setText(lEmailText);
+                            lChipEmail.setCloseIconVisible(true);
+                            lChipEmail.setOnCloseIconClickListener(v1 -> mEmailGroup.removeView(lChipEmail));
 
-                    if (!Validation.validationTextInputLayout(getContext(), CST_EMAIL, mEmail)) {
-                        return false;
-                    } else {
-                        final Chip lChipEmail = new Chip(getContext());
-                        lChipEmail.setText(lEmailText);
-                        lChipEmail.setCloseIconVisible(true);
-                        lChipEmail.setOnCloseIconClickListener(v1 -> mEmailGroup.removeView(lChipEmail));
-
-                        mEmailGroup.addView(lChipEmail);
-                        mEmailGroup.setVisibility(View.VISIBLE);
-                        mEmailEt.setText("");
-                        mEmail.setError(null);
-                        return true;
+                            mEmailGroup.addView(lChipEmail);
+                            mEmailGroup.setVisibility(View.VISIBLE);
+                            mEmailEt.setText("");
+                            mEmail.setError(null);
+                            return true;
+                        }
                     }
                 }
+                return false;
             }
-            return false;
         });
-*/
+
+        mDateEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCalendarDialog ();
+            }
+        });
+
+        mTimeStartEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayTimeDialog(v);
+            }
+        });
+
+        mTimeEndEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayTimeDialog(v);
+            }
+        });
 
         return lView;
     }
@@ -194,7 +166,6 @@ public class AddFragment extends Fragment {
     /**
      * OnClick du champs meeting_date_et : affiche la boîte de dialogue calendrier
      */
-    @OnClick(R.id.meeting_date_et)
     void displayCalendarDialog () {
         Calendar lCalendar = Calendar.getInstance();
 
@@ -230,7 +201,6 @@ public class AddFragment extends Fragment {
      * de heures
      * @param pView : view : vue
      */
-    @OnClick({R.id.meeting_start_et, R.id.meeting_end_et})
     void displayTimeDialog(View pView) {
         final int lId = pView.getId();
         Calendar lTime = Calendar.getInstance();
@@ -278,7 +248,7 @@ public class AddFragment extends Fragment {
      * Ajout d'une réunion
      * @return : boolean : indicateur si la réunion a été ajouté ou non
      */
-    private void addMeeting() {
+    public void addMeeting() {
         Room lRoomSelected;
 
         boolean isValidDateTime = false;
@@ -318,4 +288,25 @@ public class AddFragment extends Fragment {
         }
     }
 
+    private void bindObjectToCode(View pView) {
+        mListRoom = pView.findViewById(R.id.room_list) ;
+        mListLayout = pView.findViewById(R.id.room_list_layout) ;
+        mEmail = pView.findViewById(R.id.email_address);
+        mEmailEt = pView.findViewById(R.id.email_address_et) ;
+        mEmailGroup = pView.findViewById(R.id.email_group_cg) ;
+        mTopic = pView.findViewById(R.id.meeting_topic) ;
+        mTopicEt = pView.findViewById(R.id.meeting_topic_et) ;
+        mDate = pView.findViewById(R.id.meeting_date) ;
+        mDateEt = pView.findViewById(R.id.meeting_date_et) ;
+        mTimeStart = pView.findViewById(R.id.meeting_start) ;
+        mTimeStartEt = pView.findViewById(R.id.meeting_start_et) ;
+        mTimeEnd = pView.findViewById(R.id.meeting_end) ;
+        mTimeEndEt = pView.findViewById(R.id.meeting_end_et) ;
+        mBtnCancel = pView.findViewById(R.id.btn_cancel);
+        mBtnSave = pView.findViewById(R.id.btn_save);
+    }
+
+    @Override
+    public void onClick(View v) {
+    }
 }

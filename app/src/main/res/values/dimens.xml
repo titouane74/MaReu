@@ -1,5 +1,6 @@
 <resources>
     <dimen name="padding_room_item">8dp</dimen>
+    <dimen name="padding_button">8dp</dimen>
     <dimen name="padding_layout">20dp</dimen>
     <dimen name="marging_layout">20dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
