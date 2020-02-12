@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     private Context mContext;
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     }
 
     @Override
-    public void onButtonClickedAdd(View pView, String pActivateFragment) {
+    public void onButtonClickedClose(View pView, String pActivateFragment) {
         if (mAddFragment != null && mAddFragment.isVisible()) {
             // TABLET
             if (pActivateFragment == "RIGHT") {

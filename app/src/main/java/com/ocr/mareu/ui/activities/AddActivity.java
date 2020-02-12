@@ -1,11 +1,9 @@
 package com.ocr.mareu.ui.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +18,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
  */
-public class AddActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity implements AddFragment.OnListenerAdd {
 
     @BindView(R.id.toolbar_add) Toolbar mToolbarAdd;
 
@@ -76,14 +74,20 @@ public class AddActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.action_add_meeting:
+//            case R.id.action_add_meeting:
 //                addMeeting();
-                return true;
+//                return true;
             default:
                 return super.onOptionsItemSelected(pItem);
         }
     }
 
-
-
+    @Override
+    public void onButtonClickedClose(View pView, String pActivateFragment) {
+        if (getSupportActionBar()!= null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
+        finish();
+    }
 }

@@ -81,7 +81,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private AddFragment.OnListenerAdd mCallback;
 
     public interface OnListenerAdd {
-        public void onButtonClickedAdd(View pView, String pActivateFragment);
+        public void onButtonClickedClose(View pView, String pActivateFragment);
     }
 
     public AddFragment() {
@@ -169,14 +169,14 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onButtonClickedAdd(v, "RIGHT");
+                mCallback.onButtonClickedClose(v, "RIGHT");
             }
         });
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addMeeting();
-                mCallback.onButtonClickedAdd(v, "RIGHT");
+                mCallback.onButtonClickedClose(v, "RIGHT");
             }
         });
         return lView;
