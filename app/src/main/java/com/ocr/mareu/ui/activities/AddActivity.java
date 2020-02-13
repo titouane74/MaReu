@@ -74,9 +74,6 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
             case android.R.id.home:
                 finish();
                 return true;
-//            case R.id.action_add_meeting:
-//                addMeeting();
-//                return true;
             default:
                 return super.onOptionsItemSelected(pItem);
         }
@@ -90,4 +87,5 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
         }
         finish();
     }
+
 }

@@ -8,12 +8,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -68,10 +66,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private Calendar mTimeEndFormated;
     private Context mContext;
 
-    private AddFragment.OnListenerAdd mCallback;
+    private OnListenerAdd mCallback;
 
     public interface OnListenerAdd {
-        public void onButtonClickedClose(View pView, String pActivateFragment);
+        void onButtonClickedClose(View pView, String pActivateFragment);
     }
 
     public AddFragment() {
@@ -288,8 +286,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         new Meeting(lRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, lParticipants));
 
                 Toast.makeText(getContext(),getString(R.string.action_add_meeting), Toast.LENGTH_SHORT).show();
-                //TODO callback ?
-//                finish();
             } catch  (MeetingApiServiceException pE)
             {
                 Toast.makeText(getContext(), R.string.err_meeting_room_not_free, Toast.LENGTH_LONG).show();

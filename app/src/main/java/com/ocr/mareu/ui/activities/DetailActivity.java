@@ -9,12 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.ui.fragments.DetailFragment;
-import com.ocr.mareu.utils.GsonTransformer;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import static android.content.Intent.getIntent;
 
 /**
  * Created by Florence LE BOURNOT on 12/02/2020

@@ -53,11 +53,8 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
     public void onItemClicked(View pView, String pMeeting) { }
 
     @Override
-    public void onItemDeleted() {
-        updateRecyclerView();
-    }
-
-    private void updateRecyclerView() {
+    public void onItemChangeListToUpdate() {
         mListAdapter.notifyDataSetChanged();
     }
+
 }

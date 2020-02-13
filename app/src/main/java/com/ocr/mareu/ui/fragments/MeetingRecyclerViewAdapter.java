@@ -41,7 +41,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
     public interface OnRecyclerViewListener {
        void onItemClicked(View pView, String pMeeting);
-       void onItemDeleted();
+       void onItemChangeListToUpdate();
     }
 
     private Context mContext;
@@ -112,7 +112,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 sMeetingApiService.deleteMeeting(lMeeting);
-                                mCallback.onItemDeleted();
+                                mCallback.onItemChangeListToUpdate();
                             }
                         })
                         .setNegativeButton(mContext.getString(R.string.btn_no), new DialogInterface.OnClickListener() {

@@ -197,13 +197,14 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     public void onButtonClickedClose(View pView, String pActivateFragment) {
         if (mAddFragment != null && mAddFragment.isVisible()) {
-            // TABLET
             if (pActivateFragment == "RIGHT") {
                 showFragment(mRightFragment);
             }
         }
         manageActionBar(false);
+        mListFragment.onItemChangeListToUpdate();
     }
+
 
     private void manageActionBar(boolean isEnabled) {
         if (getSupportActionBar()!= null) {
@@ -230,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     }
 
     @Override
-    public void onItemDeleted() {
-        mListFragment.onItemDeleted();
+    public void onItemChangeListToUpdate() {
+        mListFragment.onItemChangeListToUpdate();
     }
 
 }
