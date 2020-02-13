@@ -57,20 +57,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
 
     private AutoCompleteTextView mListRoom;
-    private TextInputLayout mListLayout ;
-    private TextInputLayout mEmail ;
-    private TextInputEditText mEmailEt  ;
     private ChipGroup mEmailGroup ;
-    private TextInputLayout mTopic ;
-    private TextInputEditText mTopicEt ;
-    private TextInputLayout mDate ;
-    private TextInputEditText mDateEt ;
-    private TextInputLayout mTimeStart ;
-    private TextInputEditText mTimeStartEt ;
-    private TextInputLayout mTimeEnd ;
-    private TextInputEditText mTimeEndEt ;
-    private Button mBtnCancel;
-    private Button mBtnSave;
+    private TextInputLayout mListLayout, mEmail, mTopic, mDate, mTimeStart, mTimeEnd ;
+    private TextInputEditText mEmailEt, mTopicEt, mDateEt, mTimeStartEt, mTimeEndEt ;
+    private Button mBtnCancel, mBtnSave;
 
     private Calendar mNow;
     private Calendar mDateCal;

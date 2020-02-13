@@ -20,6 +20,7 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
+import com.ocr.mareu.ui.fragments.MeetingRecyclerViewAdapter;
 import com.ocr.mareu.ui.fragments.RightFragment;
 
 import butterknife.BindView;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 
-public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd {
+public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd, MeetingRecyclerViewAdapter.OnRecyclerViewListener {
 
     @BindView(R.id.add_fab) FloatingActionButton mAddFab;
     @BindView(R.id.toolbar) Toolbar mToolbar;
@@ -109,8 +110,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             case android.R.id.home:
                 if ((mAddFragment != null && mAddFragment.isVisible()) || (mDetailFragment != null && mDetailFragment.isVisible())) {
                     showFragment(mRightFragment);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    getSupportActionBar().setDisplayShowHomeEnabled(false);
+                    manageActionBar(false);
                 }
                 return true;
             case R.id.action_remove_filter:
@@ -188,10 +188,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 showFragment(mDetailFragment);
             }
         }
-        if (getSupportActionBar()!= null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        manageActionBar(true);
     }
 
     private void showFragment(final Fragment pFragment) {
@@ -209,10 +206,28 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 showFragment(mRightFragment);
             }
         }
-        if (getSupportActionBar()!= null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setDisplayShowHomeEnabled(false);
-        }
+        manageActionBar(false);
     }
 
+    private void manageActionBar(boolean isEnabled) {
+        if (getSupportActionBar()!= null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(isEnabled);
+            getSupportActionBar().setDisplayShowHomeEnabled(isEnabled);
+        }
+
+    }
+
+    @Override
+    public void onItemClicked(View pView, String pMeeting) {
+        if (mMainLayout.getTag() == getString(R.string.tablet)) {
+            Bundle lBundle = new Bundle();
+            lBundle.putString("meeting",pMeeting);
+            showFragment(mDetailFragment);
+            mDetailFragment.setArguments(lBundle);
+        } else {
+            Intent lIntent = new Intent(mContext, DetailActivity.class);
+            lIntent.putExtra("meeting", pMeeting);
+            mContext.startActivity(lIntent);
+        }
+    }
 }

@@ -21,7 +21,7 @@ import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
  */
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment  {
 
     private RecyclerView mRecyclerView;
     private MeetingRecyclerViewAdapter mListAdapter;
@@ -53,4 +53,5 @@ public class ListFragment extends Fragment {
     private void updateListUI() {
         mListAdapter.notifyDataSetChanged();
     }
+
 }

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
+import com.ocr.mareu.utils.GsonTransformer;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -31,17 +32,13 @@ import static android.content.Intent.getIntent;
  */
 public class DetailFragment  extends Fragment {
 
-    @BindView(R.id.room_name) TextView mRoomName;
-    @BindView(R.id.info_date_time) TextView mDateTime;
-    @BindView(R.id.info_list_part) TextView mListParts;
-    @BindView(R.id.info_topic) TextView mTopic;
-    @BindView(R.id.imgParticipants) ImageView mImgParts;
-    @BindView(R.id.imgTime) ImageView mImgTime;
-    @BindView(R.id.imgTopic) ImageView mImgTopic;
+    private TextView mRoomName, mDateTime, mListParts, mTopic;
+    private ImageView mImgParts, mImgTime, mImgTopic;
 
     private Context mContext;
     private Meeting mMeeting ;
 
+    private int mId;
 
     public DetailFragment() {}
 
@@ -55,7 +52,6 @@ public class DetailFragment  extends Fragment {
         super.onCreate(savedInstanceState);
         mContext = Objects.requireNonNull(getActivity()).getApplicationContext();
 
-        getIncomingIntent();
     }
 
     @Nullable
@@ -63,24 +59,24 @@ public class DetailFragment  extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View lView = inflater.inflate(R.layout.fragment_detail, container, false);
         mContext = lView.getContext();
-        return lView;
 
+        bindObjectToCode(lView);
+        readBundle(getArguments());
+
+        return lView;
     }
 
-    //TODO faire un bundle
+/*    //TODO faire un bundle
     private void getIncomingIntent() {
-/*
         if (getIntent().hasExtra("position") ) {
             mMeeting = mMeetings.get(getIntent().getIntExtra("position", 0));
             setInfoMeeting();
         }
-*/
+        mMeeting = GsonTransformer.getGsonToMeeting(pMeeting);
         setInfoMeeting();
-    }
+    }*/
 
     private void setInfoMeeting() {
-
-/*
         int lColor = mMeeting.getRoom().getColorRoom();
 
         mRoomName.setText(mMeeting.getRoom().getNameRoom());
@@ -101,7 +97,23 @@ public class DetailFragment  extends Fragment {
         mImgTopic.setColorFilter(lColor);
         mImgTime.setColorFilter(lColor);
         mImgParts.setColorFilter(lColor);
-*/
     }
 
+    private void bindObjectToCode(View pView){
+        mRoomName = pView.findViewById(R.id.room_name);
+        mDateTime = pView.findViewById(R.id.info_date_time);
+        mListParts = pView.findViewById(R.id.info_list_part);
+        mTopic = pView.findViewById(R.id.info_topic);
+        mImgParts = pView.findViewById(R.id.imgParticipants);
+        mImgTime = pView.findViewById(R.id.imgTime);
+        mImgTopic = pView.findViewById(R.id.imgTopic);
+
+    }
+
+    private void readBundle(Bundle pBundle) {
+        if (pBundle != null) {
+            mMeeting = GsonTransformer.getGsonToMeeting(pBundle.getString("meeting"));
+            setInfoMeeting();
+        }
+    }
 }

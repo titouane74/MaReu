@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
+import com.ocr.mareu.utils.GsonTransformer;
 import com.ocr.mareu.utils.SortOrFilter;
 
 import java.lang.ref.WeakReference;
@@ -34,14 +35,18 @@ import static com.ocr.mareu.di.DI.sMeetingApiService;
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
  */
-public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.ViewHolder> {
+public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.ViewHolder>  implements View.OnClickListener {
+
+    private OnRecyclerViewListener mCallback;
 
 
+    public interface OnRecyclerViewListener {
+        public void onItemClicked(View pView, String pMeeting);
+    }
 
 
     private Context mContext;
     private List<Meeting> mMeetings;
-    private int mPosition;
     /**
      * Constructor de l'adapter du RecyclerView
      * @param pContext : context : context
@@ -80,7 +85,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Meeting lMeeting = mMeetings.get(position);
-        mPosition = position;
 
         @SuppressLint("SimpleDateFormat")
         String lDescription = TextUtils.join(" - ", Arrays.asList(
@@ -120,17 +124,21 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                 lAlertDialog.show();
             }
         });
-/*
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String lMeetingString = GsonTransformer.getGsonToString(lMeeting);
+                mCallback.onItemClicked(v, lMeetingString);
+/*
                 Intent lIntent = new Intent(mContext, MeetingDetailActivity.class);
                 lIntent.putExtra("position", position);
                 mContext.startActivity(lIntent);
+*/
             }
         });
-*/
+
     }
 
     /**
@@ -164,4 +172,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             ButterKnife.bind(this,pView);
         }
     }
+    @Override
+    public void onClick(View v) {}
 }

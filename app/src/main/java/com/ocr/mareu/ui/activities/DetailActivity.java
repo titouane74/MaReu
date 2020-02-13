@@ -9,14 +9,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.ui.fragments.DetailFragment;
+import com.ocr.mareu.utils.GsonTransformer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.content.Intent.getIntent;
+
 /**
  * Created by Florence LE BOURNOT on 12/02/2020
  */
-public class DetailActivites extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar_detail) Toolbar mToolbarDetail;
     private DetailFragment mDetailFragment;
@@ -34,6 +37,7 @@ public class DetailActivites extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         configureAndShowDetailFragment();
+
     }
 
     private void configureAndShowDetailFragment() {
@@ -54,4 +58,15 @@ public class DetailActivites extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(pItem);
     }
+
+    private void getIncomingIntent() {
+        if (getIntent().hasExtra("meeting") ) {
+            String lMeeting = getIntent().getStringExtra("meeting");
+            Bundle lBundle = new Bundle();
+            lBundle.putString("meeting",lMeeting);
+            mDetailFragment.setArguments(lBundle);
+
+        }
+    }
+
 }
