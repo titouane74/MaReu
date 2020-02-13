@@ -53,17 +53,6 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
     }
 
     /**
-     * onCreateOptionsMenu : création des items du menu
-     * @param pMenu : menu : menu
-     * @return
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu pMenu) {
-        getMenuInflater().inflate(R.menu.menu_add_meeting, pMenu);
-        return true;
-    }
-
-    /**
      * Sur sélection du bouton retour ou ajout de la toolbar
      * @param pItem : menuitem : retour à l'écran précédent, ajout de la réunion et retour à l'écran précédent
      * @return

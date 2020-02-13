@@ -27,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.utils.SortOrFilter.SORT_DATE;
+import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
+import static com.ocr.mareu.utils.SortOrFilter.SORT_ROOM;
 
 public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
         MeetingRecyclerViewAdapter.OnRecyclerViewListener {
@@ -114,15 +117,15 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 manageActionBar(false);
                 return true;
             case R.id.action_remove_filter:
-//                ConfigureAdapter.configureAdapter(this, SORT_DEFAULT, mRecyclerView);
+                mListFragment.onItemChangeListToUpdate(SORT_DEFAULT);
                 return true;
             case R.id.action_sort:
                 return true;
             case R.id.sort_date:
-//                ConfigureAdapter.configureAdapter(this, SORT_DATE,mRecyclerView);
+                mListFragment.onItemChangeListToUpdate(SORT_DATE);
                 return true;
             case R.id.sort_room:
-//                ConfigureAdapter.configureAdapter(this, SORT_ROOM,mRecyclerView);
+                mListFragment.onItemChangeListToUpdate(SORT_ROOM);
                 return true;
             case R.id.action_filter:
                 return true;
@@ -156,6 +159,19 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         mBackPressedTime = System.currentTimeMillis();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sMeetingApiService.resetMeetings();
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mListFragment.onItemChangeListToUpdate(SORT_DEFAULT);
+    }
+
     private void configureAndShowListFragment() {
         mListFragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.frame_list);
         if (mListFragment == null) {
@@ -177,21 +193,18 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 
     }
 
-    @Override
-    public void onButtonClicked(View pView) {
-
-        if (mRightFragment != null && mRightFragment.isVisible()) {
-            // TABLET
-            showFragment(mAddFragment);
-        }
-        manageActionBar(true);
-    }
-
     private void showFragment(final Fragment pFragment) {
         final FragmentManager lFragmentManager = getSupportFragmentManager();
         final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
         lFragmentTransaction.replace(R.id.frame_right,pFragment);
         lFragmentTransaction.commit();
+    }
+
+    private void manageActionBar(boolean isEnabled) {
+        if (getSupportActionBar()!= null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(isEnabled);
+            getSupportActionBar().setDisplayShowHomeEnabled(isEnabled);
+        }
     }
 
     @Override
@@ -202,16 +215,16 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             }
         }
         manageActionBar(false);
-        mListFragment.onItemChangeListToUpdate();
+        mListFragment.onItemChangeListToUpdate(SORT_DEFAULT);
     }
 
-
-    private void manageActionBar(boolean isEnabled) {
-        if (getSupportActionBar()!= null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(isEnabled);
-            getSupportActionBar().setDisplayShowHomeEnabled(isEnabled);
+    @Override
+    public void onButtonClicked(View pView) {
+        if (mRightFragment != null && mRightFragment.isVisible()) {
+            mAddFragment = AddFragment.newInstance();
+            showFragment(mAddFragment);
         }
-
+        manageActionBar(true);
     }
 
     @Override
@@ -220,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         if (mMainLayout.getTag() == getString(R.string.tablet)) {
             Bundle lBundle = new Bundle();
             lBundle.putString("meeting",pMeeting);
+            mDetailFragment = DetailFragment.newInstance();
             if (mDetailFragment != null && !mDetailFragment.isVisible())
                 showFragment(mDetailFragment);
             mDetailFragment.setArguments(lBundle);
@@ -231,8 +245,8 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     }
 
     @Override
-    public void onItemChangeListToUpdate() {
-        mListFragment.onItemChangeListToUpdate();
+    public void onItemChangeListToUpdate(String pOrder) {
+        mListFragment.onItemChangeListToUpdate(pOrder);
     }
 
 }

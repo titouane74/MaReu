@@ -37,15 +37,15 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View lView = inflater.inflate(R.layout.fragment_list,container,false);
         mRecyclerView = (RecyclerView) lView;
-        configurerecyclerView();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        configurerecyclerView(SORT_DEFAULT);
 
         return lView;
     }
 
-    private void configurerecyclerView() {
+    private void configurerecyclerView(String pOrder) {
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), SORT_DEFAULT);
+        mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), pOrder);
         mRecyclerView.setAdapter(mListAdapter);
     }
 
@@ -53,8 +53,12 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
     public void onItemClicked(View pView, String pMeeting) { }
 
     @Override
-    public void onItemChangeListToUpdate() {
-        mListAdapter.notifyDataSetChanged();
+    public void onItemChangeListToUpdate(String pOrder) {
+        if (pOrder.contains("DEFAULT")) {
+            mListAdapter.notifyDataSetChanged();
+        } else {
+            configurerecyclerView(pOrder);
+        }
     }
 
 }

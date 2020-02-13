@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.utils.GsonTransformer;
 import com.ocr.mareu.utils.SortOrFilter;
 
-import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
@@ -41,7 +40,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
     public interface OnRecyclerViewListener {
        void onItemClicked(View pView, String pMeeting);
-       void onItemChangeListToUpdate();
+       void onItemChangeListToUpdate(String pOrder);
     }
 
     private Context mContext;
@@ -112,7 +111,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 sMeetingApiService.deleteMeeting(lMeeting);
-                                mCallback.onItemChangeListToUpdate();
+                                mCallback.onItemChangeListToUpdate(SORT_DEFAULT);
                             }
                         })
                         .setNegativeButton(mContext.getString(R.string.btn_no), new DialogInterface.OnClickListener() {
