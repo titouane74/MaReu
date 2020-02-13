@@ -17,22 +17,29 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ocr.mareu.R;
+import com.ocr.mareu.model.Room;
 import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
 import com.ocr.mareu.ui.fragments.MeetingRecyclerViewAdapter;
 import com.ocr.mareu.ui.fragments.RightFragment;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.utils.ShowDialog.showDialogRooms;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DATE;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_ROOM;
 
 public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
         MeetingRecyclerViewAdapter.OnRecyclerViewListener {
+
 
     @BindView(R.id.add_fab) FloatingActionButton mAddFab;
     @BindView(R.id.toolbar) Toolbar mToolbar;
@@ -45,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     private long mBackPressedTime;
     private Toast mBackToast;
     private Context mContext;
+
+//    public static List<Room> sListRoomSelected = new ArrayList<>();
+    public static List<Room> sListRoomSelected = new ArrayList<>();
+
 
 
     @SuppressLint("RestrictedApi")
@@ -133,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 //                showCalendarDialog(mContext,mRecyclerView);
                 return true;
             case R.id.filter_room:
-//                showDialogRooms(mContext,mRecyclerView);
+                showDialogRooms(mContext,mListFragment);
                 return true;
             default :
                 return super.onOptionsItemSelected(pItem);
