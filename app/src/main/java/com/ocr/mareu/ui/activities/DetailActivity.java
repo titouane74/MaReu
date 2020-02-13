@@ -21,34 +21,35 @@ import static android.content.Intent.getIntent;
  */
 public class DetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar_detail) Toolbar mToolbarDetail;
+    Toolbar mToolbarDetail;
     private DetailFragment mDetailFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail);
 
-        ButterKnife.bind(this);
-
+        mToolbarDetail = findViewById(R.id.toolbar_detail);
         setSupportActionBar(mToolbarDetail);
+
+        configureAndShowDetailFragment();
+
+        getIncomingIntent();
 
         if (getSupportActionBar()!= null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        configureAndShowDetailFragment();
-
     }
 
     private void configureAndShowDetailFragment() {
-        mDetailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_right);
+        mDetailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_detail);
         if (mDetailFragment == null) {
             mDetailFragment = DetailFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.frame_right, mDetailFragment)
+                    .add(R.id.frame_detail, mDetailFragment)
                     .commit();
         }
-
     }
 
     @Override

@@ -24,7 +24,7 @@ public class RightFragment extends Fragment implements View.OnClickListener {
     private OnRightListener mCallback;
 
     public interface OnRightListener {
-        public void onButtonClicked(View pView, String pActivateFragment);
+        void onButtonClicked(View pView);
     }
 
     public static RightFragment newInstance() {
@@ -43,19 +43,11 @@ public class RightFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View lView = inflater.inflate(R.layout.fragment_right, container, false);
         Button mBtnAdd = lView.findViewById(R.id.btn_add);
-        Button mBtnView = lView.findViewById(R.id.btn_view);
 
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onButtonClicked(v, "ADD");
-            }
-        });
-
-        mBtnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallback.onButtonClicked(v, "VIEW");
+                mCallback.onButtonClicked(v);
             }
         });
 

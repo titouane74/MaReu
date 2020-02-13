@@ -35,15 +35,14 @@ import static com.ocr.mareu.di.DI.sMeetingApiService;
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
  */
-public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.ViewHolder>  implements View.OnClickListener {
+public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.ViewHolder> implements View.OnClickListener {
 
     private OnRecyclerViewListener mCallback;
 
-
     public interface OnRecyclerViewListener {
-        public void onItemClicked(View pView, String pMeeting);
+       void onItemClicked(View pView, String pMeeting);
+       void onItemDeleted();
     }
-
 
     private Context mContext;
     private List<Meeting> mMeetings;
@@ -84,6 +83,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
+        mCallback = (OnRecyclerViewListener) mContext;
+
         final Meeting lMeeting = mMeetings.get(position);
 
         @SuppressLint("SimpleDateFormat")
@@ -111,7 +112,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 sMeetingApiService.deleteMeeting(lMeeting);
-//                                EventBus.getDefault().post(new DeleteMeetingEvent(lMeeting));
+                                mCallback.onItemDeleted();
                             }
                         })
                         .setNegativeButton(mContext.getString(R.string.btn_no), new DialogInterface.OnClickListener() {
@@ -125,17 +126,11 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             }
         });
 
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String lMeetingString = GsonTransformer.getGsonToString(lMeeting);
                 mCallback.onItemClicked(v, lMeetingString);
-/*
-                Intent lIntent = new Intent(mContext, MeetingDetailActivity.class);
-                lIntent.putExtra("position", position);
-                mContext.startActivity(lIntent);
-*/
             }
         });
 
@@ -174,4 +169,5 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     }
     @Override
     public void onClick(View v) {}
+
 }

@@ -2,7 +2,6 @@ package com.ocr.mareu.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,11 +20,7 @@ import com.ocr.mareu.utils.GsonTransformer;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.Objects;
 
-import butterknife.BindView;
-
-import static android.content.Intent.getIntent;
 
 /**
  * Created by Florence LE BOURNOT on 12/02/2020
@@ -38,7 +33,6 @@ public class DetailFragment  extends Fragment {
     private Context mContext;
     private Meeting mMeeting ;
 
-    private int mId;
 
     public DetailFragment() {}
 
@@ -50,8 +44,6 @@ public class DetailFragment  extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = Objects.requireNonNull(getActivity()).getApplicationContext();
-
     }
 
     @Nullable
@@ -65,16 +57,6 @@ public class DetailFragment  extends Fragment {
 
         return lView;
     }
-
-/*    //TODO faire un bundle
-    private void getIncomingIntent() {
-        if (getIntent().hasExtra("position") ) {
-            mMeeting = mMeetings.get(getIntent().getIntExtra("position", 0));
-            setInfoMeeting();
-        }
-        mMeeting = GsonTransformer.getGsonToMeeting(pMeeting);
-        setInfoMeeting();
-    }*/
 
     private void setInfoMeeting() {
         int lColor = mMeeting.getRoom().getColorRoom();
@@ -91,8 +73,6 @@ public class DetailFragment  extends Fragment {
                         new SimpleDateFormat("HH:mm").format(mMeeting.getStart().getTime()) + " - " +
                         new SimpleDateFormat("HH:mm").format(mMeeting.getEnd().getTime()) ;
         mDateTime.setText(lDateTime);
-
-//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(lColor));
 
         mImgTopic.setColorFilter(lColor);
         mImgTime.setColorFilter(lColor);
@@ -115,5 +95,11 @@ public class DetailFragment  extends Fragment {
             mMeeting = GsonTransformer.getGsonToMeeting(pBundle.getString("meeting"));
             setInfoMeeting();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 }

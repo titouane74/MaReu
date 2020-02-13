@@ -28,7 +28,8 @@ import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 
-public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd, MeetingRecyclerViewAdapter.OnRecyclerViewListener {
+public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
+        MeetingRecyclerViewAdapter.OnRecyclerViewListener {
 
     @BindView(R.id.add_fab) FloatingActionButton mAddFab;
     @BindView(R.id.toolbar) Toolbar mToolbar;
@@ -108,10 +109,9 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public boolean onOptionsItemSelected(MenuItem pItem) {
         switch (pItem.getItemId()) {
             case android.R.id.home:
-                if ((mAddFragment != null && mAddFragment.isVisible()) || (mDetailFragment != null && mDetailFragment.isVisible())) {
+                if ((mAddFragment != null && mAddFragment.isVisible()) || (mDetailFragment != null && mDetailFragment.isVisible()))
                     showFragment(mRightFragment);
-                    manageActionBar(false);
-                }
+                manageActionBar(false);
                 return true;
             case R.id.action_remove_filter:
 //                ConfigureAdapter.configureAdapter(this, SORT_DEFAULT, mRecyclerView);
@@ -178,15 +178,11 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     }
 
     @Override
-    public void onButtonClicked(View pView, String pActivateFragment) {
+    public void onButtonClicked(View pView) {
 
         if (mRightFragment != null && mRightFragment.isVisible()) {
             // TABLET
-            if (pActivateFragment == "ADD") {
-                showFragment(mAddFragment);
-            } else if (pActivateFragment == "VIEW") {
-                showFragment(mDetailFragment);
-            }
+            showFragment(mAddFragment);
         }
         manageActionBar(true);
     }
@@ -219,10 +215,12 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 
     @Override
     public void onItemClicked(View pView, String pMeeting) {
+        manageActionBar(true);
         if (mMainLayout.getTag() == getString(R.string.tablet)) {
             Bundle lBundle = new Bundle();
             lBundle.putString("meeting",pMeeting);
-            showFragment(mDetailFragment);
+            if (mDetailFragment != null && !mDetailFragment.isVisible())
+                showFragment(mDetailFragment);
             mDetailFragment.setArguments(lBundle);
         } else {
             Intent lIntent = new Intent(mContext, DetailActivity.class);
@@ -230,4 +228,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             mContext.startActivity(lIntent);
         }
     }
+
+    @Override
+    public void onItemDeleted() {
+        mListFragment.onItemDeleted();
+    }
+
 }

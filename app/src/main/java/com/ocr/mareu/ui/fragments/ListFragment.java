@@ -21,7 +21,7 @@ import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
  */
-public class ListFragment extends Fragment  {
+public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter.OnRecyclerViewListener {
 
     private RecyclerView mRecyclerView;
     private MeetingRecyclerViewAdapter mListAdapter;
@@ -40,7 +40,6 @@ public class ListFragment extends Fragment  {
         configurerecyclerView();
 
         return lView;
-
     }
 
     private void configurerecyclerView() {
@@ -50,8 +49,15 @@ public class ListFragment extends Fragment  {
         mRecyclerView.setAdapter(mListAdapter);
     }
 
-    private void updateListUI() {
-        mListAdapter.notifyDataSetChanged();
+    @Override
+    public void onItemClicked(View pView, String pMeeting) { }
+
+    @Override
+    public void onItemDeleted() {
+        updateRecyclerView();
     }
 
+    private void updateRecyclerView() {
+        mListAdapter.notifyDataSetChanged();
+    }
 }
