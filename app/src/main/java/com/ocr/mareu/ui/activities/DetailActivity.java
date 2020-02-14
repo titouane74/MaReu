@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.ocr.mareu.R;
+import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.ui.fragments.DetailFragment;
+
+import static com.ocr.mareu.di.DI.sMeetingApiService;
 
 
 /**
@@ -28,8 +31,6 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(mToolbarDetail);
 
         configureAndShowDetailFragment();
-
-        getIncomingIntent();
 
         if (getSupportActionBar()!= null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -53,16 +54,6 @@ public class DetailActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(pItem);
-    }
-
-    private void getIncomingIntent() {
-        if (getIntent().hasExtra("meeting") ) {
-            String lMeeting = getIntent().getStringExtra("meeting");
-            Bundle lBundle = new Bundle();
-            lBundle.putString("meeting",lMeeting);
-            mDetailFragment.setArguments(lBundle);
-
-        }
     }
 
 }

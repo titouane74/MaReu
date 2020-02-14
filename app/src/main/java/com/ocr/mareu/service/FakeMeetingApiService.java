@@ -21,6 +21,7 @@ public class FakeMeetingApiService implements MeetingApiService {
 
     private List<Meeting> mMeetings ;
     private final List<Room> mRooms;
+    private Meeting mMeetingSelected;
 
     public static final String CST_FORMAT_DATE = "dd/MM/yyyy";
     public static final String CST_FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss:SS";
@@ -56,18 +57,15 @@ public class FakeMeetingApiService implements MeetingApiService {
         return mMeetings;
     }
 
-    /**
-     * Récupère la liste des réunions triées ou filtrées
-     * @param pOrder : string : ordre de trie ou de filtre
-     * @return : objet : liste des réunions triées ou filtrées
-     */
-/*
     @Override
-    public List<Meeting> getMeetingsSortOrFilter(String pOrder) {
-
-        return sortOrFilter(mMeetings,pOrder);
+    public void setMeetingSelected(Meeting pMeeting) {
+        mMeetingSelected = pMeeting;
     }
-*/
+
+    @Override
+    public Meeting getMeetingSelected() {
+        return mMeetingSelected;
+    }
 
     /**
      * Récupère la liste des salles de réunion

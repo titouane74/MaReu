@@ -17,16 +17,11 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ocr.mareu.R;
-import com.ocr.mareu.model.Room;
 import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
 import com.ocr.mareu.ui.fragments.MeetingRecyclerViewAdapter;
 import com.ocr.mareu.ui.fragments.RightFragment;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,14 +29,12 @@ import butterknife.ButterKnife;
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.ShowDialog.showDialogRooms;
 import static com.ocr.mareu.utils.SortOrFilter.FILTER_EMPTY;
-import static com.ocr.mareu.utils.SortOrFilter.FILTER_ROOM;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DATE;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_ROOM;
 
 public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
         MeetingRecyclerViewAdapter.OnRecyclerViewListener {
-
 
     @BindView(R.id.add_fab) FloatingActionButton mAddFab;
     @BindView(R.id.toolbar) Toolbar mToolbar;
@@ -54,9 +47,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     private long mBackPressedTime;
     private Toast mBackToast;
     private Context mContext;
-
-    public static List<Room> sListRoomSelected = new ArrayList<>();
-
 
 
     @SuppressLint("RestrictedApi")
@@ -125,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         switch (pItem.getItemId()) {
             case android.R.id.home:
                 if ((mAddFragment != null && mAddFragment.isVisible()) || (mDetailFragment != null && mDetailFragment.isVisible()))
-                    showFragment(mRightFragment);
+                    showRightFragment(mRightFragment);
                 manageActionBar(false);
                 return true;
             case R.id.action_remove_filter:
@@ -202,10 +192,9 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                     .add(R.id.frame_right, mRightFragment )
                     .commit();
         }
-
     }
 
-    private void showFragment(final Fragment pFragment) {
+    private void showRightFragment(final Fragment pFragment) {
         final FragmentManager lFragmentManager = getSupportFragmentManager();
         final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
         lFragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_right,R.anim.enter_from_right, R.anim.exit_to_right);
@@ -224,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public void onButtonClickedClose(View pView, String pActivateFragment) {
         if (mAddFragment != null && mAddFragment.isVisible()) {
             if (pActivateFragment == "RIGHT") {
-                showFragment(mRightFragment);
+                showRightFragment(mRightFragment);
             }
         }
         manageActionBar(false);
@@ -235,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public void onButtonClicked(View pView) {
         if (mRightFragment != null && mRightFragment.isVisible()) {
             mAddFragment = AddFragment.newInstance();
-            showFragment(mAddFragment);
+            showRightFragment(mAddFragment);
         }
         manageActionBar(true);
     }
@@ -244,15 +233,11 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public void onItemClicked(View pView, String pMeeting) {
         manageActionBar(true);
         if (mMainLayout.getTag() == getString(R.string.tablet)) {
-            Bundle lBundle = new Bundle();
-            lBundle.putString("meeting",pMeeting);
             mDetailFragment = DetailFragment.newInstance();
             if (mDetailFragment != null && !mDetailFragment.isVisible())
-                showFragment(mDetailFragment);
-            mDetailFragment.setArguments(lBundle);
+                showRightFragment(mDetailFragment);
         } else {
             Intent lIntent = new Intent(mContext, DetailActivity.class);
-            lIntent.putExtra("meeting", pMeeting);
             mContext.startActivity(lIntent);
         }
     }
@@ -261,5 +246,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public void listToUpdate(String pOrder,String pFilter) {
         mListFragment.listToUpdate(pOrder,pFilter);
     }
+
+
 
 }

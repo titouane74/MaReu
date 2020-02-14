@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <TextView
@@ -106,7 +107,24 @@
             app:layout_constraintTop_toTopOf="@id/imgParticipants"
             android:layout_marginStart="@dimen/margin_detail"
             />
+<!--
+            <FrameLayout
+                android:id="@+id/recycler_part_frag"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintLeft_toRightOf="@id/imgParticipants"
+                app:layout_constraintTop_toBottomOf="@id/info_list_part"
+                android:layout_marginStart="@dimen/margin_detail"
+                />
+-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/recycler_part"
+            tools:listitem="@layout/fragment_participant_item">
 
+        </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -53,7 +53,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, String pOrder,String pFilter) {
         mContext = pContext;
-//        sMeetingApiService.addFakeMeeting();
+        sMeetingApiService.addFakeMeeting();
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
@@ -129,6 +129,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sMeetingApiService.setMeetingSelected(lMeeting);
                 String lMeetingString = GsonTransformer.getGsonToString(lMeeting);
                 mCallback.onItemClicked(v, lMeetingString);
             }

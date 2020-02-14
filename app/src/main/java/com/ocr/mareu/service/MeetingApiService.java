@@ -16,13 +16,9 @@ public interface MeetingApiService {
      */
     List<Meeting> getMeetings();
 
-    /**
-     * Récupère la liste des réunions triées ou filtrées
-     * @param pOrder : string : ordre de trie ou de filtre
-     * @return : objet : liste des réunions triées ou filtrées
-     */
-//    List<Meeting> getMeetingsSortOrFilter(String pOrder);
+    void setMeetingSelected(Meeting pMeeting);
 
+    Meeting getMeetingSelected();
 
     /**
      * Récupère la liste des salles de réunion

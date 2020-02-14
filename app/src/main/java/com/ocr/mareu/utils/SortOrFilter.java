@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.ocr.mareu.ui.activities.MainActivity.sListRoomSelected;
 import static com.ocr.mareu.utils.GsonTransformer.getGsonToListRooms;
 
 //import static com.ocr.mareu.ui.MeetingListActivity.sCalendarSelected;

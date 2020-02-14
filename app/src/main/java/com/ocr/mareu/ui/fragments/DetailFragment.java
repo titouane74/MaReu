@@ -13,13 +13,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
-import com.ocr.mareu.utils.GsonTransformer;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import static com.ocr.mareu.di.DI.sMeetingApiService;
 
 
 /**
@@ -29,7 +31,7 @@ public class DetailFragment  extends Fragment {
 
     private TextView mRoomName, mDateTime, mListParts, mTopic;
     private ImageView mImgParts, mImgTime, mImgTopic;
-
+    private RecyclerView mRV;
     private Context mContext;
     private Meeting mMeeting ;
 
@@ -52,8 +54,10 @@ public class DetailFragment  extends Fragment {
         View lView = inflater.inflate(R.layout.fragment_detail, container, false);
         mContext = lView.getContext();
 
+        mMeeting = sMeetingApiService.getMeetingSelected();
+
         bindObjectToCode(lView);
-        readBundle(getArguments());
+        setInfoMeeting();
 
         return lView;
     }
@@ -87,14 +91,7 @@ public class DetailFragment  extends Fragment {
         mImgParts = pView.findViewById(R.id.imgParticipants);
         mImgTime = pView.findViewById(R.id.imgTime);
         mImgTopic = pView.findViewById(R.id.imgTopic);
-
-    }
-
-    private void readBundle(Bundle pBundle) {
-        if (pBundle != null) {
-            mMeeting = GsonTransformer.getGsonToMeeting(pBundle.getString("meeting"));
-            setInfoMeeting();
-        }
+        mRV = pView.findViewById(R.id.recycler_part);
     }
 
 }
