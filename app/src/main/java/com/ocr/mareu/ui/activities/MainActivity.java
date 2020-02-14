@@ -208,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     private void showFragment(final Fragment pFragment) {
         final FragmentManager lFragmentManager = getSupportFragmentManager();
         final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
+        lFragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_right,R.anim.enter_from_right, R.anim.exit_to_right);
         lFragmentTransaction.replace(R.id.frame_right,pFragment);
         lFragmentTransaction.commit();
     }
