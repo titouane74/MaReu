@@ -33,6 +33,8 @@ import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.ShowDialog.showDialogRooms;
+import static com.ocr.mareu.utils.SortOrFilter.FILTER_EMPTY;
+import static com.ocr.mareu.utils.SortOrFilter.FILTER_ROOM;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DATE;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_ROOM;
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     private Toast mBackToast;
     private Context mContext;
 
-//    public static List<Room> sListRoomSelected = new ArrayList<>();
     public static List<Room> sListRoomSelected = new ArrayList<>();
 
 
@@ -128,15 +129,15 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 manageActionBar(false);
                 return true;
             case R.id.action_remove_filter:
-                mListFragment.onItemChangeListToUpdate(SORT_DEFAULT);
+                mListFragment.listToUpdate(SORT_DEFAULT, FILTER_EMPTY);
                 return true;
             case R.id.action_sort:
                 return true;
             case R.id.sort_date:
-                mListFragment.onItemChangeListToUpdate(SORT_DATE);
+                mListFragment.listToUpdate(SORT_DATE, FILTER_EMPTY);
                 return true;
             case R.id.sort_room:
-                mListFragment.onItemChangeListToUpdate(SORT_ROOM);
+                mListFragment.listToUpdate(SORT_ROOM, FILTER_EMPTY);
                 return true;
             case R.id.action_filter:
                 return true;
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 //                showCalendarDialog(mContext,mRecyclerView);
                 return true;
             case R.id.filter_room:
-                showDialogRooms(mContext,mListFragment);
+                showDialogRooms(mContext, mListFragment);
                 return true;
             default :
                 return super.onOptionsItemSelected(pItem);
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     protected void onResume() {
         super.onResume();
-        mListFragment.onItemChangeListToUpdate(SORT_DEFAULT);
+        mListFragment.listToUpdate(SORT_DEFAULT,FILTER_EMPTY);
     }
 
     private void configureAndShowListFragment() {
@@ -226,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             }
         }
         manageActionBar(false);
-        mListFragment.onItemChangeListToUpdate(SORT_DEFAULT);
+        mListFragment.listToUpdate(SORT_DEFAULT,FILTER_EMPTY);
     }
 
     @Override
@@ -256,8 +257,8 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     }
 
     @Override
-    public void onItemChangeListToUpdate(String pOrder) {
-        mListFragment.onItemChangeListToUpdate(pOrder);
+    public void listToUpdate(String pOrder,String pFilter) {
+        mListFragment.listToUpdate(pOrder,pFilter);
     }
 
 }

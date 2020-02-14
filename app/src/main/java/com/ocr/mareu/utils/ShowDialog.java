@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
-import static com.ocr.mareu.ui.activities.MainActivity.sListRoomSelected;
+import static com.ocr.mareu.utils.GsonTransformer.getGsonListRoomsToString;
 import static com.ocr.mareu.utils.SortOrFilter.FILTER_ROOM;
 
 /**
@@ -32,6 +32,7 @@ public class ShowDialog {
     /**
      * Affichage de la boîte de dialogue contenant les salles de réunion pour l'application du filtre par salle
      */
+
     public static void showDialogRooms(Context pContext, ListFragment pListFragment) {
 
         AlertDialog.Builder lBuilder = new AlertDialog.Builder(pContext);
@@ -53,7 +54,6 @@ public class ShowDialog {
                 if (isChecked) {
                     lRoomsSelected.add(lRooms.get(which));
                 }
-                sListRoomSelected = lRoomsSelected;
             }
         });
         lBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -63,11 +63,12 @@ public class ShowDialog {
         lBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                pListFragment.onItemChangeListToUpdate(FILTER_ROOM);
+                pListFragment.listToUpdate(FILTER_ROOM,getGsonListRoomsToString(lRoomsSelected));
             }
         });
         Dialog lDialog = lBuilder.create();
         lDialog.show();
+
     }
 
     /**

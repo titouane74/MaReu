@@ -3,6 +3,7 @@ package com.ocr.mareu.utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ocr.mareu.model.Meeting;
+import com.ocr.mareu.model.Room;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ public class GsonTransformer {
      */
     public static String getGsonToString (Meeting pArrayList) {
         return new Gson().toJson(pArrayList);
-
     }
 
     /**
@@ -33,6 +33,15 @@ public class GsonTransformer {
         Type lListType = new TypeToken<Meeting>() {}.getType();
 
         return new Gson().fromJson(pString,lListType);
+    }
 
+    public static String getGsonListRoomsToString (List<Room> pArrayList) {
+        return new Gson().toJson(pArrayList);
+    }
+
+    public static ArrayList<Room> getGsonToListRooms (String pString) {
+        //Utilisation du Type uniquement quand il s'agît d'un ArrayList
+        Type lListType = new TypeToken<ArrayList<Room>>() {}.getType();
+        return new Gson().fromJson(pString,lListType);
     }
 }

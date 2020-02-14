@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 
+import static com.ocr.mareu.utils.SortOrFilter.FILTER_EMPTY;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 
 /**
@@ -35,14 +36,14 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
         View lView = inflater.inflate(R.layout.fragment_list,container,false);
         mRecyclerView = (RecyclerView) lView;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        configurerecyclerView(SORT_DEFAULT);
+        configureRecyclerView(SORT_DEFAULT,FILTER_EMPTY);
 
         return lView;
     }
 
-    private void configurerecyclerView(String pOrder) {
+    private void configureRecyclerView(String pOrder, String pFilter) {
 
-        mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), pOrder);
+        mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), pOrder, pFilter);
         mRecyclerView.setAdapter(mListAdapter);
     }
 
@@ -50,12 +51,8 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
     public void onItemClicked(View pView, String pMeeting) { }
 
     @Override
-    public void onItemChangeListToUpdate(String pOrder) {
-        if (pOrder.contains("DEFAULT")) {
-            mListAdapter.notifyDataSetChanged();
-        } else {
-            configurerecyclerView(pOrder);
-        }
+    public void listToUpdate(String pOrder, String pFilter) {
+        configureRecyclerView(pOrder,pFilter);
     }
 
 }

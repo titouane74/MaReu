@@ -10,6 +10,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.ocr.mareu.ui.activities.MainActivity.sListRoomSelected;
+import static com.ocr.mareu.utils.GsonTransformer.getGsonToListRooms;
+
 //import static com.ocr.mareu.ui.MeetingListActivity.sCalendarSelected;
 //import static com.ocr.mareu.ui.MeetingListActivity.sListRoomSelected;
 
@@ -24,6 +27,7 @@ public class SortOrFilter {
     public static final String FILTER_ROOM = "FILTER_ROOM";
     public static final String FILTER_DATE = "FILTER_DATE";
     public static final String SORT_DEFAULT = "SORT_DEFAULT";
+    public static final String FILTER_EMPTY = "FILTER_EMPTY";
 
     private static boolean isSortAscRoom = false;
     private static boolean isSortAscDate = false;
@@ -34,11 +38,11 @@ public class SortOrFilter {
      * @param pOrder : string : indicateur de trie ou de filtre
      * @return : list : liste des réunions triée ou filtrée
      */
-    public List<Meeting> sortOrFilter(List<Meeting> pMeetings, String pOrder) {
+    public List<Meeting> sortOrFilter(List<Meeting> pMeetings, String pOrder, String pFilter) {
         if (pOrder.contains("SORT")) {
             return sortMeeting(pMeetings, pOrder);
         } else if (pOrder.contains("FILTER")) {
-            return filterMeeting(pMeetings, pOrder);
+            return filterMeeting(pMeetings, pOrder,pFilter);
         } else {
             return pMeetings;
         }
@@ -50,20 +54,18 @@ public class SortOrFilter {
      * @param pOrder : string : indicateur de filtre
      * @return : list : liste des réunions filtrée
      */
-    public List<Meeting> filterMeeting(List<Meeting> pMeetings,String pOrder) {
+    public List<Meeting> filterMeeting(List<Meeting> pMeetings,String pOrder,String pFilter) {
         List<Meeting> lMeetingRoomFiltered = new ArrayList<>();
-
         switch (pOrder) {
             case FILTER_ROOM:
-/*
-                for (Room lListRoom : sListRoomSelected) {
+                List<Room> lListRoomsSelected = getGsonToListRooms(pFilter);
+                for (Room lListRoom : lListRoomsSelected) {
                     for (int i = 0; i < pMeetings.size(); i++) {
                         if (pMeetings.get(i).getRoom().getNameRoom().equals(lListRoom.getNameRoom())) {
                             lMeetingRoomFiltered.add(pMeetings.get(i));
                         }
                     }
                 }
-*/
                 return lMeetingRoomFiltered;
             case FILTER_DATE:
 /*

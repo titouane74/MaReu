@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.utils.SortOrFilter.FILTER_EMPTY;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 
 /**
@@ -40,7 +41,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
     public interface OnRecyclerViewListener {
        void onItemClicked(View pView, String pMeeting);
-       void onItemChangeListToUpdate(String pOrder);
+       void listToUpdate(String pOrder,String pFilter);
     }
 
     private Context mContext;
@@ -50,14 +51,14 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      * @param pContext : context : context
      * @param pOrder : string : indicateur de trie ou de filtre
      */
-    public MeetingRecyclerViewAdapter(Context pContext, String pOrder) {
+    public MeetingRecyclerViewAdapter(Context pContext, String pOrder,String pFilter) {
         mContext = pContext;
-        sMeetingApiService.addFakeMeeting();
+//        sMeetingApiService.addFakeMeeting();
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
 
-        mMeetings = lSortOrFilter.sortOrFilter(mMeetings,pOrder);
+        mMeetings = lSortOrFilter.sortOrFilter(mMeetings,pOrder,pFilter);
     }
 
     /**
@@ -111,7 +112,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 sMeetingApiService.deleteMeeting(lMeeting);
-                                mCallback.onItemChangeListToUpdate(SORT_DEFAULT);
+                                mCallback.listToUpdate(SORT_DEFAULT,FILTER_EMPTY);
                             }
                         })
                         .setNegativeButton(mContext.getString(R.string.btn_no), new DialogInterface.OnClickListener() {

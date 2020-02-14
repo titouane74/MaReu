@@ -25,8 +25,10 @@ public class ConfigureAdapter {
      */
     public static void configureAdapter(Context pContext, String pOrder, RecyclerView pRecyclerView) {
 
+/*
         MeetingRecyclerViewAdapter lListAdapter = new MeetingRecyclerViewAdapter(pContext, pOrder );
         pRecyclerView.setAdapter(lListAdapter);
+*/
 
 /*
         if (lListAdapter.getItemCount() != 0) {

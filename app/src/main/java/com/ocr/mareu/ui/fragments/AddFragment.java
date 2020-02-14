@@ -90,7 +90,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View lView = inflater.inflate(R.layout.fragment_add, container, false);
+        View lView = inflater.inflate(R.layout.fragment_scroll_add, container, false);
         mContext = lView.getContext();
 
         bindObjectToCode(lView);
