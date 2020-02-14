@@ -39,8 +39,7 @@ public class DetailFragment  extends Fragment {
     public DetailFragment() {}
 
     public static DetailFragment newInstance() {
-        DetailFragment lFragment = new DetailFragment();
-        return lFragment;
+        return new DetailFragment();
     }
 
     @Override
@@ -69,7 +68,7 @@ public class DetailFragment  extends Fragment {
         mRoomName.setBackgroundColor(lColor);
         mTopic.setText(mMeeting.getTopic());
 
-        mListParts.setText(TextUtils.join(",\n ", mMeeting.getParticpants()));
+        mListParts.setText(TextUtils.join("\n", mMeeting.getParticpants()));
 
         @SuppressLint("SimpleDateFormat")
         String lDateTime =
@@ -91,7 +90,6 @@ public class DetailFragment  extends Fragment {
         mImgParts = pView.findViewById(R.id.imgParticipants);
         mImgTime = pView.findViewById(R.id.imgTime);
         mImgTopic = pView.findViewById(R.id.imgTopic);
-        mRV = pView.findViewById(R.id.recycler_part);
     }
 
 }

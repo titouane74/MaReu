@@ -6,14 +6,12 @@ import com.ocr.mareu.model.Room;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.ocr.mareu.utils.GsonTransformer.getGsonToListRooms;
-
-//import static com.ocr.mareu.ui.MeetingListActivity.sCalendarSelected;
-//import static com.ocr.mareu.ui.MeetingListActivity.sListRoomSelected;
+import static com.ocr.mareu.di.DI.sMeetingApiService;
 
 /**
  * Created by Florence LE BOURNOT on 27/01/2020
@@ -37,11 +35,11 @@ public class SortOrFilter {
      * @param pOrder : string : indicateur de trie ou de filtre
      * @return : list : liste des réunions triée ou filtrée
      */
-    public List<Meeting> sortOrFilter(List<Meeting> pMeetings, String pOrder, String pFilter) {
+    public List<Meeting> sortOrFilter(List<Meeting> pMeetings, String pOrder) {
         if (pOrder.contains("SORT")) {
             return sortMeeting(pMeetings, pOrder);
         } else if (pOrder.contains("FILTER")) {
-            return filterMeeting(pMeetings, pOrder,pFilter);
+            return filterMeeting(pMeetings, pOrder);
         } else {
             return pMeetings;
         }
@@ -53,11 +51,11 @@ public class SortOrFilter {
      * @param pOrder : string : indicateur de filtre
      * @return : list : liste des réunions filtrée
      */
-    public List<Meeting> filterMeeting(List<Meeting> pMeetings,String pOrder,String pFilter) {
+    public List<Meeting> filterMeeting(List<Meeting> pMeetings,String pOrder) {
         List<Meeting> lMeetingRoomFiltered = new ArrayList<>();
         switch (pOrder) {
             case FILTER_ROOM:
-                List<Room> lListRoomsSelected = getGsonToListRooms(pFilter);
+                List<Room> lListRoomsSelected = sMeetingApiService.getRoomsSelected();
                 for (Room lListRoom : lListRoomsSelected) {
                     for (int i = 0; i < pMeetings.size(); i++) {
                         if (pMeetings.get(i).getRoom().getNameRoom().equals(lListRoom.getNameRoom())) {
@@ -67,8 +65,8 @@ public class SortOrFilter {
                 }
                 return lMeetingRoomFiltered;
             case FILTER_DATE:
-/*
-                String lCalSelectedFormat = new SimpleDateFormat("d/MM/yyyy").format(sCalendarSelected.getTime());
+                Calendar lDateSelected = sMeetingApiService.getDateSelected();
+                String lCalSelectedFormat = new SimpleDateFormat("d/MM/yyyy").format(lDateSelected.getTime());
                 String lCalFormat = "";
 
                 for (Meeting lMeeting : pMeetings) {
@@ -77,7 +75,7 @@ public class SortOrFilter {
                         lMeetingRoomFiltered.add(lMeeting);
                     }
                 }
-*/
+
                 return lMeetingRoomFiltered;
             default :
                 return pMeetings;

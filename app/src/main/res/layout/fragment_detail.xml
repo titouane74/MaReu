@@ -107,17 +107,8 @@
             app:layout_constraintTop_toTopOf="@id/imgParticipants"
             android:layout_marginStart="@dimen/margin_detail"
             />
-<!--
-            <FrameLayout
-                android:id="@+id/recycler_part_frag"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintLeft_toRightOf="@id/imgParticipants"
-                app:layout_constraintTop_toBottomOf="@id/info_list_part"
-                android:layout_marginStart="@dimen/margin_detail"
-                />
--->
-        <androidx.recyclerview.widget.RecyclerView
+
+<!--        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -125,7 +116,17 @@
             tools:listitem="@layout/fragment_participant_item">
 
         </androidx.recyclerview.widget.RecyclerView>
+-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/recycler_part_frag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/meeting_detail_rl"
+        android:layout_marginStart="@dimen/margin_detail"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

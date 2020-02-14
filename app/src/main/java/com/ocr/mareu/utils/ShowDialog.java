@@ -8,8 +8,6 @@ import android.content.DialogInterface;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Room;
 import com.ocr.mareu.ui.fragments.ListFragment;
@@ -21,7 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
-import static com.ocr.mareu.utils.GsonTransformer.getGsonListRoomsToString;
+import static com.ocr.mareu.utils.SortOrFilter.FILTER_DATE;
 import static com.ocr.mareu.utils.SortOrFilter.FILTER_ROOM;
 
 /**
@@ -63,7 +61,8 @@ public class ShowDialog {
         lBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                pListFragment.listToUpdate(FILTER_ROOM,getGsonListRoomsToString(lRoomsSelected));
+                sMeetingApiService.setRoomsSelected(lRoomsSelected);
+                pListFragment.listToUpdate(FILTER_ROOM);
             }
         });
         Dialog lDialog = lBuilder.create();
@@ -75,24 +74,25 @@ public class ShowDialog {
      * Affichage du calendrier pour l'application du filtre par date
      * @param pContext
      */
-    public static void showCalendarDialog(Context pContext, RecyclerView pRecyclerView) {
+    public static void showCalendarDialog(Context pContext, ListFragment pListFragment) {
 
-/*
         Calendar lCalendar = Calendar.getInstance();
 
-        DatePickerDialog lDatePickerDialog = new DatePickerDialog(
+       DatePickerDialog lDatePickerDialog = new DatePickerDialog(
                 pContext,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         DateFormat lDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                        sCalendarSelected = Calendar.getInstance();
+                        Calendar lCalendarSelected = Calendar.getInstance();
 
                         Toast.makeText(pContext, R.string.err_anterior_date, Toast.LENGTH_SHORT).show();
-                        sCalendarSelected.set(year,month,dayOfMonth);
+                        lCalendarSelected .set(year,month,dayOfMonth);
+                        if (lCalendarSelected .before(lCalendar)) {
                             Toast.makeText(pContext, R.string.err_anterior_date, Toast.LENGTH_SHORT).show();
                         } else {
-                            ConfigureAdapter.configureAdapter(pContext, FILTER_DATE, pRecyclerView);
+                            sMeetingApiService.setDateSelected(lCalendarSelected);
+                            pListFragment.listToUpdate(FILTER_DATE);
                         }
                     }
                 },
@@ -101,6 +101,6 @@ public class ShowDialog {
                 lCalendar.get(Calendar.DAY_OF_MONTH)
         );
         lDatePickerDialog.show();
-*/
+
     }
 }

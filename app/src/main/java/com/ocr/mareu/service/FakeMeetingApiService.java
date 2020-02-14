@@ -8,11 +8,11 @@ import com.ocr.mareu.model.Room;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
-//import static com.ocr.mareu.utils.SortOrFilter.sortOrFilter;
 
 /**
  * Created by Florence LE BOURNOT on 16/01/2020
@@ -22,6 +22,9 @@ public class FakeMeetingApiService implements MeetingApiService {
     private List<Meeting> mMeetings ;
     private final List<Room> mRooms;
     private Meeting mMeetingSelected;
+    private Calendar mDateSelected;
+    private List<Room> mRoomsSelected;
+
 
     public static final String CST_FORMAT_DATE = "dd/MM/yyyy";
     public static final String CST_FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss:SS";
@@ -67,6 +70,27 @@ public class FakeMeetingApiService implements MeetingApiService {
         return mMeetingSelected;
     }
 
+    @Override
+    public void setDateSelected(Calendar pDateSelected) {
+        mDateSelected = pDateSelected;
+    }
+
+    @Override
+    public Calendar getDateSelected() {
+        return mDateSelected;
+    }
+
+    @Override
+    public void setRoomsSelected(List<Room> pRoomsSelected) {
+        mRoomsSelected = pRoomsSelected;
+    }
+
+    @Override
+    public List<Room> getRoomsSelected() {
+        return mRoomsSelected;
+    }
+
+
     /**
      * Récupère la liste des salles de réunion
      * @return : objet : liste des salles de réunion
@@ -81,7 +105,7 @@ public class FakeMeetingApiService implements MeetingApiService {
      * @return : objet : salle de réunion sélectionnée
      */
     @Override
-    public Room getRoomSelected(String pRoom) {
+    public Room extractRoomSelected(String pRoom) {
         Room lRoom = null;
         for (Room lRooms : mRooms) {
             if (lRooms.getNameRoom().equals(pRoom))

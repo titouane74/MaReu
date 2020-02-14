@@ -3,6 +3,7 @@ package com.ocr.mareu.service;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -20,6 +21,15 @@ public interface MeetingApiService {
 
     Meeting getMeetingSelected();
 
+    void setDateSelected(Calendar pDateSelected);
+
+    Calendar getDateSelected();
+
+    void setRoomsSelected(List<Room> pRoomsSelected);
+
+    List<Room> getRoomsSelected();
+
+
     /**
      * Récupère la liste des salles de réunion
      * @return : objet : liste des salles de réunion
@@ -30,7 +40,7 @@ public interface MeetingApiService {
      * Recherche et récupère la salle de réunion sélectionnée
      * @return : objet : salle de réunion sélectionnée
      */
-    Room getRoomSelected(String pRoom);
+    Room extractRoomSelected(String pRoom);
 
     /**
      * Suppression d'une réunion

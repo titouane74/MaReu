@@ -40,8 +40,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     private OnRecyclerViewListener mCallback;
 
     public interface OnRecyclerViewListener {
-       void onItemClicked(View pView, String pMeeting);
-       void listToUpdate(String pOrder,String pFilter);
+        void onItemClicked(View pView);
+        void listToUpdate(String pOrder);
     }
 
     private Context mContext;
@@ -51,14 +51,14 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      * @param pContext : context : context
      * @param pOrder : string : indicateur de trie ou de filtre
      */
-    public MeetingRecyclerViewAdapter(Context pContext, String pOrder,String pFilter) {
+    public MeetingRecyclerViewAdapter(Context pContext, String pOrder) {
         mContext = pContext;
         sMeetingApiService.addFakeMeeting();
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
 
-        mMeetings = lSortOrFilter.sortOrFilter(mMeetings,pOrder,pFilter);
+        mMeetings = lSortOrFilter.sortOrFilter(mMeetings,pOrder);
     }
 
     /**
@@ -112,7 +112,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 sMeetingApiService.deleteMeeting(lMeeting);
-                                mCallback.listToUpdate(SORT_DEFAULT,FILTER_EMPTY);
+                                mCallback.listToUpdate(SORT_DEFAULT);
                             }
                         })
                         .setNegativeButton(mContext.getString(R.string.btn_no), new DialogInterface.OnClickListener() {
@@ -130,8 +130,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             @Override
             public void onClick(View v) {
                 sMeetingApiService.setMeetingSelected(lMeeting);
-                String lMeetingString = GsonTransformer.getGsonToString(lMeeting);
-                mCallback.onItemClicked(v, lMeetingString);
+                mCallback.onItemClicked(v);
             }
         });
 

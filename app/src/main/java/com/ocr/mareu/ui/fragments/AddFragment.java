@@ -281,7 +281,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(),getString(R.string.action_add_meeting_missing_field), Toast.LENGTH_SHORT).show();
         } else {
             try {
-                lRoomSelected = sMeetingApiService.getRoomSelected(mListRoom.getText().toString());
+                lRoomSelected = sMeetingApiService.extractRoomSelected(mListRoom.getText().toString());
                 sMeetingApiService.addMeeting(
                         new Meeting(lRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, lParticipants));
 

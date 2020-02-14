@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 
-import static com.ocr.mareu.utils.SortOrFilter.FILTER_EMPTY;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 
 /**
@@ -21,7 +20,6 @@ import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter.OnRecyclerViewListener{
 
     private RecyclerView mRecyclerView;
-    private MeetingRecyclerViewAdapter mListAdapter;
 
     public ListFragment() {}
 
@@ -36,22 +34,22 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
         mRecyclerView = (RecyclerView) lView;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        configureRecyclerView(SORT_DEFAULT,FILTER_EMPTY);
+        configureRecyclerView(SORT_DEFAULT);
 
         return lView;
     }
 
-    private void configureRecyclerView(String pOrder, String pFilter) {
-        mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), pOrder, pFilter);
+    private void configureRecyclerView(String pOrder) {
+        MeetingRecyclerViewAdapter  mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), pOrder);
         mRecyclerView.setAdapter(mListAdapter);
     }
 
     @Override
-    public void onItemClicked(View pView, String pMeeting) { }
+    public void onItemClicked(View pView) { }
 
     @Override
-    public void listToUpdate(String pOrder, String pFilter) {
-        configureRecyclerView(pOrder,pFilter);
+    public void listToUpdate(String pOrder) {
+        configureRecyclerView(pOrder);
     }
 
  }
