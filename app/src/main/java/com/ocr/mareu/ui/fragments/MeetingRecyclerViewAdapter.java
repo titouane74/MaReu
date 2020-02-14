@@ -28,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static androidx.core.app.ActivityCompat.invalidateOptionsMenu;
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.SortOrFilter.FILTER_EMPTY;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
@@ -42,6 +43,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     public interface OnRecyclerViewListener {
         void onItemClicked(View pView);
         void listToUpdate(String pOrder);
+        void invalidateMenu();
     }
 
     private Context mContext;
@@ -53,12 +55,18 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, String pOrder) {
         mContext = pContext;
-        sMeetingApiService.addFakeMeeting();
+//        sMeetingApiService.addFakeMeeting();
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
-
         mMeetings = lSortOrFilter.sortOrFilter(mMeetings,pOrder);
+        if (mMeetings.size() > 0) {
+            lSortOrFilter.setIsMenuActive(true);
+        } else {
+            lSortOrFilter.setIsMenuActive(false);
+        }
+        mCallback = (OnRecyclerViewListener) mContext;
+        mCallback.invalidateMenu();
     }
 
     /**

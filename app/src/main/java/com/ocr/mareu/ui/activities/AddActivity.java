@@ -38,7 +38,6 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
         }
 
         configureAndShowAddFragment();
-
     }
 
     private void configureAndShowAddFragment() {
@@ -58,11 +57,10 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem pItem) {
-        switch (pItem.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
+        if (pItem.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        } else {
                 return super.onOptionsItemSelected(pItem);
         }
     }
@@ -75,5 +73,4 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
         }
         finish();
     }
-
 }

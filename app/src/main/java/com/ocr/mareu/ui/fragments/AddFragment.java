@@ -60,7 +60,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private TextInputEditText mEmailEt, mTopicEt, mDateEt, mTimeStartEt, mTimeEndEt ;
     private Button mBtnCancel, mBtnSave;
 
-    private Calendar mNow;
     private Calendar mDateCal;
     private Calendar mTimeStartFormated;
     private Calendar mTimeEndFormated;
@@ -72,13 +71,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         void onButtonClickedClose(View pView, String pActivateFragment);
     }
 
-    public AddFragment() {
-        // Required empty public constructor
-    }
+    public AddFragment() { }
 
     public static AddFragment newInstance() {
-        AddFragment lFragment = new AddFragment();
-        return lFragment;
+        return new AddFragment();
     }
 
     @Override
@@ -87,15 +83,12 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View lView = inflater.inflate(R.layout.fragment_scroll_add, container, false);
         mContext = lView.getContext();
 
         bindObjectToCode(lView);
 
-        mNow = Calendar.getInstance();
         //Les salles
         List<Room> lRooms = sMeetingApiService.getRooms();
 
@@ -120,7 +113,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         if (!Validation.validationTextInputLayout(getContext(), CST_EMAIL, mEmail)) {
                             return false;
                         } else {
-                            final Chip lChipEmail = new Chip(getContext());
+                            final Chip lChipEmail = new Chip(mContext);
                             lChipEmail.setText(lEmailText);
                             lChipEmail.setCloseIconVisible(true);
                             lChipEmail.setOnCloseIconClickListener(v1 -> mEmailGroup.removeView(lChipEmail));
@@ -177,7 +170,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         Calendar lCalendar = Calendar.getInstance();
 
         DatePickerDialog lDatePickerDialog = new DatePickerDialog(
-                getContext(),
+                mContext,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -255,7 +248,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * Ajout d'une réunion
      * @return : boolean : indicateur si la réunion a été ajouté ou non
      */
-    public void addMeeting() {
+    private void addMeeting() {
         Room lRoomSelected;
 
         boolean isValidDateTime = false;
@@ -312,15 +305,14 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
-    }
+    public void onClick(View v) { }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
         try {
-            mCallback = (AddFragment.OnListenerAdd) getContext();
+            mCallback = (AddFragment.OnListenerAdd) mContext;
         } catch (ClassCastException e) {
             throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListenerAdd");
         }

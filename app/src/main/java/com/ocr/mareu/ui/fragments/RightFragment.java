@@ -28,8 +28,7 @@ public class RightFragment extends Fragment implements View.OnClickListener {
     }
 
     public static RightFragment newInstance() {
-        RightFragment fragment = new RightFragment();
-        return fragment;
+        return new RightFragment();
     }
 
     @Override
@@ -38,9 +37,7 @@ public class RightFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View lView = inflater.inflate(R.layout.fragment_right, container, false);
         Button mBtnAdd = lView.findViewById(R.id.btn_add);
 
@@ -65,10 +62,7 @@ public class RightFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     @Override
-    public void onClick(View v) {
-    }
-
+    public void onClick(View v) { }
 
 }

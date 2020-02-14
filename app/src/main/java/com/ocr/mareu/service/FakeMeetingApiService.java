@@ -114,7 +114,6 @@ public class FakeMeetingApiService implements MeetingApiService {
         return lRoom;
     }
 
-
     /**
      * Suppression d'une réunion
      * @param pMeeting : objet : réunion à supprimer

@@ -52,4 +52,7 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
         configureRecyclerView(pOrder);
     }
 
- }
+    @Override
+    public void invalidateMenu() { }
+
+}

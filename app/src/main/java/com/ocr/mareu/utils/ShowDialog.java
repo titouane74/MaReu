@@ -67,7 +67,6 @@ public class ShowDialog {
         });
         Dialog lDialog = lBuilder.create();
         lDialog.show();
-
     }
 
     /**
@@ -86,7 +85,6 @@ public class ShowDialog {
                         DateFormat lDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         Calendar lCalendarSelected = Calendar.getInstance();
 
-                        Toast.makeText(pContext, R.string.err_anterior_date, Toast.LENGTH_SHORT).show();
                         lCalendarSelected .set(year,month,dayOfMonth);
                         if (lCalendarSelected .before(lCalendar)) {
                             Toast.makeText(pContext, R.string.err_anterior_date, Toast.LENGTH_SHORT).show();
@@ -101,6 +99,5 @@ public class ShowDialog {
                 lCalendar.get(Calendar.DAY_OF_MONTH)
         );
         lDatePickerDialog.show();
-
     }
 }

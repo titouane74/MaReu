@@ -1,5 +1,7 @@
 package com.ocr.mareu.utils;
 
+import android.view.MenuItem;
+
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
@@ -28,6 +30,8 @@ public class SortOrFilter {
 
     private static boolean isSortAscRoom = false;
     private static boolean isSortAscDate = false;
+
+    private boolean isMenuActive = true;
 
     /**
      * Appelle la méthode adéquat en fonction de pOrder (trie ou filtre)
@@ -127,5 +131,13 @@ public class SortOrFilter {
             default :
                 return pMeetings;
         }
+    }
+
+    public void setIsMenuActive (boolean pIsMenuActive) {
+        isMenuActive = pIsMenuActive;
+    }
+
+    public boolean getIsMenuActive () {
+        return isMenuActive;
     }
 }

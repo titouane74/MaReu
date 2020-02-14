@@ -22,6 +22,7 @@ import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
 import com.ocr.mareu.ui.fragments.MeetingRecyclerViewAdapter;
 import com.ocr.mareu.ui.fragments.RightFragment;
+import com.ocr.mareu.utils.SortOrFilter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,15 +84,12 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         MenuItem lActionSort = pMenu.findItem(R.id.action_sort);
         MenuItem lActionFilter = pMenu.findItem(R.id.action_filter);
 
-/*
-        if (isMenuEnabled) {
-            lActionSort.setEnabled(true);
-            lActionFilter.setEnabled(true);
-        } else {
-            lActionSort.setEnabled(false);
-            lActionFilter.setEnabled(false);
-        }
-*/
+        SortOrFilter lSortOrFilter = new SortOrFilter();
+        boolean isActive = lSortOrFilter.getIsMenuActive();
+
+        lActionSort.setEnabled(isActive);
+        lActionFilter.setEnabled(isActive);
+
         return true;
     }
     /**
@@ -247,6 +245,8 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         mListFragment.listToUpdate(pOrder);
     }
 
-
-
+    @Override
+    public void invalidateMenu() {
+        invalidateOptionsMenu();
+    }
 }
