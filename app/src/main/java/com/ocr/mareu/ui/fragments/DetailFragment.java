@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
@@ -28,6 +30,7 @@ public class DetailFragment  extends Fragment {
     private TextView mRoomName, mDateTime, mListParts, mTopic;
     private ImageView mImgParts, mImgTime, mImgTopic;
     private Meeting mMeeting ;
+    private RecyclerView mRecyclerView;
 
     public DetailFragment() {}
 
@@ -47,7 +50,10 @@ public class DetailFragment  extends Fragment {
         mMeeting = sMeetingApiService.getMeetingSelected();
 
         bindObjectToCode(lView);
+
         setInfoMeeting();
+        configureRecyclerViewParts();
+
 
         return lView;
     }
@@ -59,7 +65,7 @@ public class DetailFragment  extends Fragment {
         mRoomName.setBackgroundColor(lColor);
         mTopic.setText(mMeeting.getTopic());
 
-        mListParts.setText(TextUtils.join("\n", mMeeting.getParticpants()));
+//        mListParts.setText(TextUtils.join("\n", mMeeting.getParticpants()));
 
         @SuppressLint("SimpleDateFormat")
         String lDateTime =
@@ -71,6 +77,14 @@ public class DetailFragment  extends Fragment {
         mImgTopic.setColorFilter(lColor);
         mImgTime.setColorFilter(lColor);
         mImgParts.setColorFilter(lColor);
+
+
+    }
+
+    private void configureRecyclerViewParts( ) {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ParticipantRecyclerViewAdapter  mListAdapter = new ParticipantRecyclerViewAdapter(getActivity());
+        mRecyclerView.setAdapter(mListAdapter);
     }
 
     private void bindObjectToCode(View pView){
@@ -81,5 +95,6 @@ public class DetailFragment  extends Fragment {
         mImgParts = pView.findViewById(R.id.imgParticipants);
         mImgTime = pView.findViewById(R.id.imgTime);
         mImgTopic = pView.findViewById(R.id.imgTopic);
+        mRecyclerView = pView.findViewById(R.id.recycler_part);
     }
 }

@@ -55,7 +55,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, String pOrder) {
         mContext = pContext;
-//        sMeetingApiService.addFakeMeeting();
+        sMeetingApiService.addFakeMeeting();
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();

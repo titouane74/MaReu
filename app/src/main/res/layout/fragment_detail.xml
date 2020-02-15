@@ -108,18 +108,23 @@
             android:layout_marginStart="@dimen/margin_detail"
             />
 
-<!--        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:id="@+id/recycler_part"
-            tools:listitem="@layout/fragment_participant_item">
-
-        </androidx.recyclerview.widget.RecyclerView>
--->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:id="@+id/recycler_part"
+        tools:listitem="@layout/fragment_participant_item"
+        app:layout_constraintTop_toBottomOf="@id/meeting_detail_rl"
+        android:layout_marginStart="@dimen/margin_detail"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!--
     <FrameLayout
         android:id="@+id/recycler_part_frag"
         android:layout_width="match_parent"
@@ -127,6 +132,6 @@
         app:layout_constraintTop_toBottomOf="@id/meeting_detail_rl"
         android:layout_marginStart="@dimen/margin_detail"
         />
-
+-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

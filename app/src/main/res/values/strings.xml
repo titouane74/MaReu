@@ -41,6 +41,7 @@
     <string name="date_time">Date - Heure</string>
     <string name="participants">Participants</string>
 
+    <string name="phone_land">phone_land</string>
     <string name="tablet">tablet</string>
     <string name="phone">phone</string>
     <string name="save">Enregistrer</string>

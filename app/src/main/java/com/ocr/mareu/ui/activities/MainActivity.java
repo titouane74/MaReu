@@ -229,7 +229,8 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     public void onItemClicked(View pView) {
         manageActionBar(true);
-        if (mMainLayout.getTag() == getString(R.string.tablet)) {
+        if (mMainLayout.getTag() == getString(R.string.tablet)
+                || mMainLayout.getTag() == getString(R.string.phone_land)) {
             mDetailFragment = DetailFragment.newInstance();
             if (!mDetailFragment.isVisible())
                 showRightFragment(mDetailFragment);

@@ -58,7 +58,7 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_meeting_item, parent, false);
+                .inflate(R.layout.fragment_participant_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -70,7 +70,7 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        holder.mParticipants.setText(mMeetingSelected.getParticpants().toString());
+        holder.mParticipants.setText(mMeetingSelected.getParticpants().get(position));
 
     }
 
@@ -81,7 +81,7 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mMeetingSelected.getParticpants().size();
     }
 
 
