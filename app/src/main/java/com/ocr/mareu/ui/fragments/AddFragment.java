@@ -156,8 +156,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addMeeting();
-                mCallback.onButtonClickedClose(v, "RIGHT");
+                if (addMeeting())
+                    mCallback.onButtonClickedClose(v, "RIGHT");
             }
         });
         return lView;
@@ -248,7 +248,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * Ajout d'une réunion
      * @return : boolean : indicateur si la réunion a été ajouté ou non
      */
-    private void addMeeting() {
+    private boolean addMeeting() {
         Room lRoomSelected;
 
         boolean isValidDateTime = false;
@@ -272,6 +272,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         if (!isValidTopic | !isValidParticipants | !isValidRoom | !isValidDate | !isValidTimeStart |
                 !isValidTimeEnd | !isValidDateTime ) {
             Toast.makeText(getContext(),getString(R.string.action_add_meeting_missing_field), Toast.LENGTH_SHORT).show();
+            return false;
         } else {
             try {
                 lRoomSelected = sMeetingApiService.extractRoomSelected(mListRoom.getText().toString());
@@ -279,9 +280,11 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         new Meeting(lRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, lParticipants));
 
                 Toast.makeText(getContext(),getString(R.string.action_add_meeting), Toast.LENGTH_SHORT).show();
+                return true;
             } catch  (MeetingApiServiceException pE)
             {
                 Toast.makeText(getContext(), R.string.err_meeting_room_not_free, Toast.LENGTH_LONG).show();
+                return false;
             }
         }
     }
