@@ -61,9 +61,9 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         mMeetings = sMeetingApiService.getMeetings();
         mMeetings = lSortOrFilter.sortOrFilter(mMeetings,pOrder);
         if (mMeetings.size() > 0) {
-            lSortOrFilter.setIsMenuActive(true);
+            sMeetingApiService.setIsMenuActive(true);
         } else {
-            lSortOrFilter.setIsMenuActive(false);
+            sMeetingApiService.setIsMenuActive(false);
         }
         mCallback = (OnRecyclerViewListener) mContext;
         mCallback.invalidateMenu();

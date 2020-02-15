@@ -61,4 +61,10 @@ public interface MeetingApiService {
     void resetMeetings();
 
     void addFakeMeeting();
+
+    void setIsMenuActive (boolean pIsMenuActive) ;
+
+    boolean getIsMenuActive () ;
+
+
 }

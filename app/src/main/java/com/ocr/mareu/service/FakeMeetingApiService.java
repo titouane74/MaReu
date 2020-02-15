@@ -25,6 +25,7 @@ public class FakeMeetingApiService implements MeetingApiService {
     private Calendar mDateSelected;
     private List<Room> mRoomsSelected;
 
+    private boolean isMenuActive ;
 
     public static final String CST_FORMAT_DATE = "dd/MM/yyyy";
     public static final String CST_FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss:SS";
@@ -189,6 +190,14 @@ public class FakeMeetingApiService implements MeetingApiService {
         } catch (MeetingApiServiceException | ParseException pE) {
             pE.printStackTrace();
         }
+    }
+
+    public void setIsMenuActive (boolean pIsMenuActive) {
+        isMenuActive = pIsMenuActive;
+    }
+
+    public boolean getIsMenuActive () {
+        return isMenuActive;
     }
 
 }

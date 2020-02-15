@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         MenuItem lActionSort = pMenu.findItem(R.id.action_sort);
         MenuItem lActionFilter = pMenu.findItem(R.id.action_filter);
 
-        SortOrFilter lSortOrFilter = new SortOrFilter();
-        boolean isActive = lSortOrFilter.getIsMenuActive();
+        boolean isActive = sMeetingApiService.getIsMenuActive();
 
         lActionSort.setEnabled(isActive);
         lActionFilter.setEnabled(isActive);
