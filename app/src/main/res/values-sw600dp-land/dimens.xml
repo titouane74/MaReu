@@ -19,5 +19,5 @@
     <dimen name="padding_detail_left">30dp</dimen>
     <dimen name="padding_detail_top">30dp</dimen>
     <dimen name="margin_detail">20dp</dimen>
-    <dimen name="marging_detail_top">40dp</dimen>
+    <dimen name="margin_detail_top">40dp</dimen>
 </resources>

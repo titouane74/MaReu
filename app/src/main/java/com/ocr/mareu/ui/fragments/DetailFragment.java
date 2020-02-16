@@ -2,7 +2,6 @@ package com.ocr.mareu.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import static com.ocr.mareu.di.DI.sMeetingApiService;
  */
 public class DetailFragment  extends Fragment {
 
-    private TextView mRoomName, mDateTime, mListParts, mTopic;
+    private TextView mRoomName, mDateTime, mTopic;
     private ImageView mImgParts, mImgTime, mImgTopic;
     private Meeting mMeeting ;
     private RecyclerView mRecyclerView;
@@ -65,8 +64,6 @@ public class DetailFragment  extends Fragment {
         mRoomName.setBackgroundColor(lColor);
         mTopic.setText(mMeeting.getTopic());
 
-//        mListParts.setText(TextUtils.join("\n", mMeeting.getParticpants()));
-
         @SuppressLint("SimpleDateFormat")
         String lDateTime =
                 new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.FRENCH).format(mMeeting.getDate().getTime()) + "\n" +
@@ -90,7 +87,6 @@ public class DetailFragment  extends Fragment {
     private void bindObjectToCode(View pView){
         mRoomName = pView.findViewById(R.id.room_name);
         mDateTime = pView.findViewById(R.id.info_date_time);
-        mListParts = pView.findViewById(R.id.info_list_part);
         mTopic = pView.findViewById(R.id.info_topic);
         mImgParts = pView.findViewById(R.id.imgParticipants);
         mImgTime = pView.findViewById(R.id.imgTime);

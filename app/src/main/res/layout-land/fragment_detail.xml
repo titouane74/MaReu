@@ -23,93 +23,89 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/meeting_detail_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/room_name"
-        app:layout_constraintTop_toBottomOf="@+id/room_name"
-        android:padding="@dimen/padding_layout"
         android:layout_margin="@dimen/margin_detail"
-        >
+        android:layout_marginTop="20dp"
+        android:padding="@dimen/padding_layout"
+        app:layout_constraintTop_toBottomOf="@+id/room_name"
+        tools:layout_editor_absoluteX="20dp">
+
 
 
         <ImageView
             android:id="@+id/imgTopic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_topic"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="@dimen/margin_detail"
+            android:src="@drawable/ic_topic"
             app:layout_constraintStart_toStartOf="@id/meeting_detail_rl"
-            app:layout_constraintTop_toTopOf="@id/meeting_detail_rl"/>
+            app:layout_constraintTop_toTopOf="@id/meeting_detail_rl" />
 
         <TextView
             android:id="@+id/info_topic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_detail"
             android:hint="@string/meeting_topic"
-            android:textSize="@dimen/text_size"
             android:maxLines="2"
             android:textColor="@color/colorText"
+            android:textSize="@dimen/text_size"
             app:layout_constraintLeft_toRightOf="@id/imgTopic"
-            app:layout_constraintTop_toTopOf="@id/imgTopic"
-            android:layout_marginStart="@dimen/margin_detail"
-            />
+            app:layout_constraintTop_toTopOf="@id/imgTopic" />
 
 
         <ImageView
             android:id="@+id/imgTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_time"
             android:layout_marginStart="0dp"
-            android:layout_marginEnd="@dimen/margin_detail"
-            app:layout_constraintTop_toBottomOf="@id/imgTopic"
-            app:layout_constraintStart_toStartOf="@id/imgTopic"
             android:layout_marginTop="@dimen/margin_detail_top"
-            />
+            android:layout_marginEnd="@dimen/margin_detail"
+            android:src="@drawable/ic_time"
+            app:layout_constraintStart_toStartOf="@id/imgTopic"
+            app:layout_constraintTop_toBottomOf="@id/imgTopic" />
 
         <TextView
             android:id="@+id/info_date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_detail"
             android:hint="@string/date_time"
-            android:textSize="@dimen/text_size"
             android:maxLines="2"
             android:textColor="@color/colorText"
+            android:textSize="@dimen/text_size"
             app:layout_constraintLeft_toRightOf="@id/imgTime"
-            app:layout_constraintTop_toTopOf="@id/imgTime"
-            android:layout_marginStart="@dimen/margin_detail"
-            />
+            app:layout_constraintTop_toTopOf="@id/imgTime" />
 
         <ImageView
             android:id="@+id/imgParticipants"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_participants"
-            android:layout_marginStart="0dp"
             android:layout_marginEnd="@dimen/margin_detail"
-            android:layout_marginTop="@dimen/margin_detail_top"
-            app:layout_constraintTop_toBottomOf="@id/imgTime"
-            app:layout_constraintStart_toStartOf="@id/imgTime"
+            android:src="@drawable/ic_participants"
+            app:layout_constraintTop_toTopOf="@id/imgTopic"
+            app:layout_constraintLeft_toRightOf="@id/info_topic"
+            android:layout_marginStart="@dimen/margin_detail_left"
             />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:id="@+id/recycler_part"
             tools:listitem="@layout/fragment_participant_item"
-            app:layout_constraintLeft_toRightOf="@id/imgParticipants"
-            app:layout_constraintTop_toTopOf="@id/imgParticipants"
             android:layout_marginStart="@dimen/margin_detail"
-            >
+            app:layout_constraintLeft_toRightOf="@id/imgParticipants"
+            app:layout_constraintTop_toTopOf="@id/imgParticipants" >
 
         </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
