@@ -19,4 +19,7 @@
     <color name="colorRoom9">#9C27B0</color>
     <color name="colorRoom10">#E91E63</color>
     <color name="transparent">#00000000</color>
+    <color name="ic_filter_background">#204FBB</color>
+    <color name="ic_circle_room_background">#FFFFFF</color>
+    <color name="ic_add_white_background">#A70000</color>
 </resources>

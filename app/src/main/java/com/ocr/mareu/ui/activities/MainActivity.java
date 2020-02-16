@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         mDetailFragment = new DetailFragment();
 
 
-        if (mMainLayout.getTag() == getString(R.string.tablet))
+        if (mMainLayout.getTag() == getString(R.string.tablet) || mMainLayout.getTag() == getString(R.string.phone_land))
             mAddFab.setVisibility(View.INVISIBLE);
         mAddFab.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AddActivity.class)));
@@ -220,8 +220,13 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     public void onButtonClicked(View pView) {
         if (mRightFragment != null && mRightFragment.isVisible()) {
-            mAddFragment = AddFragment.newInstance();
-            showRightFragment(mAddFragment);
+            if (mMainLayout.getTag() == getString(R.string.tablet)) {
+                mAddFragment = AddFragment.newInstance();
+                showRightFragment(mAddFragment);
+            } else {
+                Intent lIntent = new Intent(mContext, AddActivity.class);
+                mContext.startActivity(lIntent);
+            }
         }
         manageActionBar(true);
     }
