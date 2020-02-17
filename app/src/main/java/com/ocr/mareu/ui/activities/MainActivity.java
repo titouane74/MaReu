@@ -1,5 +1,6 @@
 package com.ocr.mareu.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +24,8 @@ import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
 import com.ocr.mareu.ui.fragments.MeetingRecyclerViewAdapter;
 import com.ocr.mareu.ui.fragments.RightFragment;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,16 +68,18 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         sMeetingApiService.setRooms(mContext);
 
         configureAndShowListFragment();
-        configureAndShowRightFragment();
         mAddFragment = new AddFragment();
         mDetailFragment = new DetailFragment();
 
-
-        if (mMainLayout.getTag() == getString(R.string.tablet) )
+        if (mMainLayout.getTag() == getString(R.string.tablet) ) {
+            configureAndShowRightFragment();
             mAddFab.setVisibility(View.INVISIBLE);
+        }
         mAddFab.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AddActivity.class)));
     }
+
+
 
     /**
      * Préparation du menu option pour activer ou désactivier les menus
@@ -164,6 +170,23 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         super.onDestroy();
         sMeetingApiService.resetMeetings();
         invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        List<Fragment> lFragmentList = getSupportFragmentManager().getFragments();
+        if (lFragmentList != null) {
+            for (Fragment lFragment : lFragmentList) {
+                if (lFragment.getTag() != getString(R.string.fragment_right)
+                        || lFragment.getTag() != getString(R.string.fragment_list)) {
+                    if (!lFragment.isDetached()) {
+                        lFragment.onDetach();
+                        getSupportFragmentManager().beginTransaction().remove(lFragment).commit();
+                    }
+                }
+            }
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override

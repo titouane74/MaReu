@@ -45,6 +45,8 @@
     <string name="tablet">tablet</string>
     <string name="phone">phone</string>
     <string name="save">Enregistrer</string>
+    <string name="fragment_list">LIST</string>
+    <string name="fragment_right">RIGHT</string>
 
 
     <string name="s_color_room1">#F44336</string>
