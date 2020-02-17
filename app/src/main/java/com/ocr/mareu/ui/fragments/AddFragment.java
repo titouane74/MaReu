@@ -30,7 +30,6 @@ import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.Validation;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -43,17 +42,7 @@ import static com.ocr.mareu.utils.Validation.CST_EMAIL;
 import static com.ocr.mareu.utils.Validation.CST_ROOM;
 import static com.ocr.mareu.utils.Validation.CST_TOPIC;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {link AddFrag OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AddFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddFragment extends Fragment implements View.OnClickListener {
-
 
     private AutoCompleteTextView mListRoom;
     private ChipGroup mEmailGroup ;
@@ -90,7 +79,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
         bindObjectToCode(lView);
 
-        //Les salles
         List<Room> lRooms = sMeetingApiService.getRooms();
 
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
@@ -103,7 +91,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        //Les participants
         mEmailEt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -132,27 +119,19 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         });
         mDateEt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                displayCalendarDialog ();
-            }
+            public void onClick(View v) { displayCalendarDialog (); }
         });
         mTimeStartEt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                displayTimeDialog(v);
-            }
+            public void onClick(View v) { displayTimeDialog(v); }
         });
         mTimeEndEt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                displayTimeDialog(v);
-            }
+            public void onClick(View v) { displayTimeDialog(v); }
         });
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mCallback.onButtonClickedClose(v, "RIGHT");
-            }
+            public void onClick(View v) { mCallback.onButtonClickedClose(v, "RIGHT"); }
         });
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,17 +242,15 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         boolean isValidTimeStart = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeStart);
         boolean isValidTimeEnd = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeEnd);
 
-        if (isValidDate && isValidTimeStart && isValidTimeEnd  ) {
+        if (isValidDate && isValidTimeStart && isValidTimeEnd  )
             isValidDateTime = Validation.validationDateTime(getContext(), mTimeStart, mTimeEnd);
-        }
 
         List<String> lParticipants = Validation.validationParticipants(getContext(), mEmail,mEmailGroup);
 
         if (lParticipants.size() > 0)
             isValidParticipants = true;
 
-        if (!isValidTopic | !isValidParticipants | !isValidRoom | !isValidDate | !isValidTimeStart |
-                !isValidTimeEnd | !isValidDateTime ) {
+        if (!isValidTopic | !isValidParticipants | !isValidRoom | !isValidDate | !isValidTimeStart | !isValidTimeEnd | !isValidDateTime ) {
             Toast.makeText(getContext(),getString(R.string.action_add_meeting_missing_field), Toast.LENGTH_SHORT).show();
             return false;
         } else {
@@ -323,5 +300,4 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListenerAdd");
         }
     }
-
 }

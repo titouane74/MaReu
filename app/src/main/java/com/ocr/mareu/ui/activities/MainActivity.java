@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     private Toast mBackToast;
     private Context mContext;
 
-
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +77,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         mAddFab.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AddActivity.class)));
     }
-
-
 
     /**
      * Préparation du menu option pour activer ou désactivier les menus
@@ -175,14 +172,12 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         List<Fragment> lFragmentList = getSupportFragmentManager().getFragments();
-        if (lFragmentList != null) {
-            for (Fragment lFragment : lFragmentList) {
-                if (lFragment.getTag() != getString(R.string.fragment_right)
-                        || lFragment.getTag() != getString(R.string.fragment_list)) {
-                    if (!lFragment.isDetached()) {
-                        lFragment.onDetach();
-                        getSupportFragmentManager().beginTransaction().remove(lFragment).commit();
-                    }
+        for (Fragment lFragment : lFragmentList) {
+            if (lFragment.getTag() != getString(R.string.fragment_right)
+                    || lFragment.getTag() != getString(R.string.fragment_list)) {
+                if (!lFragment.isDetached()) {
+                    lFragment.onDetach();
+                    getSupportFragmentManager().beginTransaction().remove(lFragment).commit();
                 }
             }
         }
@@ -233,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     public void onButtonClickedClose(View pView, String pActivateFragment) {
         if (mAddFragment != null && mAddFragment.isVisible()) {
-            if (pActivateFragment == "RIGHT") {
+            if (pActivateFragment == getString(R.string.fragment_right)) {
                 showRightFragment(mRightFragment);
             }
         }

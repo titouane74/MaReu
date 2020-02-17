@@ -74,8 +74,6 @@ public class DetailFragment  extends Fragment {
         mImgTopic.setColorFilter(lColor);
         mImgTime.setColorFilter(lColor);
         mImgParts.setColorFilter(lColor);
-
-
     }
 
     private void configureRecyclerViewParts( ) {
