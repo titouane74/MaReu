@@ -1,9 +1,10 @@
 <resources>
     <dimen name="padding_layout_detail_top">40dp</dimen>
     <dimen name="margin_detail_top">30dp</dimen>
-    <dimen name="margin_detail_left">50dp</dimen>
     <dimen name="text_size_detail">18sp</dimen>
     <dimen name="text_size">14sp</dimen>
-    <dimen name="margin_detail">40dp</dimen>
+    <dimen name="margin_detail">20dp</dimen>
+    <dimen name="padding_layout_detail_bottom">18dp</dimen>
+    <dimen name="padding_layout">10dp</dimen>
 
 </resources>

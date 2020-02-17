@@ -10,10 +10,10 @@
     <color name="colorButton">#9950AEFA</color>
     <color name="colorRoom1">#F44336</color>
     <color name="colorRoom2">#F57555</color>
-    <color name="colorRoom3">#D59E34</color>
-    <color name="colorRoom4">#8BC34A</color>
+    <color name="colorRoom3">#FFC107</color>
+    <color name="colorRoom4">#4CAF50</color>
     <color name="colorRoom5">#009688</color>
-    <color name="colorRoom6">#00BCD4</color>
+    <color name="colorRoom6">#03A9F4</color>
     <color name="colorRoom7">#3F51B5</color>
     <color name="colorRoom8">#673AB7</color>
     <color name="colorRoom9">#9C27B0</color>

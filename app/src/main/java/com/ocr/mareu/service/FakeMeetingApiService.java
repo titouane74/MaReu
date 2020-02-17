@@ -36,13 +36,14 @@ public class FakeMeetingApiService implements MeetingApiService {
      */
     public FakeMeetingApiService() {
         mMeetings = new ArrayList<>();
+
         mRooms = new ArrayList<>(Arrays.asList(
             new Room ("ARES", Color.parseColor("#F44336")),
             new Room ("ATHENA", Color.parseColor("#F57555")),
-            new Room ("CRONOS", Color.parseColor("#FFEB3B")),
-            new Room ("DEMETER", Color.parseColor("#8BC34A")),
+            new Room ("CRONOS", Color.parseColor("#FFC107")),
+            new Room ("DEMETER", Color.parseColor("#4CAF50")),
             new Room ("GAIA", Color.parseColor("#009688")),
-            new Room ("HADES", Color.parseColor("#00BCD4")),
+            new Room ("HADES", Color.parseColor("#03A9F4")),
             new Room ("PLUTON", Color.parseColor("#3F51B5")),
             new Room ("POSEIDON", Color.parseColor("#673AB7")),
             new Room ("VENUS", Color.parseColor("#9C27B0")),

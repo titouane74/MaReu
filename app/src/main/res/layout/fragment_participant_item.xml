@@ -18,6 +18,7 @@
         android:textSize="@dimen/item_text_size"
         android:singleLine="true"
         android:ellipsize="end"
+        android:maxLines="20"
         />
 
 
