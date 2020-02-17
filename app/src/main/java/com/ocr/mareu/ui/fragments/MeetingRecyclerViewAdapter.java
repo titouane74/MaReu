@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
-import com.ocr.mareu.utils.GsonTransformer;
 import com.ocr.mareu.utils.SortOrFilter;
 
 import java.text.SimpleDateFormat;
@@ -28,9 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static androidx.core.app.ActivityCompat.invalidateOptionsMenu;
 import static com.ocr.mareu.di.DI.sMeetingApiService;
-import static com.ocr.mareu.utils.SortOrFilter.FILTER_EMPTY;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 
 /**

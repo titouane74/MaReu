@@ -22,7 +22,6 @@ import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
 import com.ocr.mareu.ui.fragments.MeetingRecyclerViewAdapter;
 import com.ocr.mareu.ui.fragments.RightFragment;
-import com.ocr.mareu.utils.SortOrFilter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -46,6 +46,15 @@ public interface MeetingApiService {
      */
     Room extractRoomSelected(String pRoom);
 
+    void setStartMeeting(Calendar pStartMeeting);
+
+    Calendar getStartMeeting();
+
+    void setEndMeeting(Calendar pEndMeeting) ;
+
+    Calendar getEndMeeting ();
+
+
     /**
      * Suppression d'une réunion
      * @param pMeeting : objet : réunion à supprimer

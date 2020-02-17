@@ -30,6 +30,7 @@ import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.Validation;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -231,9 +232,11 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         if (lId == R.id.meeting_start_et) {
                             mTimeStartEt.setText(lTimeFormated);
                             mTimeStartFormated = lTimeCal;
+                            sMeetingApiService.setStartMeeting(lTimeCal);
                         } else if (lId == R.id.meeting_end_et) {
                             mTimeEndEt.setText(lTimeFormated);
                             mTimeEndFormated = lTimeCal;
+                            sMeetingApiService.setEndMeeting(lTimeCal);
                         }
                     }
                 },
@@ -248,7 +251,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * Ajout d'une réunion
      * @return : boolean : indicateur si la réunion a été ajouté ou non
      */
-    private boolean addMeeting() {
+    private boolean addMeeting()  {
         Room lRoomSelected;
 
         boolean isValidDateTime = false;
@@ -261,7 +264,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         boolean isValidTimeEnd = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeEnd);
 
         if (isValidDate && isValidTimeStart && isValidTimeEnd  ) {
-            isValidDateTime = Validation.validationDateTime(getContext(), mDate, mTimeStart, mTimeEnd);
+            isValidDateTime = Validation.validationDateTime(getContext(), mTimeStart, mTimeEnd);
         }
 
         List<String> lParticipants = Validation.validationParticipants(getContext(), mEmail,mEmailGroup);

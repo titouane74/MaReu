@@ -26,7 +26,8 @@ public class FakeMeetingApiService implements MeetingApiService {
     private Meeting mMeetingSelected;
     private Calendar mDateSelected;
     private List<Room> mRoomsSelected;
-
+    private Calendar mStartMeeting;
+    private Calendar mEndMeeting;
     private boolean isMenuActive ;
 
     public static final String CST_FORMAT_DATE = "dd/MM/yyyy";
@@ -38,7 +39,6 @@ public class FakeMeetingApiService implements MeetingApiService {
      */
     public FakeMeetingApiService() {
         mMeetings = new ArrayList<>();
-
     }
 
     @Override
@@ -122,6 +122,14 @@ public class FakeMeetingApiService implements MeetingApiService {
         return lRoom;
     }
 
+    public void setStartMeeting(Calendar pStartMeeting) { mStartMeeting = pStartMeeting; }
+
+    public Calendar getStartMeeting() { return mStartMeeting; }
+
+    public void setEndMeeting(Calendar pEndMeeting) { mEndMeeting = pEndMeeting; }
+
+    public Calendar getEndMeeting () { return mEndMeeting; }
+
     /**
      * Suppression d'une réunion
      * @param pMeeting : objet : réunion à supprimer
@@ -158,7 +166,6 @@ public class FakeMeetingApiService implements MeetingApiService {
                 if (pMeeting.getStart().after(lMeetings.getStart()) && pMeeting.getStart().before(lMeetings.getEnd())
                         && (pMeeting.getEnd().before(lMeetings.getEnd()) || pMeeting.getEnd().after(lMeetings.getEnd())))
                     throw new MeetingApiServiceException();
-
             }
         }
         mMeetings.add(pMeeting);

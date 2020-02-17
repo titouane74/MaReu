@@ -12,8 +12,6 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.model.Room;
 import com.ocr.mareu.ui.fragments.ListFragment;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -38,7 +36,7 @@ public class ShowDialog {
 
         List<Room> lRooms = sMeetingApiService.getRooms();
         List<Room> lRoomsSelected = new ArrayList<>();
-        List<String> lListRooms = new ArrayList<String>();
+        List<String> lListRooms = new ArrayList<>();
 
         for (Room lRoom : lRooms) {
             lListRooms.add(lRoom.getNameRoom());
@@ -82,10 +80,9 @@ public class ShowDialog {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        DateFormat lDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         Calendar lCalendarSelected = Calendar.getInstance();
 
-                        lCalendarSelected .set(year,month,dayOfMonth);
+                        lCalendarSelected.set(year,month,dayOfMonth);
                         if (lCalendarSelected .before(lCalendar)) {
                             Toast.makeText(pContext, R.string.err_anterior_date, Toast.LENGTH_SHORT).show();
                         } else {

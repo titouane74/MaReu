@@ -24,7 +24,6 @@ public class SortOrFilter {
     public static final String FILTER_ROOM = "FILTER_ROOM";
     public static final String FILTER_DATE = "FILTER_DATE";
     public static final String SORT_DEFAULT = "SORT_DEFAULT";
-    public static final String FILTER_EMPTY = "FILTER_EMPTY";
 
     private static boolean isSortAscRoom = false;
     private static boolean isSortAscDate = false;
@@ -67,7 +66,7 @@ public class SortOrFilter {
             case FILTER_DATE:
                 Calendar lDateSelected = sMeetingApiService.getDateSelected();
                 String lCalSelectedFormat = new SimpleDateFormat("d/MM/yyyy").format(lDateSelected.getTime());
-                String lCalFormat = "";
+                String lCalFormat;
 
                 for (Meeting lMeeting : pMeetings) {
                     lCalFormat = new SimpleDateFormat("d/MM/yyyy").format(lMeeting.getDate().getTime());
@@ -75,7 +74,6 @@ public class SortOrFilter {
                         lMeetingRoomFiltered.add(lMeeting);
                     }
                 }
-
                 return lMeetingRoomFiltered;
             default :
                 return pMeetings;
