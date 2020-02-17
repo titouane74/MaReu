@@ -47,16 +47,15 @@
     <string name="save">Enregistrer</string>
 
 
-
-    <string name="s_color_room1">toto</string>
-    <string name="colorRoom2">#F57555</string>
-    <string name="colorRoom3">#FFEB3B</string>
-    <string name="colorRoom4">#8BC34A</string>
-    <string name="colorRoom5">#009688</string>
-    <string name="colorRoom6">#00BCD4</string>
-    <string name="colorRoom7">#3F51B5</string>
-    <string name="colorRoom8">#673AB7</string>
-    <string name="colorRoom9">#9C27B0</string>
-    <string name="colorRoom10">#E91E63</string>
+    <string name="s_color_room1">#F44336</string>
+    <string name="s_color_room2">#F57555</string>
+    <string name="s_color_room3">#FFC107</string>
+    <string name="s_color_room4">#4CAF50</string>
+    <string name="s_color_room5">#009688</string>
+    <string name="s_color_room6">#03A9F4</string>
+    <string name="s_color_room7">#3F51B5</string>
+    <string name="s_color_room8">#673AB7</string>
+    <string name="s_color_room9">#9C27B0</string>
+    <string name="s_color_room10">#E91E63</string>
 
 </resources>

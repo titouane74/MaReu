@@ -1,5 +1,7 @@
 package com.ocr.mareu.service;
 
+import android.content.Context;
+
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
@@ -10,6 +12,8 @@ import java.util.List;
  * Created by Florence LE BOURNOT on 16/01/2020
  */
 public interface MeetingApiService {
+
+    void setRooms(Context pContext);
 
     /**
      * Récupère la liste des réunions

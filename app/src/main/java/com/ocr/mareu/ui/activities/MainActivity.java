@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 
         setSupportActionBar(mToolbar);
 
+        sMeetingApiService.setRooms(mContext);
+
         configureAndShowListFragment();
         configureAndShowRightFragment();
         mAddFragment = new AddFragment();

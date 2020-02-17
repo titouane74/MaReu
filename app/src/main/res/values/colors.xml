@@ -8,16 +8,6 @@
     <color name="colorText">#000000</color>
     <color name="colorCircle">#557DF5</color>
     <color name="colorButton">#9950AEFA</color>
-    <color name="colorRoom1">#F44336</color>
-    <color name="colorRoom2">#F57555</color>
-    <color name="colorRoom3">#FFC107</color>
-    <color name="colorRoom4">#4CAF50</color>
-    <color name="colorRoom5">#009688</color>
-    <color name="colorRoom6">#03A9F4</color>
-    <color name="colorRoom7">#3F51B5</color>
-    <color name="colorRoom8">#673AB7</color>
-    <color name="colorRoom9">#9C27B0</color>
-    <color name="colorRoom10">#E91E63</color>
     <color name="transparent">#00000000</color>
     <color name="ic_filter_background">#204FBB</color>
     <color name="ic_circle_room_background">#FFFFFF</color>

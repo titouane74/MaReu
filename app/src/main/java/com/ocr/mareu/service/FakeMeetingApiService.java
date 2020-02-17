@@ -1,7 +1,9 @@
 package com.ocr.mareu.service;
 
+import android.content.Context;
 import android.graphics.Color;
 
+import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
@@ -20,7 +22,7 @@ import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
 public class FakeMeetingApiService implements MeetingApiService {
 
     private List<Meeting> mMeetings ;
-    private final List<Room> mRooms;
+    private List<Room> mRooms;
     private Meeting mMeetingSelected;
     private Calendar mDateSelected;
     private List<Room> mRoomsSelected;
@@ -37,21 +39,25 @@ public class FakeMeetingApiService implements MeetingApiService {
     public FakeMeetingApiService() {
         mMeetings = new ArrayList<>();
 
-        mRooms = new ArrayList<>(Arrays.asList(
-            new Room ("ARES", Color.parseColor("#F44336")),
-            new Room ("ATHENA", Color.parseColor("#F57555")),
-            new Room ("CRONOS", Color.parseColor("#FFC107")),
-            new Room ("DEMETER", Color.parseColor("#4CAF50")),
-            new Room ("GAIA", Color.parseColor("#009688")),
-            new Room ("HADES", Color.parseColor("#03A9F4")),
-            new Room ("PLUTON", Color.parseColor("#3F51B5")),
-            new Room ("POSEIDON", Color.parseColor("#673AB7")),
-            new Room ("VENUS", Color.parseColor("#9C27B0")),
-            new Room ("ZEUS", Color.parseColor("#E91E63"))
-        )) ;
     }
 
+    @Override
+    public void setRooms(Context pContext) {
 
+        mRooms = new ArrayList<>(Arrays.asList(
+                new Room ("ARES", Color.parseColor(pContext.getString(R.string.s_color_room1))),
+                new Room ("ATHENA", Color.parseColor(pContext.getString(R.string.s_color_room2))),
+                new Room ("CRONOS", Color.parseColor(pContext.getString(R.string.s_color_room3))),
+                new Room ("DEMETER", Color.parseColor(pContext.getString(R.string.s_color_room4))),
+                new Room ("GAIA", Color.parseColor(pContext.getString(R.string.s_color_room5))),
+                new Room ("HADES", Color.parseColor(pContext.getString(R.string.s_color_room6))),
+                new Room ("PLUTON", Color.parseColor(pContext.getString(R.string.s_color_room7))),
+                new Room ("POSEIDON", Color.parseColor(pContext.getString(R.string.s_color_room8))),
+                new Room ("VENUS", Color.parseColor(pContext.getString(R.string.s_color_room9))),
+                new Room ("ZEUS", Color.parseColor(pContext.getString(R.string.s_color_room10)))
+        )) ;
+
+    }
 
     /**
      * Récupère la liste des réunions
@@ -169,9 +175,9 @@ public class FakeMeetingApiService implements MeetingApiService {
 
     public void addFakeMeeting()  {
         List<String> lStringList = Arrays.asList("toto@gmail.com","titi@gmail.com");
-        Room lRoomTest = new Room("POSEIDON", Color.argb(100,103,58,183));
+        Room lRoomTest = new Room("POSEIDON", Color.argb(100,244,67,54));
         List<String> lStringList2 = Arrays.asList("toto@gmail.com","titi@gmail.com");
-        Room lRoomTest2 = new Room("ARES", Color.argb(100,244,67,54));
+        Room lRoomTest2 = new Room("ARES", Color.argb(100,103,58,183));
 
         try {
             sMeetingApiService.addMeeting(
