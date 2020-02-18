@@ -1,167 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activities.AddActivity"
     android:padding="@dimen/padding_layout"
-    android:id="@+id/add_fragment_layout">
+    tools:context=".ui.activities.AddActivity">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/room_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_layout"
+        android:layout_marginBottom="@dimen/margin_layout"
+        app:errorEnabled="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/room_list"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="true"
+            android:hint="@string/select_room"
+            android:inputType="text"
+            android:maxLines="10"
+            android:textSize="@dimen/text_size" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/meeting_topic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_layout"
+        android:layout_marginBottom="@dimen/margin_layout"
+        app:counterEnabled="true"
+        app:counterMaxLength="40"
+        app:errorEnabled="true"
+        app:hintEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/meeting_topic_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/meeting_topic"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/meeting_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_layout"
+        android:layout_marginBottom="@dimen/margin_layout"
+        app:errorEnabled="true"
+        app:hintEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/meeting_date_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:hint="@string/meeting_date"
+            android:inputType="date" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/margin_layout"
+        android:layout_marginBottom="@dimen/margin_layout"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/room_list_layout"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/meeting_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_layout"
+            android:layout_weight="1"
+            app:errorEnabled="true"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/meeting_start_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_layout"
-                android:layout_marginBottom="@dimen/margin_layout"
-                app:errorEnabled="true" >
+                android:cursorVisible="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:hint="@string/meeting_from"
+                android:inputType="time" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/room_list"
-                    android:hint="@string/select_room"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:focusable="true"
-                    android:cursorVisible="false"
-                    style="@style/Widget.AppCompat.Spinner.Underlined"
-                    android:textSize="@dimen/text_size"
-                    android:maxLines="10"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/meeting_topic"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/meeting_end"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_layout"
+            android:layout_weight="1"
+            app:errorEnabled="true"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/meeting_end_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterEnabled="true"
-                app:counterMaxLength="40"
-                app:errorEnabled="true"
-                app:hintEnabled="true"
-                android:layout_marginBottom="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                >
+                android:cursorVisible="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:hint="@string/meeting_to"
+                android:inputType="time" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/meeting_topic_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="@string/meeting_topic"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/meeting_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true"
-                app:hintEnabled="true"
-                android:layout_marginBottom="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/meeting_date_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="date"
-                    android:hint="@string/meeting_date"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:baselineAligned="false"
-                android:layout_marginBottom="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                >
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/meeting_start"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:errorEnabled="true"
-                    app:hintEnabled="true"
-                    android:layout_marginEnd="@dimen/margin_layout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/meeting_start_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="time"
-                        android:hint="@string/meeting_from"
-                        android:focusable="false"
-                        android:cursorVisible="false"
-                        android:enabled="false"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/meeting_end"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:errorEnabled="true"
-                    app:hintEnabled="true"
-                    android:layout_marginStart="@dimen/margin_layout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/meeting_end_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="time"
-                        android:hint="@string/meeting_to"
-                        android:focusable="false"
-                        android:cursorVisible="false"
-                        android:enabled="false"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true"
-                app:hintEnabled="true"
-                android:layout_marginBottom="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email_address_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:hint="@string/meeting_email"
-                    />
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/email_group_cg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/Widget.MaterialComponents.ChipGroup"/>
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_layout"
+        android:layout_marginBottom="@dimen/margin_layout"
+        app:errorEnabled="true"
+        app:hintEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_address_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/meeting_email"
+            android:inputType="textEmailAddress" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/email_group_cg"
+            style="@style/Widget.MaterialComponents.ChipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

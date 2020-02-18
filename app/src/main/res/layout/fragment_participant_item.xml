@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.activities.MainActivity"
-    android:orientation="vertical" >
-
+    android:orientation="vertical"
+    tools:context=".ui.activities.MainActivity">
 
     <TextView
         android:id="@+id/item_participant_rv"
@@ -13,13 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/text_margin"
         android:layout_marginEnd="@dimen/text_margin"
-        android:textAlignment="textStart"
-        android:textColor="@color/colorText"
-        android:textSize="@dimen/item_text_size"
-        android:singleLine="true"
         android:ellipsize="end"
         android:maxLines="20"
-        />
-
+        android:singleLine="true"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/item_text_size" />
 
 </LinearLayout>

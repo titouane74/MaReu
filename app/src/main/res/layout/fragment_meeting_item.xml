@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.activities.MainActivity"
-    android:orientation="vertical" >
-
+    android:orientation="vertical"
+    tools:context=".ui.activities.MainActivity">
 
     <ImageView
         android:id="@+id/item_location_img"
@@ -18,45 +17,42 @@
         android:background="@drawable/ic_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/item_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_location_img"
-        app:layout_constraintEnd_toStartOf="@+id/item_delete_img"
         android:layout_marginStart="@dimen/text_margin"
         android:layout_marginTop="@dimen/text_margin"
         android:layout_marginEnd="@dimen/text_margin"
-        android:textAlignment="textStart"
-        android:textStyle="bold"
-        android:textSize="@dimen/item_text_size"
-        android:textColor="@color/colorText"
-        android:singleLine="true"
         android:ellipsize="end"
-        android:text="Description"/>
-
+        android:singleLine="true"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/item_text_size"
+        android:textStyle="bold"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@+id/item_delete_img"
+        app:layout_constraintStart_toEndOf="@+id/item_location_img"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/item_participant"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintTop_toBottomOf="@id/item_description"
-        app:layout_constraintStart_toEndOf="@+id/item_location_img"
-        app:layout_constraintEnd_toStartOf="@+id/item_delete_img"
         android:layout_marginStart="@dimen/text_margin"
         android:layout_marginEnd="@dimen/text_margin"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:textAlignment="textStart"
         android:textColor="@color/colorText"
         android:textSize="@dimen/item_text_size"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:text="maxime@lamzone.com, alex@lamzone.com, coucou@gmail.com, coucou@gmail.com"/>
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@+id/item_delete_img"
+        app:layout_constraintStart_toEndOf="@+id/item_location_img"
+        app:layout_constraintTop_toBottomOf="@id/item_description" />
 
     <ImageButton
         android:id="@+id/item_delete_img"
@@ -67,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/item_location_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/item_location_img"
-        app:srcCompat="@drawable/ic_delete_black_24dp" />
-
+        app:srcCompat="@drawable/ic_delete_black_24dp"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

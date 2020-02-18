@@ -1,60 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activities.AddActivity"
-    android:padding="@dimen/padding_layout">
-
+    android:padding="@dimen/padding_layout"
+    tools:context=".ui.activities.AddActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_button">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/padding_button"
-            >
-            <Button
-                android:id="@+id/btn_cancel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/padding_layout"
-                android:text="@string/cancel"
-                android:layout_weight="1"
-                android:background="@drawable/button_round"
-                android:textColor="@color/colorWhite"
-                />
+            android:layout_marginEnd="@dimen/padding_layout"
+            android:layout_weight="1"
+            android:background="@drawable/button_round"
+            android:text="@string/cancel"
+            android:textColor="@color/colorWhite" />
 
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding_layout"
-                android:text="@string/save"
-                android:layout_weight="1"
-                android:background="@drawable/button_round"
-                android:textColor="@color/colorWhite"
-                />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimary"/>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include layout="@layout/fragment_add"/>
-
-        </ScrollView>
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_layout"
+            android:layout_weight="1"
+            android:background="@drawable/button_round"
+            android:text="@string/save"
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/fragment_add" />
+
+    </ScrollView>
 
 </LinearLayout>

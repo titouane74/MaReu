@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/menu_right"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:id="@+id/menu_right">
-
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_round"
         android:padding="@dimen/padding_button"
         android:text="Ajouter une réunion"
-        android:background="@drawable/button_round"
-        android:textColor="@color/colorWhite"/>
-
+        android:textColor="@color/colorWhite" />
 
 </LinearLayout>
