@@ -24,6 +24,7 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
 
     private Context mContext;
     private Meeting mMeetingSelected;
+
     /**
      * Constructor de l'adapter du RecyclerView
      * @param pContext : context : context
@@ -33,12 +34,6 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
         mMeetingSelected = sMeetingApiService.getMeetingSelected();
     }
 
-    /**
-     * onCreateViewHolder
-     * @param parent
-     * @param viewType
-     * @return
-     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,22 +42,12 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
         return new ViewHolder(view);
     }
 
-    /**
-     * onBindViewHolder
-     * @param holder
-     * @param position
-     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.mParticipants.setText(mMeetingSelected.getParticpants().get(position));
 
     }
-
-    /**
-     * getItemCount du recyclerview
-     * @return
-     */
 
     @Override
     public int getItemCount() {
@@ -78,14 +63,9 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
         @BindView(R.id.item_participant_rv)
         TextView mParticipants;
 
-        /**
-         * Constructor ViewHolder
-         * @param pView
-         */
         ViewHolder(View pView) {
             super(pView);
             ButterKnife.bind(this,pView);
         }
     }
-
 }

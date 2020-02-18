@@ -41,8 +41,24 @@ public class FakeMeetingApiService implements MeetingApiService {
         mMeetings = new ArrayList<>();
     }
 
+    /**
+     * Sauvegarde l'indicateur de l'état du menu. Actif : true, Inactif : false
+     * @param pIsMenuActive : boolean : indicateur de l'état du menu
+     */
+    public void setIsMenuActive (boolean pIsMenuActive) { isMenuActive = pIsMenuActive; }
+
+    /**
+     * Récupère l'indicateur de l'état du menu. Actif : true, Inactif : false
+     * @return : boolean : indicateur de l'état du menu
+     */
+    public boolean getIsMenuActive () { return isMenuActive; }
+
+    /**
+     * Initialise la liste des salles de réunions disponibles
+     * @param pContext : context : context
+     */
     @Override
-    public void setRooms(Context pContext) {
+    public void initializeRooms(Context pContext) {
 
         mRooms = new ArrayList<>(Arrays.asList(
                 new Room ("ARES", Color.parseColor(pContext.getString(R.string.s_color_room1))),
@@ -56,7 +72,6 @@ public class FakeMeetingApiService implements MeetingApiService {
                 new Room ("VENUS", Color.parseColor(pContext.getString(R.string.s_color_room9))),
                 new Room ("ZEUS", Color.parseColor(pContext.getString(R.string.s_color_room10)))
         )) ;
-
     }
 
     /**
@@ -68,36 +83,47 @@ public class FakeMeetingApiService implements MeetingApiService {
         return mMeetings;
     }
 
+    /**
+     * Sauvegarde la réunion sélectionnée
+     * @param pMeeting : objet : réunion sélectionnée
+     */
     @Override
-    public void setMeetingSelected(Meeting pMeeting) {
-        mMeetingSelected = pMeeting;
-    }
+    public void setMeetingSelected(Meeting pMeeting) { mMeetingSelected = pMeeting; }
 
+    /**
+     * Récupère la réunion sélectionnée
+     * @return : objet : réunion sélectionnée
+     */
     @Override
-    public Meeting getMeetingSelected() {
-        return mMeetingSelected;
-    }
+    public Meeting getMeetingSelected() { return mMeetingSelected; }
 
+    /**
+     * Sauvegarde la date sélectionnée pour l'application du filtre
+     * @param pDateSelected : calendar : date sélectionnée
+     */
     @Override
-    public void setDateSelected(Calendar pDateSelected) {
-        mDateSelected = pDateSelected;
-    }
+    public void setDateSelected(Calendar pDateSelected) { mDateSelected = pDateSelected; }
 
+    /**
+     * Récupère la date sélectionnée pour l'application du filtre
+     * @return : calendar : date sélectionnée
+     */
     @Override
-    public Calendar getDateSelected() {
-        return mDateSelected;
-    }
+    public Calendar getDateSelected() { return mDateSelected; }
 
+    /**
+     * Sauvegarde les salles de réunion sélectionnées pour l'application du filtre
+     * @param pRoomsSelected : object : liste des salles de réunion sélectionnées
+     */
     @Override
-    public void setRoomsSelected(List<Room> pRoomsSelected) {
-        mRoomsSelected = pRoomsSelected;
-    }
+    public void setRoomsSelected(List<Room> pRoomsSelected) { mRoomsSelected = pRoomsSelected; }
 
+    /**
+     * Récupère la liste des salles de réunion sélectionnées pour l'application du filtre
+     * @return : objet : liste des salles de réunion sélectionnées
+     */
     @Override
-    public List<Room> getRoomsSelected() {
-        return mRoomsSelected;
-    }
-
+    public List<Room> getRoomsSelected() { return mRoomsSelected; }
 
     /**
      * Récupère la liste des salles de réunion
@@ -109,7 +135,7 @@ public class FakeMeetingApiService implements MeetingApiService {
     }
 
     /**
-     * Recherche et récupère la salle de réunion sélectionnée
+     * Recherche et récupère la salle de réunion sélectionnée pour l'enregistrement de la réunion
      * @return : objet : salle de réunion sélectionnée
      */
     @Override
@@ -122,12 +148,28 @@ public class FakeMeetingApiService implements MeetingApiService {
         return lRoom;
     }
 
+    /**
+     * Sauvegarde l'heure de début de la réunion pour les tests de validation avant l'enregistrement de la réunion
+     * @param pStartMeeting : calendar : heure de début de la réunion
+     */
     public void setStartMeeting(Calendar pStartMeeting) { mStartMeeting = pStartMeeting; }
 
+    /**
+     * Récupère l'heure de début de la réunion
+     * @return : calendar : heure de début de la réunion
+     */
     public Calendar getStartMeeting() { return mStartMeeting; }
 
+    /**
+     * Sauvegarde l'heure de fin de la réunion pour les tests de validation avant l'enregistrement de la réunion
+     * @param pEndMeeting : calendar : heure de fin de la réunion
+     */
     public void setEndMeeting(Calendar pEndMeeting) { mEndMeeting = pEndMeeting; }
 
+    /**
+     * Récupère l'heure de fin de laréunion
+     * @return : calendar : heure de fin de la réunion
+     */
     public Calendar getEndMeeting () { return mEndMeeting; }
 
     /**
@@ -179,7 +221,9 @@ public class FakeMeetingApiService implements MeetingApiService {
         mMeetings = new ArrayList<>();
     }
 
-
+    /**
+     * Ajout de réunions pour les tests
+     */
     public void addFakeMeeting()  {
         List<String> lStringList = Arrays.asList("toto@gmail.com","titi@gmail.com");
         Room lRoomTest = new Room("POSEIDON", Color.argb(100,244,67,54));
@@ -205,13 +249,4 @@ public class FakeMeetingApiService implements MeetingApiService {
             pE.printStackTrace();
         }
     }
-
-    public void setIsMenuActive (boolean pIsMenuActive) {
-        isMenuActive = pIsMenuActive;
-    }
-
-    public boolean getIsMenuActive () {
-        return isMenuActive;
-    }
-
 }

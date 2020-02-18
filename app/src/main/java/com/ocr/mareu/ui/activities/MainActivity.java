@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 
         setSupportActionBar(mToolbar);
 
-        sMeetingApiService.setRooms(mContext);
+        sMeetingApiService.initializeRooms(mContext);
 
         configureAndShowListFragment();
         mAddFragment = new AddFragment();
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 
         return true;
     }
+
     /**
      * onCreateOptionsMenu : création du menu
      * @param pMenu : menu : menu
@@ -162,6 +162,9 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         mBackPressedTime = System.currentTimeMillis();
     }
 
+    /**
+     * A la rotation de l'écran, on purge la liste des réunions et on réinitialise le menu
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -169,27 +172,40 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         invalidateOptionsMenu();
     }
 
+    /**
+     * A la rotation de l'écran, pour le mode tablette, on ferme tous les fragments ouverts
+     * exceptés celui de la liste des réunions et de celui du bouton d'ajout d'une réunion
+     * @param outState : bundle : on ne sauvegarde rien
+     */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        List<Fragment> lFragmentList = getSupportFragmentManager().getFragments();
-        for (Fragment lFragment : lFragmentList) {
-            if (lFragment.getTag() != getString(R.string.fragment_right)
-                    || lFragment.getTag() != getString(R.string.fragment_list)) {
-                if (!lFragment.isDetached()) {
-                    lFragment.onDetach();
-                    getSupportFragmentManager().beginTransaction().remove(lFragment).commit();
+        if (mMainLayout.getTag() == getString(R.string.tablet)) {
+            List<Fragment> lFragmentList = getSupportFragmentManager().getFragments();
+            for (Fragment lFragment : lFragmentList) {
+                if (lFragment.getTag() != getString(R.string.fragment_right)
+                        || lFragment.getTag() != getString(R.string.fragment_list)) {
+                    if (!lFragment.isDetached()) {
+                        lFragment.onDetach();
+                        getSupportFragmentManager().beginTransaction().remove(lFragment).commit();
+                    }
                 }
             }
         }
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * Sur le retour sur le Mainactivity, on rafraîchi la liste des réunions
+     */
     @Override
     protected void onResume() {
         super.onResume();
         mListFragment.listToUpdate(SORT_DEFAULT);
     }
 
+    /**
+     * On initialise et on affiche le fragment contenant la liste des réunions
+     */
     private void configureAndShowListFragment() {
         mListFragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.frame_list);
         if (mListFragment == null) {
@@ -200,6 +216,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         }
     }
 
+    /**
+     * On initialise et on affiche le fragment de la partie droite en mode tablette
+     * qui affiche par défaut le bouton d'ajout d'une réunion
+     */
     private void configureAndShowRightFragment() {
         mRightFragment = (RightFragment) getSupportFragmentManager().findFragmentById(R.id.frame_right);
         if (mRightFragment == null && findViewById(R.id.frame_right) != null) {
@@ -210,6 +230,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         }
     }
 
+    /**
+     * Méthode d'affichage du fragment de la partie droite lors du changement de fragment
+     * @param pFragment : fragment : fragment à afficher
+     */
     private void showRightFragment(final Fragment pFragment) {
         final FragmentManager lFragmentManager = getSupportFragmentManager();
         final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
@@ -218,6 +242,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         lFragmentTransaction.commit();
     }
 
+    /**
+     * Gère l'affichage du bouton de retour à l'écran précédent en fonction de l'indicateur
+     * @param isEnabled : boolean : indicateur de la barre de menu
+     */
     private void manageActionBar(boolean isEnabled) {
         if (getSupportActionBar()!= null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(isEnabled);
@@ -225,8 +253,15 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         }
     }
 
+    /**
+     * Fermeture du fragment d'ajout d'une réunion lors du clique sur le bouton cancel
+     * et réaffichage de l'écran de droite avec le bouton d'ajout de réunion
+     * fonctionnement pour le mode tablette
+     * @param pView : view : vue
+     * @param pActivateFragment : fragment : fragment à afficher
+     */
     @Override
-    public void onButtonClickedClose(View pView, String pActivateFragment) {
+    public void onButtonCancelClickedClose(View pView, String pActivateFragment) {
         if (mAddFragment != null && mAddFragment.isVisible()) {
             if (pActivateFragment == getString(R.string.fragment_right)) {
                 showRightFragment(mRightFragment);
@@ -236,20 +271,25 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         mListFragment.listToUpdate(SORT_DEFAULT);
     }
 
+    /**
+     * En mode tablette, ouverture du fragment d'ajout d'une réunion suite au clic
+     * sur la bouton Ajouter un réunion du fragment_right
+     * @param pView : view : vue
+     */
     @Override
-    public void onButtonClicked(View pView) {
+    public void onButtonAddMeetingClicked(View pView) {
         if (mRightFragment != null && mRightFragment.isVisible()) {
-            if (mMainLayout.getTag() == getString(R.string.tablet)) {
-                mAddFragment = AddFragment.newInstance();
-                showRightFragment(mAddFragment);
-            } else {
-                Intent lIntent = new Intent(mContext, AddActivity.class);
-                mContext.startActivity(lIntent);
-            }
+            mAddFragment = AddFragment.newInstance();
+            showRightFragment(mAddFragment);
         }
         manageActionBar(true);
     }
 
+    /**
+     * Sur le clic d'un item de la liste des réunions on ouvre l'écran de détail
+     * En mode tablette, on ouvre me fragment de détail sinon on ouvre l'activité de détail
+     * @param pView : view : vue
+     */
     @Override
     public void onItemClicked(View pView) {
         manageActionBar(true);
@@ -263,13 +303,21 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         }
     }
 
+    /**
+     * Liste des réunions à mettre à jour en fonction du tri ou filtre passé
+     * @param pOrder : string : ordre de tri ou filtre passé pour afficher la liste
+     */
     @Override
     public void listToUpdate(String pOrder) {
         mListFragment.listToUpdate(pOrder);
     }
 
+    /**
+     * Invalide le menu depuis la recyclerview afin de mettre le menu à jour en fonction
+     * de l'affichage de la recyclerview
+     */
     @Override
-    public void invalidateMenu() {
+    public void invalidateMenuRV() {
         invalidateOptionsMenu();
     }
 }

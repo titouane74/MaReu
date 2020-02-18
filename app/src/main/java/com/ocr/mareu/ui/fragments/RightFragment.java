@@ -23,8 +23,11 @@ public class RightFragment extends Fragment implements View.OnClickListener {
 
     private OnRightListener mCallback;
 
+    /**
+     * Interface permettant de gérer les callbacks vers la MainActivity
+     */
     public interface OnRightListener {
-        void onButtonClicked(View pView);
+        void onButtonAddMeetingClicked(View pView);
     }
 
     public static RightFragment newInstance() {
@@ -44,7 +47,7 @@ public class RightFragment extends Fragment implements View.OnClickListener {
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onButtonClicked(v);
+                mCallback.onButtonAddMeetingClicked(v);
             }
         });
 

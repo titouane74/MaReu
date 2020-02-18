@@ -39,6 +39,9 @@ public class ParticipantsListFragment extends Fragment {
         return lView;
     }
 
+    /**
+     * Configuration du recyclerview de la liste des participants
+     */
     private void configureRecyclerView() {
         mListAdapter = new ParticipantRecyclerViewAdapter(getActivity());
         mRecyclerView.setAdapter(mListAdapter);

@@ -115,5 +115,4 @@ public class Validation {
             }
         return lParts;
     }
-
 }

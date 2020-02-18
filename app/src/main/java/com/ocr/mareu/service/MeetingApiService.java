@@ -13,7 +13,23 @@ import java.util.List;
  */
 public interface MeetingApiService {
 
-    void setRooms(Context pContext);
+    /**
+     * Sauvegarde l'indicateur de l'état du menu. Actif : true, Inactif : false
+     * @param pIsMenuActive : boolean : indicateur de l'état du menu
+     */
+    void setIsMenuActive (boolean pIsMenuActive) ;
+
+    /**
+     * Récupère l'indicateur de l'état du menu. Actif : true, Inactif : false
+     * @return : boolean : indicateur de l'état du menu
+     */
+    boolean getIsMenuActive () ;
+
+    /**
+     * Initialise la liste des salles de réunions disponibles
+     * @param pContext : context : context
+     */
+    void initializeRooms(Context pContext);
 
     /**
      * Récupère la liste des réunions
@@ -21,18 +37,41 @@ public interface MeetingApiService {
      */
     List<Meeting> getMeetings();
 
+    /**
+     * Sauvegarde la réunion sélectionnée
+     * @param pMeeting : objet : réunion sélectionnée
+     */
     void setMeetingSelected(Meeting pMeeting);
 
+    /**
+     * Récupère la réunion sélectionnée
+     * @return : objet : réunion sélectionnée
+     */
     Meeting getMeetingSelected();
 
+    /**
+     * Sauvegarde la date sélectionnée pour l'application du filtre
+     * @param pDateSelected : calendar : date sélectionnée
+     */
     void setDateSelected(Calendar pDateSelected);
 
+    /**
+     * Récupère la date sélectionnée pour l'application du filtre
+     * @return : calendar : date sélectionnée
+     */
     Calendar getDateSelected();
 
+    /**
+     * Sauvegarde les salles de réunion sélectionnées pour l'application du filtre
+     * @param pRoomsSelected : object : liste des salles de réunion sélectionnées
+     */
     void setRoomsSelected(List<Room> pRoomsSelected);
 
+    /**
+     * Récupère la liste des salles de réunion sélectionnées pour l'application du filtre
+     * @return : objet : liste des salles de réunion sélectionnées
+     */
     List<Room> getRoomsSelected();
-
 
     /**
      * Récupère la liste des salles de réunion
@@ -46,14 +85,29 @@ public interface MeetingApiService {
      */
     Room extractRoomSelected(String pRoom);
 
+    /**
+     * Sauvegarde l'heure de début de la réunion pour les tests de validation avant l'enregistrement de la réunion
+     * @param pStartMeeting : calendar : heure de début de la réunion
+     */
     void setStartMeeting(Calendar pStartMeeting);
 
+    /**
+     * Récupère l'heure de début de la réunion
+     * @return : calendar : heure de début de la réunion
+     */
     Calendar getStartMeeting();
 
+    /**
+     * Sauvegarde l'heure de fin de la réunion pour les tests de validation avant l'enregistrement de la réunion
+     * @param pEndMeeting : calendar : heure de fin de la réunion
+     */
     void setEndMeeting(Calendar pEndMeeting) ;
 
+    /**
+     * Récupère l'heure de fin de laréunion
+     * @return : calendar : heure de fin de la réunion
+     */
     Calendar getEndMeeting ();
-
 
     /**
      * Suppression d'une réunion
@@ -73,11 +127,9 @@ public interface MeetingApiService {
      */
     void resetMeetings();
 
+    /**
+     * Ajout de réunions pour les tests
+     */
     void addFakeMeeting();
-
-    void setIsMenuActive (boolean pIsMenuActive) ;
-
-    boolean getIsMenuActive () ;
-
 
 }

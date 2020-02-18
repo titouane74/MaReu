@@ -37,14 +37,18 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
     private OnRecyclerViewListener mCallback;
 
+    /**
+     * Inteface permettant de gérer les callbacks vers la MainActivity
+     */
     public interface OnRecyclerViewListener {
         void onItemClicked(View pView);
         void listToUpdate(String pOrder);
-        void invalidateMenu();
+        void invalidateMenuRV();
     }
 
     private Context mContext;
     private List<Meeting> mMeetings;
+
     /**
      * Constructor de l'adapter du RecyclerView
      * @param pContext : context : context
@@ -63,15 +67,9 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             sMeetingApiService.setIsMenuActive(false);
         }
         mCallback = (OnRecyclerViewListener) mContext;
-        mCallback.invalidateMenu();
+        mCallback.invalidateMenuRV();
     }
 
-    /**
-     * onCreateViewHolder
-     * @param parent
-     * @param viewType
-     * @return
-     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -80,11 +78,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         return new ViewHolder(view);
     }
 
-    /**
-     * onBindViewHolder
-     * @param holder
-     * @param position
-     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
@@ -141,10 +134,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
     }
 
-    /**
-     * getItemCount du recyclerview
-     * @return
-     */
     @Override
     public int getItemCount() {
         return mMeetings.size();
@@ -163,10 +152,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         @BindView(R.id.item_delete_img)
         ImageButton mDelete;
 
-        /**
-         * Constructor ViewHolder
-         * @param pView
-         */
         ViewHolder(View pView) {
             super(pView);
             ButterKnife.bind(this,pView);
@@ -174,5 +159,4 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     }
     @Override
     public void onClick(View v) {}
-
 }

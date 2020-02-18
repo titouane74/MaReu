@@ -57,11 +57,16 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
     private OnListenerAdd mCallback;
 
+    /**
+     * Inteface permettant de gérer le bouton d'annulation dans l'AddActivity ou le MainActivity
+     * en focntion de l'appelant
+     */
     public interface OnListenerAdd {
-        void onButtonClickedClose(View pView, String pActivateFragment);
+        void onButtonCancelClickedClose(View pView, String pActivateFragment);
     }
 
     public AddFragment() { }
+
 
     public static AddFragment newInstance() {
         return new AddFragment();
@@ -84,12 +89,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
         mListRoom.setAdapter(lAdapter);
         mListRoom.setShowSoftInputOnFocus(false);
-        mListRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListRoom.showDropDown();
-            }
-        });
+        mListRoom.setOnClickListener(v -> mListRoom.showDropDown() );
 
         mEmailEt.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -117,28 +117,17 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 return false;
             }
         });
-        mDateEt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { displayCalendarDialog (); }
-        });
-        mTimeStartEt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { displayTimeDialog(v); }
-        });
-        mTimeEndEt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { displayTimeDialog(v); }
-        });
-        mBtnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { mCallback.onButtonClickedClose(v, "RIGHT"); }
-        });
-        mBtnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (addMeeting())
-                    mCallback.onButtonClickedClose(v, "RIGHT");
-            }
+        mDateEt.setOnClickListener(v ->
+                displayCalendarDialog ());
+        mTimeStartEt.setOnClickListener(v ->
+                displayTimeDialog(v));
+        mTimeEndEt.setOnClickListener(v ->
+                displayTimeDialog(v));
+        mBtnCancel.setOnClickListener(v ->
+                mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)));
+        mBtnSave.setOnClickListener(v -> {
+            if (addMeeting()) {
+                    mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)); }
         });
         return lView;
     }
@@ -269,6 +258,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Lie les objets du layout au code
+     * @param pView : view : vue
+     */
     private void bindObjectToCode(View pView) {
         mListRoom = pView.findViewById(R.id.room_list) ;
         mListLayout = pView.findViewById(R.id.room_list_layout) ;

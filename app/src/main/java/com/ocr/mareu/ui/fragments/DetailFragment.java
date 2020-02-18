@@ -20,7 +20,6 @@ import java.util.Locale;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 
-
 /**
  * Created by Florence LE BOURNOT on 12/02/2020
  */
@@ -53,10 +52,12 @@ public class DetailFragment  extends Fragment {
         setInfoMeeting();
         configureRecyclerViewParts();
 
-
         return lView;
     }
 
+    /**
+     * Affiche les informations de la réunion
+     */
     private void setInfoMeeting() {
         int lColor = mMeeting.getRoom().getColorRoom();
 
@@ -76,12 +77,19 @@ public class DetailFragment  extends Fragment {
         mImgParts.setColorFilter(lColor);
     }
 
+    /**
+     * Configure le recyclerview de la liste des participants
+     */
     private void configureRecyclerViewParts( ) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ParticipantRecyclerViewAdapter  mListAdapter = new ParticipantRecyclerViewAdapter(getActivity());
         mRecyclerView.setAdapter(mListAdapter);
     }
 
+    /**
+     * Lie les objets du layout au code
+     * @param pView : view : vue
+     */
     private void bindObjectToCode(View pView){
         mRoomName = pView.findViewById(R.id.room_name);
         mDateTime = pView.findViewById(R.id.info_date_time);

@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.ocr.mareu.R;
 import com.ocr.mareu.ui.fragments.DetailFragment;
 
-
 /**
  * Created by Florence LE BOURNOT on 12/02/2020
  */
@@ -35,6 +34,22 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sur sélection du bouton retour
+     * @param pItem : menuitem : retour à l'écran précédent
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem pItem) {
+        if (pItem.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(pItem);
+    }
+
+    /**
+     * Méthode configurant et affichant le fragment du détail d'une réunion
+     */
     private void configureAndShowDetailFragment() {
         mDetailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_detail);
         if (mDetailFragment == null) {
@@ -43,13 +58,5 @@ public class DetailActivity extends AppCompatActivity {
                     .add(R.id.frame_detail, mDetailFragment)
                     .commit();
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem pItem) {
-        if (pItem.getItemId()==android.R.id.home){
-            finish();
-        }
-        return super.onOptionsItemSelected(pItem);
     }
 }

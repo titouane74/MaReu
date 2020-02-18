@@ -40,16 +40,6 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
         configureAndShowAddFragment();
     }
 
-    private void configureAndShowAddFragment() {
-        mAddFragment = (AddFragment) getSupportFragmentManager().findFragmentById(R.id.frame_add);
-        if (mAddFragment == null) {
-            mAddFragment = AddFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.frame_add, mAddFragment)
-                    .commit();
-        }
-    }
-
     /**
      * Sur sélection du bouton retour ou ajout de la toolbar
      * @param pItem : menuitem : retour à l'écran précédent, ajout de la réunion et retour à l'écran précédent
@@ -61,12 +51,30 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
             finish();
             return true;
         } else {
-                return super.onOptionsItemSelected(pItem);
+            return super.onOptionsItemSelected(pItem);
         }
     }
 
+    /**
+     * Méthode configurant et affichant le fragment d'ajout d'une réunion
+     */
+    private void configureAndShowAddFragment() {
+        mAddFragment = (AddFragment) getSupportFragmentManager().findFragmentById(R.id.frame_add);
+        if (mAddFragment == null) {
+            mAddFragment = AddFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.frame_add, mAddFragment)
+                    .commit();
+        }
+    }
+
+    /**
+     * Ferme l'activité d'ajout d"une réunion sur le clique du bouton cancel au niveau du fragment
+     * @param pView : view : vue
+     * @param pActivateFragment : string : fragment à afficher, sert en mode table
+     */
     @Override
-    public void onButtonClickedClose(View pView, String pActivateFragment) {
+    public void onButtonCancelClickedClose(View pView, String pActivateFragment) {
         if (getSupportActionBar()!= null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);

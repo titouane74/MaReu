@@ -8,8 +8,9 @@ import com.ocr.mareu.service.MeetingApiService;
  */
 public class DI {
 
+    /**
+     * Création d'une nouvelle instance de l'API Service
+     */
     public static MeetingApiService sMeetingApiService = new FakeMeetingApiService();
-
-    public static MeetingApiService getMeetingApiService() { return sMeetingApiService; }
 
 }
