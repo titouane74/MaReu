@@ -22,7 +22,7 @@ import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
 public class FakeMeetingApiService implements MeetingApiService {
 
     private List<Meeting> mMeetings ;
-    private List<Room> mRooms;
+    private List<Room> mRooms = new ArrayList<>();
     private Meeting mMeetingSelected;
     private Calendar mDateSelected;
     private List<Room> mRoomsSelected;
@@ -222,7 +222,7 @@ public class FakeMeetingApiService implements MeetingApiService {
     }
 
     /**
-     * Ajout de réunions pour les tests
+     * Ajout de réunions pour les tests manuels
      */
     public void addFakeMeeting()  {
         List<String> lStringList = Arrays.asList("toto@gmail.com","titi@gmail.com");
@@ -232,12 +232,18 @@ public class FakeMeetingApiService implements MeetingApiService {
 
         try {
             sMeetingApiService.addMeeting(
-                    new Meeting(lRoomTest,
-                            "Sujet",
-                            convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
-                            convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
-                            convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
-                            lStringList));
+                new Meeting(lRoomTest,
+                        "Sujet",
+                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
+                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
+                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
+                        lStringList));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        } catch (ParseException pE) {
+            pE.printStackTrace();
+        }
+        try {
             sMeetingApiService.addMeeting(
                     new Meeting(lRoomTest2,
                             "Sujet2",
@@ -245,7 +251,9 @@ public class FakeMeetingApiService implements MeetingApiService {
                             convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
                             convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 11:00:00:00"),
                             lStringList2));
-        } catch (MeetingApiServiceException | ParseException pE) {
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        } catch (ParseException pE) {
             pE.printStackTrace();
         }
     }
