@@ -127,7 +127,13 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void setIsMenuActive() {
+    public void extractRoomSelecteWithSuccess() {
+        Room lRoomExtracted = null;
+
+        lRoomExtracted = mApi.extractRoomSelected("POSEIDON");
+        assertEquals("POSEIDON",lRoomExtracted.getNameRoom());
 
     }
+
+
 }

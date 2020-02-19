@@ -36,6 +36,10 @@ public class MeetingUtils {
         return lMeeting;
     }
 
+    public static Room generate1Room() {
+        return new Room("HADES", Color.argb(100,3,169,244)) ;
+    }
+
     /**
      * Ajout de réunions pour les tests unitaires de addMeeting
      */

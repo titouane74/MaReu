@@ -24,8 +24,6 @@ import static org.junit.Assert.assertEquals;
 public class InitializeRoomTest {
 
     private MeetingApiService mApi;
-    private List<Meeting> mMeetings;
-    private List<Room> mRooms;
 
     @Mock
     Context contextMock;
@@ -33,7 +31,6 @@ public class InitializeRoomTest {
     @Before
     public void setup() {
         mApi = DI.sMeetingApiService;
-        mMeetings = new ArrayList<>();
     }
 
     @Test
