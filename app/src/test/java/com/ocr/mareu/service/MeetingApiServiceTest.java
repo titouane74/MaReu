@@ -5,7 +5,7 @@ import android.content.Context;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
-import com.ocr.mareu.utils.MeetingUtils;
+import com.ocr.mareu.utilstest.MeetingUtils;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Florence LE BOURNOT on 18/02/2020

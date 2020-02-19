@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.utils.SortOrFilter;
+import com.ocr.mareu.utils.SortOrFilterLabel;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.ocr.mareu.di.DI.sMeetingApiService;
-import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
+
 
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
@@ -42,7 +43,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public interface OnRecyclerViewListener {
         void onItemClicked(View pView);
-        void listToUpdate(String pOrder);
+        void listToUpdate(Enum pOrder);
         void invalidateMenuRV();
     }
 
@@ -54,13 +55,22 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      * @param pContext : context : context
      * @param pOrder : string : indicateur de trie ou de filtre
      */
-    public MeetingRecyclerViewAdapter(Context pContext, String pOrder) {
+    public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
         sMeetingApiService.addFakeMeeting();
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
-        mMeetings = lSortOrFilter.sortOrFilter(mMeetings,pOrder);
+        if (pOrder == SortOrFilterLabel.SORT_ROOM ) {
+            mMeetings = lSortOrFilter.sortMeetingRoom(mMeetings);
+        } else if (pOrder == SortOrFilterLabel.SORT_DATE ) {
+            mMeetings = lSortOrFilter.sortMeetingDate(mMeetings);
+        } else if (pOrder == SortOrFilterLabel.FILTER_ROOM ) {
+            mMeetings = lSortOrFilter.filterMeetingRoom(mMeetings, pOrder,sMeetingApiService.getRoomsSelected());
+        } else if (pOrder == SortOrFilterLabel.FILTER_DATE ) {
+            mMeetings = lSortOrFilter.filterMeetingDate(mMeetings,pOrder,sMeetingApiService.getDateSelected());
+        }
+
         if (mMeetings.size() > 0) {
             sMeetingApiService.setIsMenuActive(true);
         } else {
@@ -110,7 +120,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 sMeetingApiService.deleteMeeting(lMeeting);
-                                mCallback.listToUpdate(SORT_DEFAULT);
+                                mCallback.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
                             }
                         })
                         .setNegativeButton(mContext.getString(R.string.btn_no), new DialogInterface.OnClickListener() {

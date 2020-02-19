@@ -16,10 +16,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.ocr.mareu.di.DI.sMeetingApiService;
-import static com.ocr.mareu.utils.SortOrFilter.FILTER_DATE;
-import static com.ocr.mareu.utils.SortOrFilter.FILTER_ROOM;
-
 /**
  * Created by Florence LE BOURNOT on 07/02/2020
  */
@@ -29,16 +25,15 @@ public class ShowDialog {
      * Affichage de la boîte de dialogue contenant les salles de réunion pour l'application du filtre par salle
      */
 
-    public static void showDialogRooms(Context pContext, ListFragment pListFragment) {
+    public static List<Room> showDialogRooms(Context pContext, ListFragment pListFragment,List<Room> pRooms) {
 
         AlertDialog.Builder lBuilder = new AlertDialog.Builder(pContext);
         lBuilder.setTitle(R.string.meeting_room_selected);
 
-        List<Room> lRooms = sMeetingApiService.getRooms();
         List<Room> lRoomsSelected = new ArrayList<>();
         List<String> lListRooms = new ArrayList<>();
 
-        for (Room lRoom : lRooms) {
+        for (Room lRoom : pRooms) {
             lListRooms.add(lRoom.getNameRoom());
         }
 
@@ -48,7 +43,7 @@ public class ShowDialog {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 if (isChecked) {
-                    lRoomsSelected.add(lRooms.get(which));
+                    lRoomsSelected.add(pRooms.get(which));
                 }
             }
         });
@@ -59,35 +54,35 @@ public class ShowDialog {
         lBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                sMeetingApiService.setRoomsSelected(lRoomsSelected);
-                pListFragment.listToUpdate(FILTER_ROOM);
+                pListFragment.listToUpdate(SortOrFilterLabel.FILTER_ROOM);
             }
         });
         Dialog lDialog = lBuilder.create();
         lDialog.show();
+
+        return lRoomsSelected;
     }
 
     /**
      * Affichage du calendrier pour l'application du filtre par date
      * @param pContext
      */
-    public static void showCalendarDialog(Context pContext, ListFragment pListFragment) {
+    public static Calendar showCalendarDialog(Context pContext, ListFragment pListFragment) {
 
         Calendar lCalendar = Calendar.getInstance();
+        Calendar lCalendarSelected = Calendar.getInstance();
 
        DatePickerDialog lDatePickerDialog = new DatePickerDialog(
                 pContext,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        Calendar lCalendarSelected = Calendar.getInstance();
 
                         lCalendarSelected.set(year,month,dayOfMonth);
                         if (lCalendarSelected .before(lCalendar)) {
                             Toast.makeText(pContext, R.string.err_anterior_date, Toast.LENGTH_SHORT).show();
                         } else {
-                            sMeetingApiService.setDateSelected(lCalendarSelected);
-                            pListFragment.listToUpdate(FILTER_DATE);
+                            pListFragment.listToUpdate(SortOrFilterLabel.FILTER_DATE);
                         }
                     }
                 },
@@ -96,5 +91,7 @@ public class ShowDialog {
                 lCalendar.get(Calendar.DAY_OF_MONTH)
         );
         lDatePickerDialog.show();
+
+        return lCalendarSelected;
     }
 }

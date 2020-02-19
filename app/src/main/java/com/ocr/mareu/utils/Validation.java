@@ -72,7 +72,8 @@ public class Validation {
      * @param pEnd : textinputlayout : textinputlayout pouvant recevoir le message d'erreur
      * @return : boolean : indicateur si la zone est valide ou non
      */
-    public static boolean validationDateTime (Context pContext, TextInputLayout pStart, TextInputLayout pEnd)  {
+    public static boolean validationDateTime (Context pContext, TextInputLayout pStart, TextInputLayout pEnd,
+    Calendar pStartSaved, Calendar pEndSaved)  {
 
         Calendar lCalendar = Calendar.getInstance() ;
         boolean isValid = true;
@@ -80,11 +81,11 @@ public class Validation {
         Calendar lStart = sMeetingApiService.getStartMeeting();
         Calendar lEnd = sMeetingApiService.getEndMeeting();
 
-        if (lStart.before(lCalendar)) {
+        if (pStartSaved.before(lCalendar)) {
             pStart.setError(pContext.getString(R.string.err_start_before_now));
             isValid = false;
         }
-        if (lStart.after(lEnd)) {
+        if (pStartSaved.after(pEndSaved)) {
             pEnd.setError(pContext.getString(R.string.err_end_before_start));
             isValid = false;
         }

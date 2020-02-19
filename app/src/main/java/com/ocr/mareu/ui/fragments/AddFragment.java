@@ -126,7 +126,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         mBtnCancel.setOnClickListener(v ->
                 mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)));
         mBtnSave.setOnClickListener(v -> {
-            if (addMeeting()) {
+            if (addMeeting(sMeetingApiService.getStartMeeting(), sMeetingApiService.getEndMeeting(),
+                    sMeetingApiService.extractRoomSelected(mListRoom.getText().toString()))) {
                     mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)); }
         });
         return lView;
@@ -219,8 +220,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * Ajout d'une réunion
      * @return : boolean : indicateur si la réunion a été ajouté ou non
      */
-    private boolean addMeeting()  {
-        Room lRoomSelected;
+    private boolean addMeeting(Calendar pStart, Calendar pEnd, Room pRoomSelected)  {
 
         boolean isValidDateTime = false;
         boolean isValidParticipants = false ;
@@ -231,9 +231,9 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         boolean isValidTimeStart = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeStart);
         boolean isValidTimeEnd = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeEnd);
 
-        if (isValidDate && isValidTimeStart && isValidTimeEnd  )
-            isValidDateTime = Validation.validationDateTime(getContext(), mTimeStart, mTimeEnd);
-
+        if (isValidDate && isValidTimeStart && isValidTimeEnd  ) {
+            isValidDateTime = Validation.validationDateTime(getContext(), mTimeStart, mTimeEnd, pStart, pEnd);
+        }
         List<String> lParticipants = Validation.validationParticipants(getContext(), mEmail,mEmailGroup);
 
         if (lParticipants.size() > 0)
@@ -244,9 +244,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             return false;
         } else {
             try {
-                lRoomSelected = sMeetingApiService.extractRoomSelected(mListRoom.getText().toString());
                 sMeetingApiService.addMeeting(
-                        new Meeting(lRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, lParticipants));
+                        new Meeting(pRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, lParticipants));
 
                 Toast.makeText(getContext(),getString(R.string.action_add_meeting), Toast.LENGTH_SHORT).show();
                 return true;

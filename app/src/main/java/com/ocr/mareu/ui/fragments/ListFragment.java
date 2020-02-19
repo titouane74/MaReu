@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
+import com.ocr.mareu.utils.SortOrFilterLabel;
 
-import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
+//import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
@@ -34,7 +35,7 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
         mRecyclerView = (RecyclerView) lView;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        configureRecyclerView(SORT_DEFAULT);
+        configureRecyclerView(SortOrFilterLabel.SORT_DEFAULT);
 
         return lView;
     }
@@ -43,7 +44,7 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
      * Configure le recyclerview de la liste des réunions
      * @param pOrder : string : ordrede tri ou filtre à appliquer
      */
-    private void configureRecyclerView(String pOrder) {
+    private void configureRecyclerView(Enum pOrder) {
         MeetingRecyclerViewAdapter  mListAdapter = new MeetingRecyclerViewAdapter(getActivity(), pOrder);
         mRecyclerView.setAdapter(mListAdapter);
     }
@@ -56,7 +57,7 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
      * @param pOrder : string : ordre de tri ou filtre passé pour afficher la liste
      */
     @Override
-    public void listToUpdate(String pOrder) {
+    public void listToUpdate(Enum pOrder) {
         configureRecyclerView(pOrder);
     }
 

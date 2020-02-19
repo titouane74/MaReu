@@ -23,6 +23,7 @@ import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
 import com.ocr.mareu.ui.fragments.MeetingRecyclerViewAdapter;
 import com.ocr.mareu.ui.fragments.RightFragment;
+import com.ocr.mareu.utils.SortOrFilterLabel;
 
 import java.util.List;
 
@@ -32,9 +33,11 @@ import butterknife.ButterKnife;
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.ShowDialog.showCalendarDialog;
 import static com.ocr.mareu.utils.ShowDialog.showDialogRooms;
+/*
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DATE;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 import static com.ocr.mareu.utils.SortOrFilter.SORT_ROOM;
+*/
 
 public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
         MeetingRecyclerViewAdapter.OnRecyclerViewListener {
@@ -120,23 +123,23 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 manageActionBar(false);
                 return true;
             case R.id.action_remove_filter:
-                mListFragment.listToUpdate(SORT_DEFAULT);
+                mListFragment.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
                 return true;
             case R.id.action_sort:
                 return true;
             case R.id.sort_date:
-                mListFragment.listToUpdate(SORT_DATE);
+                mListFragment.listToUpdate(SortOrFilterLabel.SORT_DATE);
                 return true;
             case R.id.sort_room:
-                mListFragment.listToUpdate(SORT_ROOM);
+                mListFragment.listToUpdate(SortOrFilterLabel.SORT_ROOM);
                 return true;
             case R.id.action_filter:
                 return true;
             case R.id.filter_date:
-                showCalendarDialog(mContext,mListFragment);
+                sMeetingApiService.setDateSelected(showCalendarDialog(mContext,mListFragment));
                 return true;
             case R.id.filter_room:
-                showDialogRooms(mContext, mListFragment);
+                sMeetingApiService.setRoomsSelected(showDialogRooms(mContext, mListFragment,sMeetingApiService.getRooms()));
                 return true;
             default :
                 return super.onOptionsItemSelected(pItem);
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     protected void onResume() {
         super.onResume();
-        mListFragment.listToUpdate(SORT_DEFAULT);
+        mListFragment.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
     }
 
     /**
@@ -268,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             }
         }
         manageActionBar(false);
-        mListFragment.listToUpdate(SORT_DEFAULT);
+        mListFragment.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
     }
 
     /**
@@ -308,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
      * @param pOrder : string : ordre de tri ou filtre passé pour afficher la liste
      */
     @Override
-    public void listToUpdate(String pOrder) {
+    public void listToUpdate(Enum pOrder) {
         mListFragment.listToUpdate(pOrder);
     }
 
@@ -320,4 +323,5 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public void invalidateMenuRV() {
         invalidateOptionsMenu();
     }
+
 }

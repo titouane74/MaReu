@@ -227,7 +227,7 @@ public class FakeMeetingApiService implements MeetingApiService {
     public void addFakeMeeting()  {
 
         try {
-            sMeetingApiService.addMeeting(
+            addMeeting(
                 new Meeting(new Room("POSEIDON", Color.argb(100,244,67,54)),
                     "Sujet",
                     convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
@@ -240,7 +240,7 @@ public class FakeMeetingApiService implements MeetingApiService {
             pE.printStackTrace();
         }
         try {
-            sMeetingApiService.addMeeting(
+            addMeeting(
                 new Meeting(new Room("ARES", Color.argb(100,103,58,183)),
                     "Sujet2",
                     convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),

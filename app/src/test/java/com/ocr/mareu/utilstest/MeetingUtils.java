@@ -1,4 +1,4 @@
-package com.ocr.mareu.utils;
+package com.ocr.mareu.utilstest;
 
 import android.graphics.Color;
 
