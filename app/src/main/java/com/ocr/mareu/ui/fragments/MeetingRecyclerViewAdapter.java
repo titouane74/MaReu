@@ -66,9 +66,9 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         } else if (pOrder == SortOrFilterLabel.SORT_DATE ) {
             mMeetings = lSortOrFilter.sortMeetingDate(mMeetings);
         } else if (pOrder == SortOrFilterLabel.FILTER_ROOM ) {
-            mMeetings = lSortOrFilter.filterMeetingRoom(mMeetings, pOrder,sMeetingApiService.getRoomsSelected());
+            mMeetings = lSortOrFilter.filterMeetingRoom(mMeetings, sMeetingApiService.getRoomsSelected());
         } else if (pOrder == SortOrFilterLabel.FILTER_DATE ) {
-            mMeetings = lSortOrFilter.filterMeetingDate(mMeetings,pOrder,sMeetingApiService.getDateSelected());
+            mMeetings = lSortOrFilter.filterMeetingDate(mMeetings, sMeetingApiService.getDateSelected());
         }
 
         if (mMeetings.size() > 0) {

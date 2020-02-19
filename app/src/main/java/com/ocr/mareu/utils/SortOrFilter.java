@@ -24,10 +24,9 @@ public class SortOrFilter {
     /**
      * Filtre les réunions en fonction du paramètre pOrder (salle de réunion ou date)
      * @param pMeetings : list : liste des réunions
-     * @param pOrder : string : indicateur de filtre
      * @return : list : liste des réunions filtrée
      */
-    public List<Meeting> filterMeetingRoom(List<Meeting> pMeetings,Enum pOrder,List<Room> pListRoomsSelected ) {
+    public List<Meeting> filterMeetingRoom(List<Meeting> pMeetings,List<Room> pListRoomsSelected ) {
         List<Meeting> lMeetingRoomFiltered = new ArrayList<>();
         for (Room lListRoom : pListRoomsSelected) {
             for (int i = 0; i < pMeetings.size(); i++) {
@@ -39,13 +38,13 @@ public class SortOrFilter {
         return lMeetingRoomFiltered;
     }
 
-    public List<Meeting> filterMeetingDate(List<Meeting> pMeetings,Enum pOrder,Calendar pDateSelected) {
+    public List<Meeting> filterMeetingDate(List<Meeting> pMeetings, Calendar pDateSelected) {
         List<Meeting> lMeetingDateFiltered = new ArrayList<>();
-        String lCalSelectedFormat = new SimpleDateFormat("d/MM/yyyy").format(pDateSelected.getTime());
+        String lCalSelectedFormat = new SimpleDateFormat("dd/MM/yyyy").format(pDateSelected.getTime());
         String lCalFormat;
 
         for (Meeting lMeeting : pMeetings) {
-            lCalFormat = new SimpleDateFormat("d/MM/yyyy").format(lMeeting.getDate().getTime());
+            lCalFormat = new SimpleDateFormat("dd/MM/yyyy").format(lMeeting.getDate().getTime());
             if (lCalFormat.equals(lCalSelectedFormat)) {
                 lMeetingDateFiltered.add(lMeeting);
             }
@@ -57,7 +56,6 @@ public class SortOrFilter {
      * Trie les réunions en fonction du paramètre pOrder (salle de réunion ou date)
      * de façon ascendante ou descendante
      * @param pMeetings : list : liste des réunions
-     * @param pOrder : string : indicateur de trie
      * @return : list : liste des réunions triée
      */
     public List<Meeting>sortMeetingRoom(List<Meeting> pMeetings) {
