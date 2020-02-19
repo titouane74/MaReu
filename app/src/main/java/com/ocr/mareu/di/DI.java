@@ -13,4 +13,6 @@ public class DI {
      */
     public static MeetingApiService sMeetingApiService = new FakeMeetingApiService();
 
+    public static MeetingApiService getMeetingApiService() { return sMeetingApiService; }
+
 }

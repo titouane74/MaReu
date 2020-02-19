@@ -225,19 +225,15 @@ public class FakeMeetingApiService implements MeetingApiService {
      * Ajout de réunions pour les tests manuels
      */
     public void addFakeMeeting()  {
-        List<String> lStringList = Arrays.asList("toto@gmail.com","titi@gmail.com");
-        Room lRoomTest = new Room("POSEIDON", Color.argb(100,244,67,54));
-        List<String> lStringList2 = Arrays.asList("toto@gmail.com","titi@gmail.com");
-        Room lRoomTest2 = new Room("ARES", Color.argb(100,103,58,183));
 
         try {
             sMeetingApiService.addMeeting(
-                new Meeting(lRoomTest,
-                        "Sujet",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
-                        lStringList));
+                new Meeting(new Room("POSEIDON", Color.argb(100,244,67,54)),
+                    "Sujet",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
         } catch (MeetingApiServiceException pE) {
             pE.printStackTrace();
         } catch (ParseException pE) {
@@ -245,12 +241,12 @@ public class FakeMeetingApiService implements MeetingApiService {
         }
         try {
             sMeetingApiService.addMeeting(
-                    new Meeting(lRoomTest2,
-                            "Sujet2",
-                            convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
-                            convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
-                            convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 11:00:00:00"),
-                            lStringList2));
+                new Meeting(new Room("ARES", Color.argb(100,103,58,183)),
+                    "Sujet2",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 11:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
         } catch (MeetingApiServiceException pE) {
             pE.printStackTrace();
         } catch (ParseException pE) {
