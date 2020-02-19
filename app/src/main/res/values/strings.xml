@@ -3,8 +3,8 @@
     <string name="action_remove_filter">Enlever le filtre</string>
     <string name="action_sort">Trier par</string>
     <string name="action_filter">Filtrer par</string>
-    <string name="sort_date_asc">Dates récentes à anciennes</string>
-    <string name="sort_date_desc">Dates anciennes à récentes</string>
+    <string name="sort_date_recent">Dates récentes à anciennes</string>
+    <string name="sort_date_older">Dates anciennes à récentes</string>
     <string name="sort_room_asc">Salles de A à Z</string>
     <string name="sort_room_desc">Salles de Z à A</string>
     <string name="filter_date">Date sélectionnée</string>

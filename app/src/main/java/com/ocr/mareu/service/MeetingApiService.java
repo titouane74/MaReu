@@ -132,4 +132,6 @@ public interface MeetingApiService {
      */
     void addFakeMeeting();
 
-}
+    void addFakeValidMeetingsLongList() throws MeetingApiServiceException;
+
+    }

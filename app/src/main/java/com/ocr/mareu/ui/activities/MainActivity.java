@@ -127,11 +127,11 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 return true;
             case R.id.action_sort:
                 return true;
-            case R.id.sort_date_asc:
-                mListFragment.listToUpdate(SortOrFilterLabel.SORT_DATE_ASC);
+            case R.id.sort_date_recent:
+                mListFragment.listToUpdate(SortOrFilterLabel.SORT_DATE_RECENT);
                 return true;
-            case R.id.sort_date_desc:
-                mListFragment.listToUpdate(SortOrFilterLabel.SORT_DATE_DESC);
+            case R.id.sort_date_older:
+                mListFragment.listToUpdate(SortOrFilterLabel.SORT_DATE_OLDER);
                 return true;
             case R.id.sort_room_asc:
                 mListFragment.listToUpdate(SortOrFilterLabel.SORT_ROOM_ASC);

@@ -68,13 +68,18 @@ public class SortOrFilter {
 
     public static List<Meeting>sortMeetingRoomDesc(List<Meeting> pMeetings) {
 
-        Collections.reverse(pMeetings);
+        Collections.sort(pMeetings, new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting o1, Meeting o2) {
+                return o2.getRoom().getNameRoom().compareTo(o1.getRoom().getNameRoom());
+            }
+        });
 
         return pMeetings;
     }
 
 
-    public static List<Meeting> sortMeetingDateAsc(List<Meeting> pMeetings) {
+    public static List<Meeting> sortMeetingDateOlderToRecent(List<Meeting> pMeetings) {
 
         Collections.sort(pMeetings, new Comparator<Meeting>() {
             @Override
@@ -90,9 +95,18 @@ public class SortOrFilter {
         return pMeetings;
     }
 
-    public static List<Meeting> sortMeetingDateDesc(List<Meeting> pMeetings) {
+    public static List<Meeting> sortMeetingDateRecentToOlder(List<Meeting> pMeetings) {
 
-        Collections.reverse(pMeetings);
+        Collections.sort(pMeetings, new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting o1, Meeting o2) {
+                if (o2.getStart().compareTo(o1.getStart()) == 0) {
+                    return o2.getEnd().compareTo(o1.getEnd());
+                } else {
+                    return o2.getStart().compareTo(o1.getStart());
+                }
+            }
+        });
 
         return pMeetings;
     }

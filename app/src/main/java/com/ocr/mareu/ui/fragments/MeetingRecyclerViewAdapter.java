@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
+import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.SortOrFilter;
 import com.ocr.mareu.utils.SortOrFilterLabel;
 
@@ -57,7 +58,12 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
-        sMeetingApiService.addFakeMeeting();
+//        sMeetingApiService.addFakeMeeting();
+        try {
+            sMeetingApiService.addFakeValidMeetingsLongList();
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
@@ -65,10 +71,10 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             mMeetings = lSortOrFilter.sortMeetingRoomAsc(mMeetings);
         } else if (pOrder == SortOrFilterLabel.SORT_ROOM_DESC ) {
             mMeetings = lSortOrFilter.sortMeetingRoomDesc(mMeetings);
-        } else if (pOrder == SortOrFilterLabel.SORT_DATE_ASC ) {
-            mMeetings = lSortOrFilter.sortMeetingDateAsc(mMeetings);
-        } else if (pOrder == SortOrFilterLabel.SORT_DATE_DESC ) {
-            mMeetings = lSortOrFilter.sortMeetingDateDesc(mMeetings);
+        } else if (pOrder == SortOrFilterLabel.SORT_DATE_OLDER ) {
+            mMeetings = lSortOrFilter.sortMeetingDateOlderToRecent(mMeetings);
+        } else if (pOrder == SortOrFilterLabel.SORT_DATE_RECENT ) {
+            mMeetings = lSortOrFilter.sortMeetingDateRecentToOlder(mMeetings);
         } else if (pOrder == SortOrFilterLabel.FILTER_ROOM ) {
             mMeetings = lSortOrFilter.filterMeetingRoom(mMeetings, sMeetingApiService.getRoomsSelected());
         } else if (pOrder == SortOrFilterLabel.FILTER_DATE ) {

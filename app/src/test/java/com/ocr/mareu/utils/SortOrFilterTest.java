@@ -2,7 +2,6 @@ package com.ocr.mareu.utils;
 
 import android.content.Context;
 
-import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.FakeMeetingApiService;
@@ -168,7 +167,7 @@ public class SortOrFilterTest {
         assertEquals("HADES",mMeetings.get(8).getRoom().getNameRoom());
         assertEquals("GAIA",mMeetings.get(9).getRoom().getNameRoom());
 
-        mMeetings = SortOrFilter.sortMeetingRoomAsc(mMeetings);
+        mMeetings = SortOrFilter.sortMeetingRoomDesc(mMeetings);
 
         assertEquals(10,mMeetings.size());
 
@@ -177,13 +176,14 @@ public class SortOrFilterTest {
         assertEquals("POSEIDON",mMeetings.get(2).getRoom().getNameRoom());
         assertEquals("PLUTON",mMeetings.get(3).getRoom().getNameRoom());
         assertEquals("HADES",mMeetings.get(4).getRoom().getNameRoom());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(4).getDate());
         assertEquals("HADES",mMeetings.get(5).getRoom().getNameRoom());
-        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(5).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(4).getDate());
         assertEquals("GAIA",mMeetings.get(6).getRoom().getNameRoom());
         assertEquals("DEMETER",mMeetings.get(7).getRoom().getNameRoom());
         assertEquals("ARES",mMeetings.get(8).getRoom().getNameRoom());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(8).getDate());
         assertEquals("ARES",mMeetings.get(9).getRoom().getNameRoom());
-        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(9).getDate());
 
     }
 
@@ -192,38 +192,67 @@ public class SortOrFilterTest {
 
         assertEquals(10,mMeetings.size());
 
-        assertEquals("POSEIDON",mMeetings.get(0).getRoom().getNameRoom());
-        assertEquals("ARES",mMeetings.get(1).getRoom().getNameRoom());
-        assertEquals("HADES",mMeetings.get(2).getRoom().getNameRoom());
-        assertEquals("ZEUS",mMeetings.get(3).getRoom().getNameRoom());
-        assertEquals("ARES",mMeetings.get(4).getRoom().getNameRoom());
-        assertEquals("PLUTON",mMeetings.get(5).getRoom().getNameRoom());
-        assertEquals("VENUS",mMeetings.get(6).getRoom().getNameRoom());
-        assertEquals("DEMETER",mMeetings.get(7).getRoom().getNameRoom());
-        assertEquals("HADES",mMeetings.get(8).getRoom().getNameRoom());
-        assertEquals("GAIA",mMeetings.get(9).getRoom().getNameRoom());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),mMeetings.get(0).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(1).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(2).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(3).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"22/08/2020"),mMeetings.get(4).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"22/08/2020"),mMeetings.get(5).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),mMeetings.get(6).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(7).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),mMeetings.get(8).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),mMeetings.get(9).getDate());
 
-        mMeetings = SortOrFilter.sortMeetingRoomAsc(mMeetings);
+        mMeetings = SortOrFilter.sortMeetingDateRecentToOlder(mMeetings);
 
         assertEquals(10,mMeetings.size());
 
-        assertEquals("ARES",mMeetings.get(0).getRoom().getNameRoom());
-        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(0).getDate());
-        assertEquals("ARES",mMeetings.get(1).getRoom().getNameRoom());
-        assertEquals("DEMETER",mMeetings.get(2).getRoom().getNameRoom());
-        assertEquals("GAIA",mMeetings.get(3).getRoom().getNameRoom());
-        assertEquals("HADES",mMeetings.get(4).getRoom().getNameRoom());
-        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(4).getDate());
-        assertEquals("HADES",mMeetings.get(5).getRoom().getNameRoom());
-        assertEquals("PLUTON",mMeetings.get(6).getRoom().getNameRoom());
-        assertEquals("POSEIDON",mMeetings.get(7).getRoom().getNameRoom());
-        assertEquals("VENUS",mMeetings.get(8).getRoom().getNameRoom());
-        assertEquals("ZEUS",mMeetings.get(9).getRoom().getNameRoom());
+        assertEquals("DEMETER",mMeetings.get(0).getRoom().getNameRoom());
+        assertEquals("HADES",mMeetings.get(1).getRoom().getNameRoom());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(1).getDate());
+        assertEquals("POSEIDON",mMeetings.get(2).getRoom().getNameRoom());
+        assertEquals("ARES",mMeetings.get(3).getRoom().getNameRoom());
+        assertEquals("PLUTON",mMeetings.get(4).getRoom().getNameRoom());
+        assertEquals("ARES",mMeetings.get(5).getRoom().getNameRoom());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(5).getDate());
+        assertEquals("ZEUS",mMeetings.get(6).getRoom().getNameRoom());
+        assertEquals("VENUS",mMeetings.get(7).getRoom().getNameRoom());
+        assertEquals("GAIA",mMeetings.get(8).getRoom().getNameRoom());
+        assertEquals("HADES",mMeetings.get(9).getRoom().getNameRoom());
 
     }
 
     @Test
-    public void sortMeetingByDateFromOlderToRecentWithSuccess() {
+    public void sortMeetingByDateFromOlderToRecentWithSuccess() throws ParseException {
+        assertEquals(10,mMeetings.size());
+
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),mMeetings.get(0).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(1).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(2).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(3).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"22/08/2020"),mMeetings.get(4).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"22/08/2020"),mMeetings.get(5).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),mMeetings.get(6).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(7).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),mMeetings.get(8).getDate());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),mMeetings.get(9).getDate());
+
+        mMeetings = SortOrFilter.sortMeetingDateOlderToRecent(mMeetings);
+
+        assertEquals(10,mMeetings.size());
+
+        assertEquals("HADES",mMeetings.get(0).getRoom().getNameRoom());
+        assertEquals("GAIA",mMeetings.get(1).getRoom().getNameRoom());
+        assertEquals("VENUS",mMeetings.get(2).getRoom().getNameRoom());
+        assertEquals("ZEUS",mMeetings.get(3).getRoom().getNameRoom());
+        assertEquals("ARES",mMeetings.get(4).getRoom().getNameRoom());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),mMeetings.get(4).getDate());
+        assertEquals("PLUTON",mMeetings.get(5).getRoom().getNameRoom());
+        assertEquals("ARES",mMeetings.get(6).getRoom().getNameRoom());
+        assertEquals("POSEIDON",mMeetings.get(7).getRoom().getNameRoom());
+        assertEquals("HADES",mMeetings.get(8).getRoom().getNameRoom());
+        assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),mMeetings.get(8).getDate());
+        assertEquals("DEMETER",mMeetings.get(9).getRoom().getNameRoom());
 
     }
 

@@ -6,9 +6,8 @@ package com.ocr.mareu.utils;
 public enum SortOrFilterLabel {
     SORT_ROOM_ASC ,
     SORT_ROOM_DESC ,
-    SORT_DATE_ASC ,
-    SORT_DATE_DESC ,
-    SORT_DATE,
+    SORT_DATE_RECENT ,
+    SORT_DATE_OLDER ,
     FILTER_ROOM ,
     FILTER_DATE ,
     SORT_DEFAULT
