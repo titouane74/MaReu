@@ -20,11 +20,17 @@
                 <menu>
 
                     <item
-                        android:id="@+id/sort_date"
-                        android:title="@string/sort_date"/>
+                        android:id="@+id/sort_date_asc"
+                        android:title="@string/sort_date_asc"/>
                     <item
-                        android:id="@+id/sort_room"
-                        android:title="@string/sort_room"/>
+                        android:id="@+id/sort_date_desc"
+                        android:title="@string/sort_date_desc"/>
+                    <item
+                        android:id="@+id/sort_room_asc"
+                        android:title="@string/sort_room_asc"/>
+                    <item
+                        android:id="@+id/sort_room_desc"
+                        android:title="@string/sort_room_desc"/>
                 </menu>
             </item>
             <item

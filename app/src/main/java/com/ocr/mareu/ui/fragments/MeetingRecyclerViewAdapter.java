@@ -57,14 +57,18 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
-//        sMeetingApiService.addFakeMeeting();
+        sMeetingApiService.addFakeMeeting();
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
-        if (pOrder == SortOrFilterLabel.SORT_ROOM ) {
-            mMeetings = lSortOrFilter.sortMeetingRoom(mMeetings);
-        } else if (pOrder == SortOrFilterLabel.SORT_DATE ) {
-            mMeetings = lSortOrFilter.sortMeetingDate(mMeetings);
+        if (pOrder == SortOrFilterLabel.SORT_ROOM_ASC ) {
+            mMeetings = lSortOrFilter.sortMeetingRoomAsc(mMeetings);
+        } else if (pOrder == SortOrFilterLabel.SORT_ROOM_DESC ) {
+            mMeetings = lSortOrFilter.sortMeetingRoomDesc(mMeetings);
+        } else if (pOrder == SortOrFilterLabel.SORT_DATE_ASC ) {
+            mMeetings = lSortOrFilter.sortMeetingDateAsc(mMeetings);
+        } else if (pOrder == SortOrFilterLabel.SORT_DATE_DESC ) {
+            mMeetings = lSortOrFilter.sortMeetingDateDesc(mMeetings);
         } else if (pOrder == SortOrFilterLabel.FILTER_ROOM ) {
             mMeetings = lSortOrFilter.filterMeetingRoom(mMeetings, sMeetingApiService.getRoomsSelected());
         } else if (pOrder == SortOrFilterLabel.FILTER_DATE ) {

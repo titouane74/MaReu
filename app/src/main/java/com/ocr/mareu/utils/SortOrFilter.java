@@ -17,16 +17,12 @@ import java.util.List;
 
 public class SortOrFilter {
 
-    private static boolean isSortAscRoom = false;
-    private static boolean isSortAscDate = false;
-
-
     /**
      * Filtre les réunions en fonction du paramètre pOrder (salle de réunion ou date)
      * @param pMeetings : list : liste des réunions
      * @return : list : liste des réunions filtrée
      */
-    public List<Meeting> filterMeetingRoom(List<Meeting> pMeetings,List<Room> pListRoomsSelected ) {
+    public static List<Meeting> filterMeetingRoom(List<Meeting> pMeetings,List<Room> pListRoomsSelected ) {
         List<Meeting> lMeetingRoomFiltered = new ArrayList<>();
         for (Room lListRoom : pListRoomsSelected) {
             for (int i = 0; i < pMeetings.size(); i++) {
@@ -38,7 +34,7 @@ public class SortOrFilter {
         return lMeetingRoomFiltered;
     }
 
-    public List<Meeting> filterMeetingDate(List<Meeting> pMeetings, Calendar pDateSelected) {
+    public static  List<Meeting> filterMeetingDate(List<Meeting> pMeetings, Calendar pDateSelected) {
         List<Meeting> lMeetingDateFiltered = new ArrayList<>();
         String lCalSelectedFormat = new SimpleDateFormat("dd/MM/yyyy").format(pDateSelected.getTime());
         String lCalFormat;
@@ -58,41 +54,46 @@ public class SortOrFilter {
      * @param pMeetings : list : liste des réunions
      * @return : list : liste des réunions triée
      */
-    public List<Meeting>sortMeetingRoom(List<Meeting> pMeetings) {
+    public static List<Meeting>sortMeetingRoomAsc(List<Meeting> pMeetings) {
 
-        if (!isSortAscRoom) {
-            Collections.sort(pMeetings, new Comparator<Meeting>() {
-                @Override
-                public int compare(Meeting o1, Meeting o2) {
-                    return o1.getRoom().getNameRoom().compareTo(o2.getRoom().getNameRoom());
-                }
-            });
-            isSortAscRoom = true;
-        } else {
-            Collections.reverse(pMeetings);
-            isSortAscRoom = false;
-        }
+        Collections.sort(pMeetings, new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting o1, Meeting o2) {
+                return o1.getRoom().getNameRoom().compareTo(o2.getRoom().getNameRoom());
+            }
+        });
+
         return pMeetings;
     }
 
-    public List<Meeting> sortMeetingDate(List<Meeting> pMeetings) {
+    public static List<Meeting>sortMeetingRoomDesc(List<Meeting> pMeetings) {
 
-        if (!isSortAscDate) {
-            Collections.sort(pMeetings, new Comparator<Meeting>() {
-                @Override
-                public int compare(Meeting o1, Meeting o2) {
-                    if (o1.getStart().compareTo(o2.getStart()) == 0) {
-                        return o1.getEnd().compareTo(o2.getEnd());
-                    } else {
-                        return o1.getStart().compareTo(o2.getStart());
-                    }
+        Collections.reverse(pMeetings);
+
+        return pMeetings;
+    }
+
+
+    public static List<Meeting> sortMeetingDateAsc(List<Meeting> pMeetings) {
+
+        Collections.sort(pMeetings, new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting o1, Meeting o2) {
+                if (o1.getStart().compareTo(o2.getStart()) == 0) {
+                    return o1.getEnd().compareTo(o2.getEnd());
+                } else {
+                    return o1.getStart().compareTo(o2.getStart());
                 }
-            });
-            isSortAscDate = true;
-        } else {
-            Collections.reverse(pMeetings);
-            isSortAscDate = false;
-        }
+            }
+        });
+
+        return pMeetings;
+    }
+
+    public static List<Meeting> sortMeetingDateDesc(List<Meeting> pMeetings) {
+
+        Collections.reverse(pMeetings);
+
         return pMeetings;
     }
 

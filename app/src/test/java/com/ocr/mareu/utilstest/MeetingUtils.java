@@ -138,9 +138,9 @@ public class MeetingUtils {
             mApi.addMeeting(
                 new Meeting(new Room("HADES", Color.argb(100,3,169,244)),
                 "Sujet3",
-                convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
-                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 14:00:00:00"),
-                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 15:00:00:00"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 14:00:00:00"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 15:00:00:00"),
                 Arrays.asList("toto@gmail.com","titi@gmail.com")));
         } catch (ParseException pE) {
             pE.printStackTrace();
@@ -193,9 +193,9 @@ public class MeetingUtils {
             mApi.addMeeting(
                 new Meeting(new Room("DEMETER", Color.argb(100,76,175,80)),
                 "Sujet8",
-                convertDateTimeStringToCalendar(CST_FORMAT_DATE,"05/08/2020"),
-                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"05/08/2020 16:00:00:00"),
-                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"05/08/2020 18:00:00:00"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 16:00:00:00"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 18:00:00:00"),
                 Arrays.asList("toto@gmail.com","titi@gmail.com")));
         } catch (ParseException pE) {
             pE.printStackTrace();
