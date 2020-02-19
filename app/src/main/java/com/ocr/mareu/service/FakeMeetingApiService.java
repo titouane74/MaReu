@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
 
 /**
@@ -28,7 +27,7 @@ public class FakeMeetingApiService implements MeetingApiService {
     private List<Room> mRoomsSelected;
     private Calendar mStartMeeting;
     private Calendar mEndMeeting;
-    private boolean isMenuActive ;
+    private boolean isMenuActive = false;
 
     public static final String CST_FORMAT_DATE = "dd/MM/yyyy";
     public static final String CST_FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss:SS";

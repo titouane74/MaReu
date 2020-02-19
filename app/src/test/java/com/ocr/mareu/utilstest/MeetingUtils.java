@@ -40,6 +40,14 @@ public class MeetingUtils {
         return new Room("HADES", Color.argb(100,3,169,244)) ;
     }
 
+    public static List<Room> generate3Rooms() {
+        List<Room> lRooms = new ArrayList<>();
+        lRooms.add(new Room("HADES", Color.argb(100,3,169,244)));
+        lRooms.add(new Room("ARES", Color.argb(100,103,58,183)));
+        lRooms.add(new Room("POSEIDON", Color.argb(100,244,67,54)));
+        return lRooms;
+    }
+
     /**
      * Ajout de réunions pour les tests unitaires de addMeeting
      */
