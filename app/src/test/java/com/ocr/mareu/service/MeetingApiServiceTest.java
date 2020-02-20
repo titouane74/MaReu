@@ -2,9 +2,12 @@ package com.ocr.mareu.service;
 
 import android.content.Context;
 
+import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
+import com.ocr.mareu.utils.GsonTransformer;
+import com.ocr.mareu.utils.Validation;
 import com.ocr.mareu.utilstest.MeetingUtils;
 
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +18,7 @@ import org.mockito.Mock;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE;
 import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE_TIME;
@@ -26,6 +30,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 
@@ -79,6 +84,7 @@ public class MeetingApiServiceTest {
         List<Meeting> lMeetingsAdded = mApi.getMeetings();
         assertEquals("HADES",lMeetingsAdded.get(nbGetMeetings).getRoom().getNameRoom());
     }
+
 
     @Test
     public void getMeetingsWithSuccess() throws MeetingApiServiceException, ParseException {

@@ -1,9 +1,7 @@
 package com.ocr.mareu.utilstest;
 
 import android.graphics.Color;
-import android.view.View;
 
-import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.MeetingApiService;
@@ -163,6 +161,17 @@ public class MeetingUtils {
             convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 10:00:00:00"),
             convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 12:00:00:00"),
             Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        return mApi;
+    }
+
+
+    public static MeetingApiService generateReferenceMeeting(MeetingApiService mApi) throws ParseException, MeetingApiServiceException {
+        mApi.addMeeting( new Meeting(new Room("GAIA", Color.argb(100,0,150,135)),
+                "Sujet10 reunion avec quarante caractères",
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 06:00:00:00"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 08:00:00:00"),
+                Arrays.asList("toto@gmail.com","titi@gmail.com")));
         return mApi;
     }
 

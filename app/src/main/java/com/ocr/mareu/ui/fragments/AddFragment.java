@@ -55,11 +55,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private Button mBtnCancel, mBtnSave;
 
     private Calendar mDateCal;
-    private Calendar mTimeStartFormated;
-    private Calendar mTimeEndFormated;
     private Context mContext;
     private List<String> mParticipants;
-
     private OnListenerAdd mCallback;
 
     /**
@@ -206,16 +203,12 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         } catch (NullPointerException e) {
                             Toast.makeText(getContext(), R.string.err_meeting_date_empty, Toast.LENGTH_SHORT).show();
                         }
-
                         String lTimeFormated = sdf.format(lTimeCal.getTime());
-
                         if (lId == R.id.meeting_start_et) {
                             mTimeStartEt.setText(lTimeFormated);
-                            mTimeStartFormated = lTimeCal;
                             sMeetingApiService.setStartMeeting(lTimeCal);
                         } else if (lId == R.id.meeting_end_et) {
                             mTimeEndEt.setText(lTimeFormated);
-                            mTimeEndFormated = lTimeCal;
                             sMeetingApiService.setEndMeeting(lTimeCal);
                         }
                     }
@@ -231,12 +224,11 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * Ajout d'une réunion
      * @return : boolean : indicateur si la réunion a été ajouté ou non
      */
-    private boolean addMeeting(Calendar pStart, Calendar pEnd, Room pRoomSelected)  {
-
-        if (testFieldsValidity(pStart, pEnd)) {
+    public boolean addMeeting(Calendar pStart, Calendar pEnd, Room pRoomSelected)  {
+       if (testFieldsValidity(pStart, pEnd)) {
             try {
                 sMeetingApiService.addMeeting(
-                        new Meeting(pRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, mParticipants));
+                        new Meeting(pRoomSelected, mTopicEt.getText().toString(), mDateCal, pStart, pEnd, mParticipants));
 
                 Toast.makeText(getContext(), getString(R.string.action_add_meeting), Toast.LENGTH_SHORT).show();
                 return true;

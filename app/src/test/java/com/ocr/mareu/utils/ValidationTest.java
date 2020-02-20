@@ -7,6 +7,7 @@ import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.FakeMeetingApiService;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
+import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.utilstest.MeetingUtils;
 
 import org.junit.jupiter.api.AfterEach;
