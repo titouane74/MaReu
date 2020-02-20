@@ -64,7 +64,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void addMeetingWithSuccess() throws MeetingApiServiceException {
+    public void addMeetingWithSuccess() throws MeetingApiServiceException, ParseException {
         //Avant ajout on doit avoir 0 meeting
         int nbGetMeetings = mApi.getMeetings().size();
         assertEquals(0,nbGetMeetings);
@@ -80,7 +80,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void getMeetingsWithSuccess() throws MeetingApiServiceException {
+    public void getMeetingsWithSuccess() throws MeetingApiServiceException, ParseException {
         List<Meeting> lMeetingListExpected = MeetingUtils.add2FakeMeetingsExpected();
         int nbMeetingExpected = lMeetingListExpected.size();
 
@@ -105,7 +105,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void deleteMeetingWithSuccess() {
+    public void deleteMeetingWithSuccess() throws ParseException {
         int initialNbMeeting = mApi.getMeetings().size();
         assertEquals(0,initialNbMeeting);
 
@@ -123,7 +123,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void resetMeetingListWithSuccess() throws MeetingApiServiceException {
+    public void resetMeetingListWithSuccess() throws MeetingApiServiceException, ParseException {
 
         assertEquals(0,mApi.getMeetings().size());
 
@@ -144,7 +144,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void setAndGetMeetingSelectedWithSuccess() {
+    public void setAndGetMeetingSelectedWithSuccess() throws ParseException {
 
         Meeting lMeetingSelectedInitial = mApi.getMeetingSelected();
         assertNull(lMeetingSelectedInitial);

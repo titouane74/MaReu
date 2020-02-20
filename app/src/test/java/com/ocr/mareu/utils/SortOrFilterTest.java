@@ -42,7 +42,7 @@ public class SortOrFilterTest {
     Context contextMock;
 
     @Before
-    public void setup() throws MeetingApiServiceException {
+    public void setup() throws MeetingApiServiceException, ParseException {
         mApi = new FakeMeetingApiService();
         //mApi = DI.sMeetingApiService;
         assertThat(mApi, notNullValue());

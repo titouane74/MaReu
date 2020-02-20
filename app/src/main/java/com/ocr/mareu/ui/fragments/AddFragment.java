@@ -41,6 +41,7 @@ import static com.ocr.mareu.utils.Validation.CST_DATETIME;
 import static com.ocr.mareu.utils.Validation.CST_EMAIL;
 import static com.ocr.mareu.utils.Validation.CST_ROOM;
 import static com.ocr.mareu.utils.Validation.CST_TOPIC;
+import static com.ocr.mareu.utils.Validation.errorMessageToShow;
 
 public class AddFragment extends Fragment implements View.OnClickListener {
 
@@ -221,12 +222,18 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * @return : boolean : indicateur si la réunion a été ajouté ou non
      */
     private boolean addMeeting(Calendar pStart, Calendar pEnd, Room pRoomSelected)  {
-
+        String  lReturn;
+        boolean isValidTopic = true;
         boolean isValidDateTime = false;
         boolean isValidParticipants = false ;
         boolean isValidRoom = Validation.validationTextInputLayout(getContext(), CST_ROOM, mListLayout);
-        boolean isValidTopic = Validation.validationTextInputLayout(getContext(), CST_TOPIC, mTopic);
-
+        //boolean isValidTopic = Validation.validationTextInputLayout(getContext(), CST_TOPIC, mTopic);
+        lReturn = Validation.validationText(getContext(), CST_TOPIC,
+                Objects.requireNonNull(mTopic.getEditText()).getText().toString().trim());
+        if (lReturn != null) {
+            errorMessageToShow(mTopic,lReturn);
+            isValidTopic = false;
+        }
         boolean isValidDate = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mDate);
         boolean isValidTimeStart = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeStart);
         boolean isValidTimeEnd = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeEnd);

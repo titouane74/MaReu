@@ -53,6 +53,23 @@ public class Validation {
         return isValid;
     }
 
+    public static String validationText(Context pContext, String pObjectToValide, String pValue) {
+        String lTextToReturn = null;
+
+        if (pValue.isEmpty()  && pObjectToValide != CST_EMAIL) {
+            lTextToReturn = pContext.getString(R.string.err_empty_field);
+        } else if (pObjectToValide == CST_EMAIL) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(pValue).matches()){
+                lTextToReturn = pContext.getString(R.string.err_invalid_email_address);
+            }
+        } else if (pObjectToValide == CST_TOPIC) {
+            if (pValue.length() > 40) {
+                lTextToReturn = pContext.getString(R.string.err_topic_length);
+            }
+        }
+        return lTextToReturn;
+    }
+
     /**
      * Affiche le message d'erreur sur le textinputlayout
      * @param pTextInputLayout : textinputlayout : textinputlayout concerné par l'erreur
@@ -62,6 +79,9 @@ public class Validation {
     public static boolean errorMessage (TextInputLayout pTextInputLayout, String pMessage) {
         pTextInputLayout.setError(pMessage);
         return false ;
+    }
+    public static void errorMessageToShow (TextInputLayout pTextInputLayout, String pMessage) {
+        pTextInputLayout.setError(pMessage);
     }
 
     /**
