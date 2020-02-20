@@ -27,6 +27,7 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.MeetingApiServiceException;
+import com.ocr.mareu.utils.GsonTransformer;
 import com.ocr.mareu.utils.Validation;
 
 import java.text.DateFormat;
@@ -41,6 +42,7 @@ import static com.ocr.mareu.utils.Validation.CST_DATETIME;
 import static com.ocr.mareu.utils.Validation.CST_EMAIL;
 import static com.ocr.mareu.utils.Validation.CST_ROOM;
 import static com.ocr.mareu.utils.Validation.CST_TOPIC;
+import static com.ocr.mareu.utils.Validation.errorMessageDateTimeToShow;
 import static com.ocr.mareu.utils.Validation.errorMessageToShow;
 
 public class AddFragment extends Fragment implements View.OnClickListener {
@@ -55,6 +57,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private Calendar mTimeStartFormated;
     private Calendar mTimeEndFormated;
     private Context mContext;
+    private List<String> mParticipants;
 
     private OnListenerAdd mCallback;
 
@@ -67,7 +70,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     }
 
     public AddFragment() { }
-
 
     public static AddFragment newInstance() {
         return new AddFragment();
@@ -98,8 +100,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 if(event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_ENTER) {
                         String lEmailText = Objects.requireNonNull(mEmailEt.getText()).toString().trim();
-
-                        if (!Validation.validationTextInputLayout(getContext(), CST_EMAIL, mEmail)) {
+                        String lReturn = Validation.validationText(getContext(), CST_EMAIL, lEmailText);
+                        if (!errorMessageToShow(mEmail, lReturn)){
                             return false;
                         } else {
                             final Chip lChipEmail = new Chip(mContext);
@@ -222,45 +224,63 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * @return : boolean : indicateur si la réunion a été ajouté ou non
      */
     private boolean addMeeting(Calendar pStart, Calendar pEnd, Room pRoomSelected)  {
-        String  lReturn;
-        boolean isValidTopic = true;
-        boolean isValidDateTime = false;
-        boolean isValidParticipants = false ;
-        boolean isValidRoom = Validation.validationTextInputLayout(getContext(), CST_ROOM, mListLayout);
-        //boolean isValidTopic = Validation.validationTextInputLayout(getContext(), CST_TOPIC, mTopic);
-        lReturn = Validation.validationText(getContext(), CST_TOPIC,
-                Objects.requireNonNull(mTopic.getEditText()).getText().toString().trim());
-        if (lReturn != null) {
-            errorMessageToShow(mTopic,lReturn);
-            isValidTopic = false;
-        }
-        boolean isValidDate = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mDate);
-        boolean isValidTimeStart = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeStart);
-        boolean isValidTimeEnd = Validation.validationTextInputLayout(getContext(), CST_DATETIME, mTimeEnd);
 
-        if (isValidDate && isValidTimeStart && isValidTimeEnd  ) {
-            isValidDateTime = Validation.validationDateTime(getContext(), mTimeStart, mTimeEnd, pStart, pEnd);
-        }
-        List<String> lParticipants = Validation.validationParticipants(getContext(), mEmail,mEmailGroup);
-
-        if (lParticipants.size() > 0)
-            isValidParticipants = true;
-
-        if (!isValidTopic | !isValidParticipants | !isValidRoom | !isValidDate | !isValidTimeStart | !isValidTimeEnd | !isValidDateTime ) {
-            Toast.makeText(getContext(),getString(R.string.action_add_meeting_missing_field), Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
+        if (testsValidationChamps(pStart, pEnd)) {
             try {
                 sMeetingApiService.addMeeting(
-                        new Meeting(pRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, lParticipants));
+                        new Meeting(pRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, mParticipants));
 
-                Toast.makeText(getContext(),getString(R.string.action_add_meeting), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.action_add_meeting), Toast.LENGTH_SHORT).show();
                 return true;
-            } catch  (MeetingApiServiceException pE)
-            {
+            } catch (MeetingApiServiceException pE) {
                 Toast.makeText(getContext(), R.string.err_meeting_room_not_free, Toast.LENGTH_LONG).show();
                 return false;
             }
+        } else {
+            Toast.makeText(getContext(), getString(R.string.action_add_meeting_missing_field), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    private boolean testsValidationChamps(Calendar pStart, Calendar pEnd) {
+        String  lReturn;
+        boolean isValidDateTime = true;
+        boolean isValidParticipants = true ;
+
+        lReturn = Validation.validationText(getContext(), CST_ROOM,Objects.requireNonNull(mListLayout.getEditText()).getText().toString().trim());
+        boolean isValidRoom = errorMessageToShow(mListLayout,lReturn);
+
+        lReturn = Validation.validationText(getContext(), CST_TOPIC,Objects.requireNonNull(mTopic.getEditText()).getText().toString().trim());
+        boolean isValidTopic = errorMessageToShow(mTopic,lReturn);
+
+        lReturn = Validation.validationText(getContext(), CST_DATETIME,Objects.requireNonNull(mDate.getEditText()).getText().toString().trim());
+        boolean isValidDate = errorMessageToShow(mDate,lReturn);
+
+        lReturn = Validation.validationText(getContext(), CST_DATETIME,Objects.requireNonNull(mTimeStart.getEditText()).getText().toString().trim());
+        boolean isValidTimeStart = errorMessageToShow(mTimeStart, lReturn);
+
+        lReturn = Validation.validationText(getContext(), CST_DATETIME,Objects.requireNonNull(mTimeEnd.getEditText()).getText().toString().trim());
+        boolean isValidTimeEnd = errorMessageToShow(mTimeEnd, lReturn);
+
+        if (isValidDate && isValidTimeStart && isValidTimeEnd  ) {
+            lReturn = Validation.validationDateTime(getContext(), pStart, pEnd);
+            if (lReturn.contains("/")) {
+                List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+                isValidDateTime = errorMessageDateTimeToShow(mTimeStart, lError.get(0), mTimeEnd,lError.get(2));
+            }
+        }
+
+        lReturn = Validation.validationParticipants(getContext(), mEmailGroup);
+        if (lReturn.contains("@")) {
+            mParticipants = GsonTransformer.getGsonToListString(lReturn);
+        } else {
+            isValidParticipants = errorMessageToShow(mEmail, lReturn);
+        }
+
+        if (!isValidTopic | !isValidParticipants | !isValidRoom | !isValidDate | !isValidTimeStart | !isValidTimeEnd | !isValidDateTime ) {
+            return false;
+        } else {
+            return true;
         }
     }
 
