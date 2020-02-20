@@ -7,12 +7,10 @@ import com.ocr.mareu.model.Room;
 
 import com.ocr.mareu.utilstest.MeetingUtils;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -28,11 +26,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.MockitoAnnotations.initMocks;
+
 
 /**
  * Created by Florence LE BOURNOT on 18/02/2020
  */
-@RunWith(MockitoJUnitRunner.class)
+
 public class MeetingApiServiceTest {
 
     private MeetingApiService mApi;
@@ -42,8 +42,9 @@ public class MeetingApiServiceTest {
     @Mock
     Context contextMock;
 
-    @Before
+    @BeforeEach
     public void setup() {
+        initMocks(this);
         mApi = new FakeMeetingApiService();
         //mApi = DI.sMeetingApiService;
         assertThat(mApi, notNullValue());
@@ -52,7 +53,7 @@ public class MeetingApiServiceTest {
         mRooms = mApi.getRooms();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         mApi = null;
     }

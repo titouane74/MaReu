@@ -44,6 +44,7 @@ import static com.ocr.mareu.utils.Validation.CST_ROOM;
 import static com.ocr.mareu.utils.Validation.CST_TOPIC;
 import static com.ocr.mareu.utils.Validation.errorMessageDateTimeToShow;
 import static com.ocr.mareu.utils.Validation.errorMessageToShow;
+import static com.ocr.mareu.utils.Validation.transformChipGroupInString;
 
 public class AddFragment extends Fragment implements View.OnClickListener {
 
@@ -93,6 +94,17 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         mListRoom.setAdapter(lAdapter);
         mListRoom.setShowSoftInputOnFocus(false);
         mListRoom.setOnClickListener(v -> mListRoom.showDropDown() );
+        mListRoom.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode != KeyEvent.KEYCODE_DPAD_DOWN || keyCode != KeyEvent.KEYCODE_DPAD_UP) {
+                        mListRoom.showDropDown();
+                    }
+                }
+                return true;
+            }
+        });
 
         mEmailEt.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -120,14 +132,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 return false;
             }
         });
-        mDateEt.setOnClickListener(v ->
-                displayCalendarDialog ());
-        mTimeStartEt.setOnClickListener(v ->
-                displayTimeDialog(v));
-        mTimeEndEt.setOnClickListener(v ->
-                displayTimeDialog(v));
-        mBtnCancel.setOnClickListener(v ->
-                mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)));
+        mDateEt.setOnClickListener(v -> displayCalendarDialog ());
+        mTimeStartEt.setOnClickListener(v -> displayTimeDialog(v));
+        mTimeEndEt.setOnClickListener(v -> displayTimeDialog(v));
+        mBtnCancel.setOnClickListener(v -> mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)));
         mBtnSave.setOnClickListener(v -> {
             if (addMeeting(sMeetingApiService.getStartMeeting(), sMeetingApiService.getEndMeeting(),
                     sMeetingApiService.extractRoomSelected(mListRoom.getText().toString()))) {
@@ -225,7 +233,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      */
     private boolean addMeeting(Calendar pStart, Calendar pEnd, Room pRoomSelected)  {
 
-        if (testsValidationChamps(pStart, pEnd)) {
+        if (testFieldsValidity(pStart, pEnd)) {
             try {
                 sMeetingApiService.addMeeting(
                         new Meeting(pRoomSelected, mTopicEt.getText().toString(), mDateCal, mTimeStartFormated, mTimeEndFormated, mParticipants));
@@ -242,7 +250,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private boolean testsValidationChamps(Calendar pStart, Calendar pEnd) {
+    private boolean testFieldsValidity(Calendar pStart, Calendar pEnd) {
         String  lReturn;
         boolean isValidDateTime = true;
         boolean isValidParticipants = true ;
@@ -269,8 +277,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 isValidDateTime = errorMessageDateTimeToShow(mTimeStart, lError.get(0), mTimeEnd,lError.get(2));
             }
         }
-
-        lReturn = Validation.validationParticipants(getContext(), mEmailGroup);
+        String lParts = transformChipGroupInString(mEmailGroup);
+        lReturn = Validation.validationParticipants(getContext(), lParts);
         if (lReturn.contains("@")) {
             mParticipants = GsonTransformer.getGsonToListString(lReturn);
         } else {

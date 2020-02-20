@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activities.AddActivity"/>
+        <activity android:name=".ui.activities.AddActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".ui.activities.DetailActivity"/>
         <activity android:name=".ui.activities.MainActivity"
             android:configChanges="orientation">

@@ -9,12 +9,10 @@ import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utilstest.MeetingUtils;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.text.ParseException;
 import java.util.List;
@@ -25,13 +23,11 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Created by Florence LE BOURNOT on 19/02/2020
  */
-@RunWith(MockitoJUnitRunner.class)
 public class SortOrFilterTest {
 
     private MeetingApiService mApi;
@@ -41,8 +37,10 @@ public class SortOrFilterTest {
     @Mock
     Context contextMock;
 
-    @Before
+    @BeforeEach
     public void setup() throws MeetingApiServiceException, ParseException {
+        initMocks(this);
+
         mApi = new FakeMeetingApiService();
         //mApi = DI.sMeetingApiService;
         assertThat(mApi, notNullValue());
@@ -59,7 +57,7 @@ public class SortOrFilterTest {
         assertEquals(10,mMeetings.size());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         mApi = null;
     }

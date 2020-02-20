@@ -1,12 +1,6 @@
 package com.ocr.mareu.utils;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.AutoCompleteTextView;
-
-import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
@@ -15,31 +9,37 @@ import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utilstest.MeetingUtils;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
 
+import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE;
+import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE_TIME;
+import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
+import static com.ocr.mareu.utils.Validation.CST_DATETIME;
+import static com.ocr.mareu.utils.Validation.CST_EMAIL;
+import static com.ocr.mareu.utils.Validation.CST_ROOM;
 import static com.ocr.mareu.utils.Validation.CST_TOPIC;
-import static com.ocr.mareu.utils.Validation.errorMessageToShow;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Created by Florence LE BOURNOT on 20/02/2020
  */
-@RunWith(MockitoJUnitRunner.class)
+
 public class ValidationTest {
 
 
@@ -50,8 +50,10 @@ public class ValidationTest {
     @Mock
     Context contextMock;
 
-    @Before
+    @BeforeEach
     public void setup() throws MeetingApiServiceException, ParseException {
+        initMocks(this);
+
         mApi = new FakeMeetingApiService();
         //mApi = DI.sMeetingApiService;
         assertThat(mApi, notNullValue());
@@ -68,13 +70,42 @@ public class ValidationTest {
         assertEquals(10,mMeetings.size());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         mApi = null;
     }
 
     @Test
-    public void validationTextInputLayoutWithSuccess () {
+    public void validationTextRoomWithSuccess () {
+        String lReturn = null;
+
+        lReturn = Validation.validationText(contextMock, CST_ROOM,"NOT EMPTY KEYBOARD INPUT BLOCKED");
+        assertNull(lReturn);
+    }
+
+    @Test
+    public void validationTextRoomFailing () {
+        String lReturn = null;
+
+        when(contextMock.getString(R.string.err_empty_field))
+                .thenReturn("Le champ ne peut pas être vide");
+
+        lReturn = Validation.validationText(contextMock, CST_ROOM,"");
+        assertEquals("Le champ ne peut pas être vide",lReturn);
+    }
+
+    @Test
+    public void validationTextTopicWithSuccess () {
+        String lReturn = null;
+
+        lReturn = Validation.validationText(contextMock, CST_TOPIC,"Un texte normal");
+        assertNull(lReturn);
+
+        lReturn = Validation.validationText(contextMock, CST_TOPIC,"Réunion avec un texte avec 40 caractères");
+        assertNull(lReturn);
+
+        lReturn = Validation.validationText(contextMock, CST_TOPIC,"Texte avec > + - / @ 1 2 , ; ");
+        assertNull(lReturn);
 
     }
 
@@ -94,26 +125,178 @@ public class ValidationTest {
         lReturn = Validation.validationText(contextMock, CST_TOPIC,
                 "Réunion avec un texte avec plus de quarante caractères");
         assertEquals("Libellé du sujet trop long",lReturn);
+    }
+
+    @Test
+    public void giventDate_whenEmpty_thenFail() {
+        String lReturn = null;
+
+        when(contextMock.getString(R.string.err_empty_field))
+                .thenReturn("Le champ ne peut pas être vide");
+
+        lReturn = Validation.validationText(contextMock, CST_DATETIME,"");
+        assertEquals("Le champ ne peut pas être vide",lReturn);
+    }
+
+    @Test
+    public void givenDate_whenBeforeNow_thenFail() {
+//        Erreur gérée dans DatePicker
+//        when(contextMock.getString(R.string.err_anterior_date))
+//                .thenReturn("La date ne peut pas être antérieur à aujourd\\'hui");
+    }
+
+    @Test
+    public void givenTimeStart_whenEmpty_thenFail() {
+        String lReturn = null;
+
+        when(contextMock.getString(R.string.err_empty_field))
+                .thenReturn("Le champ ne peut pas être vide");
+
+        lReturn = Validation.validationText(contextMock, CST_DATETIME,"");
+        assertEquals("Le champ ne peut pas être vide",lReturn);
+    }
+
+    @Test
+    public void givenTimeStart_whenBeforeNow_thenFail() {
+        String lReturn = null;
+
+        Calendar lStart = Calendar.getInstance(Locale.FRANCE);
+        lStart.add(Calendar.HOUR_OF_DAY, -1);
+        Calendar lEnd = Calendar.getInstance(Locale.FRANCE);
+        lEnd.add(Calendar.HOUR_OF_DAY,+1);
+
+        when(contextMock.getString(R.string.err_start_before_now))
+                .thenReturn("L\'heure de début ne peut pas être antérieure à maintenant");
+
+        lReturn = Validation.validationDateTime(contextMock, lStart,lEnd);
+        List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+
+        assertEquals("L\'heure de début ne peut pas être antérieure à maintenant",lError.get(0));
 
     }
 
     @Test
-    public void validationDateTimeWithSuccess() {
+    public void giventStartTime_whenAfterNow_thenSuccess() {
+        String lReturn = null;
+
+        Calendar lStart = Calendar.getInstance(Locale.FRANCE);
+        lStart.add(Calendar.HOUR_OF_DAY, +2);
+        Calendar lEnd = Calendar.getInstance(Locale.FRANCE);
+        lEnd.add(Calendar.HOUR_OF_DAY,+3);
+
+        lReturn = Validation.validationDateTime(contextMock, lStart,lEnd);
+        List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+
+        assertTrue(lError.get(0).isEmpty());
 
     }
 
     @Test
-    public void validationDateTimeFailing() {
+    public void givenTimeEnd_whenEmpty_thenFail() {
+        String lReturn = null;
+
+        when(contextMock.getString(R.string.err_empty_field))
+                .thenReturn("Le champ ne peut pas être vide");
+
+        lReturn = Validation.validationText(contextMock, CST_DATETIME,"");
+        assertEquals("Le champ ne peut pas être vide",lReturn);
+    }
+
+    @Test
+    public void givenEndTime_whenBeforeStartTime_thenFail() {
+        String lReturn = null;
+
+        Calendar lStart = Calendar.getInstance(Locale.FRANCE);
+        lStart.add(Calendar.HOUR_OF_DAY, +5);
+        Calendar lEnd = Calendar.getInstance(Locale.FRANCE);
+        lEnd.add(Calendar.HOUR_OF_DAY,+2);
+
+        when(contextMock.getString(R.string.err_end_before_start))
+                .thenReturn("L\'heure de fin ne peut pas être antérieure à l\'heure début");
+
+        lReturn = Validation.validationDateTime(contextMock, lStart,lEnd);
+        List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+
+        assertEquals("L\'heure de fin ne peut pas être antérieure à l\'heure début",lError.get(2));
+
+    }
+
+    @Test
+    public void givenEndTime_whenAfterStartTime_thenSuccess() {
+        String lReturn = null;
+
+        Calendar lStart = Calendar.getInstance(Locale.FRANCE);
+        lStart.add(Calendar.HOUR_OF_DAY, +2);
+        Calendar lEnd = Calendar.getInstance(Locale.FRANCE);
+        lEnd.add(Calendar.HOUR_OF_DAY,+3);
+
+        lReturn = Validation.validationDateTime(contextMock, lStart,lEnd);
+        List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+
+        assertTrue(lError.get(1).isEmpty());
+
+    }
+
+    @Test
+    public void validationEmailAddressWithSuccess() {
+        String lReturn ;
+
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto@gmail.com");
+        assertNull(lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto12@gmail.com");
+        assertNull(lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto-et-titi@gmail.com");
+        assertNull(lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto*24@gmail.com");
+        assertNull(lReturn);
+
+    }
+
+    @Test
+    public void validationEmailAddressFailing() {
+        String lReturn ;
+
+        when(contextMock.getString(R.string.err_invalid_email_address))
+                .thenReturn("Entrez une adresse mail valide");
+
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto");
+        assertEquals("Entrez une adresse mail valide",lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto@");
+        assertEquals("Entrez une adresse mail valide",lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto@gmail");
+        assertEquals("Entrez une adresse mail valide",lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto@gmail.");
+        assertEquals("Entrez une adresse mail valide",lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"@.");
+        assertEquals("Entrez une adresse mail valide",lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"@gmail.");
+        assertEquals("Entrez une adresse mail valide",lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"@gmail.com");
+        assertEquals("Entrez une adresse mail valide",lReturn);
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"to&to>@gmail.com");
+        assertEquals("Entrez une adresse mail valide",lReturn);
 
     }
 
     @Test
     public void validationParticipantsWithSuccess() {
+        String lReturn ;
+
+        lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto@gmail.com,toto12@gmail.com," +
+                "toto-et-titi@gmail.com,toto*24@gmail.com");
+        assertNull(lReturn);
 
     }
 
     @Test
     public void validationParticipantsFailing() {
+        String lReturn ;
+
+        when(contextMock.getString(R.string.err_list_participants))
+                .thenReturn("La liste des participants ne peut pas être vide");
+
+        lReturn = Validation.validationParticipants(contextMock, "");
+        assertEquals("La liste des participants ne peut pas être vide",lReturn);
 
     }
 

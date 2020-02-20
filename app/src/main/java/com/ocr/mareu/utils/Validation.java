@@ -1,7 +1,6 @@
 package com.ocr.mareu.utils;
 
 import android.content.Context;
-import android.util.Patterns;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -11,7 +10,7 @@ import com.ocr.mareu.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * Created by Florence LE BOURNOT on 23/01/2020
@@ -23,6 +22,16 @@ public class Validation {
     public static final String CST_DATETIME = "DATETIME";
     public static final String CST_ROOM = "ROOM";
 
+
+    public static final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
+    );
     /**
      * Validation du contenu d'une zone de type TextInputLayout ou affichage du message d'erreur
      * @param pContext : context : context
@@ -35,7 +44,8 @@ public class Validation {
         if (pValue.isEmpty()  && pObjectToValide != CST_EMAIL) {
             lTextToReturn = pContext.getString(R.string.err_empty_field);
         } else if (pObjectToValide == CST_EMAIL) {
-            if (!Patterns.EMAIL_ADDRESS.matcher(pValue).matches()){
+            if (!EMAIL_ADDRESS_PATTERN.matcher(pValue).matches()){
+
                 lTextToReturn = pContext.getString(R.string.err_invalid_email_address);
             }
         } else if (pObjectToValide == CST_TOPIC) {
@@ -104,23 +114,28 @@ public class Validation {
      * @param pEmailGroup : chipgroup : liste des participants
      * @return : list : liste des particiants préparés pour l'ajout dans Meeting
      */
-    public static String validationParticipants (Context pContext,ChipGroup pEmailGroup) {
 
+    public static String transformChipGroupInString(ChipGroup pEmailGroup) {
         int lNbPart = pEmailGroup.getChildCount();
         List<String> lParts = new ArrayList<>();
-        String lReturn;
-
         if (lNbPart == 0) {
-            lReturn = pContext.getString(R.string.err_list_participants);
+            return "";
         } else {
             for (int i = 0; i < lNbPart; i++) {
                 Chip lChildEmail = (Chip) pEmailGroup.getChildAt(i);
                 String lEmail = lChildEmail.getText().toString();
                 lParts.add(lEmail);
-                }
-            lReturn = GsonTransformer.getGsonToString(lParts);
             }
+            return GsonTransformer.getGsonToString(lParts);
+        }
+    }
 
-        return lReturn;
+    public static String validationParticipants (Context pContext,String pParts) {
+
+        if (pParts.isEmpty()) {
+            return pContext.getString(R.string.err_list_participants);
+        } else {
+            return pParts;
+        }
     }
 }

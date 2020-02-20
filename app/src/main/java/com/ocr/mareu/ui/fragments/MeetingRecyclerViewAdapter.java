@@ -59,11 +59,11 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
 //        sMeetingApiService.addFakeMeeting();
-        try {
-            sMeetingApiService.addFakeValidMeetingsLongList();
-        } catch (MeetingApiServiceException pE) {
-            pE.printStackTrace();
-        }
+//        try {
+//            sMeetingApiService.addFakeValidMeetingsLongList();
+//        } catch (MeetingApiServiceException pE) {
+//            pE.printStackTrace();
+//        }
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
