@@ -6,12 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -76,7 +73,7 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
      * en focntion de l'appelant
      */
     public interface OnListenerAdd {
-        void onButtonCancelClickedClose(View pView, String pActivateFragment);
+        void onButtonCancelClickedClose(View pView);
     }
 
     public AddFragment() { }
@@ -138,11 +135,11 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
         mDateEt.setOnClickListener(v -> displayCalendarDialog ());
         mTimeStartEt.setOnClickListener(v -> displayTimeDialog(v));
         mTimeEndEt.setOnClickListener(v -> displayTimeDialog(v));
-        mBtnCancel.setOnClickListener(v -> mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)));
+        mBtnCancel.setOnClickListener(v -> mCallback.onButtonCancelClickedClose(v));
         mBtnSave.setOnClickListener(v -> {
             if (addMeeting(sMeetingApiService.getStartMeeting(), sMeetingApiService.getEndMeeting(),
                     sMeetingApiService.extractRoomSelected(mListRoom.getText().toString()))) {
-                mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)); }
+                mCallback.onButtonCancelClickedClose(v); }
         });
     }
 

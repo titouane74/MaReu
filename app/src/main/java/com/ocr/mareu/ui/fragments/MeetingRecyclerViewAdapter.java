@@ -45,7 +45,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     public interface OnRecyclerViewListener {
         void onItemClicked(View pView);
         void listToUpdate(Enum pOrder);
-        void invalidateMenuRV();
     }
 
     private Context mContext;
@@ -83,7 +82,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             sMeetingApiService.setIsMenuActive(false);
         }
         mCallback = (OnRecyclerViewListener) mContext;
-        mCallback.invalidateMenuRV();
     }
 
     @NonNull

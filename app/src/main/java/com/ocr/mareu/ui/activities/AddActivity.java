@@ -71,10 +71,9 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
     /**
      * Ferme l'activité d'ajout d"une réunion sur le clique du bouton cancel au niveau du fragment
      * @param pView : view : vue
-     * @param pActivateFragment : string : fragment à afficher, sert en mode table
      */
     @Override
-    public void onButtonCancelClickedClose(View pView, String pActivateFragment) {
+    public void onButtonCancelClickedClose(View pView) {
         if (getSupportActionBar()!= null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);

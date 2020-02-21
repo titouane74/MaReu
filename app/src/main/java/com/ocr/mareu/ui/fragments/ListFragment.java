@@ -60,10 +60,4 @@ public class ListFragment extends BaseFragment implements MeetingRecyclerViewAda
         configureRecyclerView(pOrder);
     }
 
-    /**
-     * Invalidation du menu depuis la recyclerview, sert dans la MainActivity
-     */
-    @Override
-    public void invalidateMenuRV() { }
-
 }
