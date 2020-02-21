@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends Fragment {
 
-    public abstract BaseFragment newInstance();
     protected abstract int getFragmentLayout();
     protected abstract void configureDesign(View pView);
 

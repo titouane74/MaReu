@@ -110,6 +110,19 @@ public interface MeetingApiService {
     Calendar getEndMeeting ();
 
     /**
+     * Sauvegarde la réunion qui a été supprimée pour fermer l'écran de détail si celui-ci
+     * contient l'élément supprimé
+     * @param pMeeting : meeting : réunion supprimée
+     */
+    void setMeetingDeleted (Meeting pMeeting);
+
+    /**
+     * Récupère la réunion supprimée
+     * @return : meeting : réunion supprimée
+     */
+    Meeting getMeetingDeleted ();
+
+    /**
      * Suppression d'une réunion
      * @param pMeeting : objet : réunion à supprimer
      */
@@ -132,6 +145,9 @@ public interface MeetingApiService {
      */
     void addFakeMeeting();
 
+    /**
+     * Ajout de réunions pour les tests longue liste
+     */
     void addFakeValidMeetingsLongList() throws MeetingApiServiceException;
 
     }

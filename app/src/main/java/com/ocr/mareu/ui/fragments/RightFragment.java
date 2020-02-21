@@ -31,11 +31,10 @@ public class RightFragment extends BaseFragment implements View.OnClickListener 
         void onButtonAddMeetingClicked(View pView);
     }
 
-    @Override
-    public BaseFragment newInstance() {
-        return new RightFragment();
-    }
-
+    /**
+     * Retourne le layout à utilisr pour le fragment pour la création de la view
+     * @return : layout : layout à utiliser
+     */
     @Override
     protected int getFragmentLayout() { return R.layout.fragment_right; }
 

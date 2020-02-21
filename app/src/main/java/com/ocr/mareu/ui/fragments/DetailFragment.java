@@ -37,13 +37,14 @@ public class DetailFragment  extends BaseFragment {
     public DetailFragment() {}
 
     @Override
-    public BaseFragment newInstance() { return new DetailFragment(); }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Retourne le layout à utilisr pour le fragment pour la création de la view
+     * @return : layout : layout à utiliser
+     */
     @Override
     protected int getFragmentLayout() { return R.layout.fragment_detail; }
 

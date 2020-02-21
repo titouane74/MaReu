@@ -69,18 +69,20 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
     private OnListenerAdd mCallback;
 
     /**
-     * Inteface permettant de gérer le bouton d'annulation dans l'AddActivity ou le MainActivity
+     * Inteface permettant de gérer le bouton d'annulation dans le MainActivity
      * en focntion de l'appelant
      */
+    //TODO voir si encore utile
     public interface OnListenerAdd {
         void onButtonCancelClickedClose(View pView);
     }
 
     public AddFragment() { }
 
-    @Override
-    public BaseFragment newInstance()  { return new AddFragment(); }
-
+    /**
+     * Retourne le layout à utilisr pour le fragment pour la création de la view
+     * @return : layout : layout à utiliser
+     */
     @Override
     protected int getFragmentLayout() { return R.layout.fragment_scroll_add; }
 
@@ -249,6 +251,12 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Test si les champs de la réunion sont valides ou non
+     * @param pStart : calendar : heure de début de la réunion
+     * @param pEnd : calendar : heure de fin de la réunion
+     * @return : boolean : indicateur si la réunion peut-être créée ou non
+     */
     private boolean testFieldsValidity(Calendar pStart, Calendar pEnd) {
         String  lReturn;
         boolean isValidDateTime = true;

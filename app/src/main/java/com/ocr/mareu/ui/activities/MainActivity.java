@@ -241,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 
     /**
      * Méthode d'affichage du fragment de la partie droite lors du changement de fragment
-     *
      * @param pFragment : fragment : fragment à afficher
      */
     private void replaceRightFragment(final Fragment pFragment) {
@@ -252,6 +251,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         lFragmentTransaction.commit();
     }
 
+    /**
+     * Méthode d'affichage du fragment de la partie gauche lors du changement de fragment ou en mode téléphone
+     * @param pFragment : fragment : fragment à afficher
+     */
     private void replaceListFragment(final Fragment pFragment) {
         final FragmentManager lFragmentManager = getSupportFragmentManager();
         final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
@@ -285,11 +288,11 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             } else {
                 replaceListFragment(mListFragment);
                 mAddFab.show();
-                invalidateOptionsMenu();
             }
         }
         manageActionBar(false);
         mListFragment.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
+        invalidateOptionsMenu();
     }
 
     /**
@@ -314,24 +317,31 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     public void onItemClicked(View pView) {
         manageActionBar(true);
-        if (mMainLayout.getTag() == getString(R.string.tablet)) {
             mDetailFragment = new DetailFragment();
-            if (!mDetailFragment.isVisible())
+            if (mMainLayout.getTag() == getString(R.string.tablet)) {
                 replaceRightFragment(mDetailFragment);
-        } else {
-            mDetailFragment = new DetailFragment();
-            if (!mDetailFragment.isVisible())
+            } else {
                 replaceListFragment(mDetailFragment);
-        }
+            }
     }
 
     /**
      * Liste des réunions à mettre à jour en fonction du tri ou filtre passé
+     * En mode tablette, si le détail d'une réunion est affichée et qu'elle est supprimée
+     * de la liste alors on ferme le détail pour réactiver le fragment de droite
      * @param pOrder : string : ordre de tri ou filtre passé pour afficher la liste
      */
     @Override
     public void listToUpdate(Enum pOrder) {
         mListFragment.listToUpdate(pOrder);
+        if (sMeetingApiService.getMeetingSelected() == sMeetingApiService.getMeetingDeleted()) {
+            if (mMainLayout.getTag() == getString(R.string.tablet)) {
+                if (mDetailFragment.isVisible()) {
+                    mRightFragment = new RightFragment();
+                    replaceRightFragment(mRightFragment);
+                }
+            }
+        }
         invalidateOptionsMenu();
     }
 }

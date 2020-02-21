@@ -25,9 +25,10 @@ public class ListFragment extends BaseFragment implements MeetingRecyclerViewAda
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public BaseFragment newInstance() {return new ListFragment() ;}
-
+    /**
+     * Retourne le layout à utilisr pour le fragment pour la création de la view
+     * @return : layout : layout à utiliser
+     */
     @Override
     protected int getFragmentLayout() { return R.layout.fragment_list; }
 

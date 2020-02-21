@@ -12,14 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 
-
 /**
  * Created by Florence LE BOURNOT on 14/02/2020
  */
 public class ParticipantsListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private ParticipantRecyclerViewAdapter mListAdapter;
 
     public ParticipantsListFragment() {}
 
@@ -43,6 +41,7 @@ public class ParticipantsListFragment extends Fragment {
      * Configuration du recyclerview de la liste des participants
      */
     private void configureRecyclerView() {
+        ParticipantRecyclerViewAdapter mListAdapter;
         mListAdapter = new ParticipantRecyclerViewAdapter(getActivity());
         mRecyclerView.setAdapter(mListAdapter);
     }

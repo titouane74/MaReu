@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
-import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.SortOrFilter;
 import com.ocr.mareu.utils.SortOrFilterLabel;
 
@@ -123,6 +122,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                         .setPositiveButton(mContext.getString(R.string.btn_yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                sMeetingApiService.setMeetingDeleted(lMeeting);
                                 sMeetingApiService.deleteMeeting(lMeeting);
                                 mCallback.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
                             }

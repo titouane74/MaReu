@@ -7,7 +7,6 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -23,6 +22,7 @@ public class FakeMeetingApiService implements MeetingApiService {
     private List<Meeting> mMeetings ;
     private List<Room> mRooms = new ArrayList<>();
     private Meeting mMeetingSelected;
+    private Meeting mMeetingdeleted;
     private Calendar mDateSelected;
     private List<Room> mRoomsSelected;
     private Calendar mStartMeeting;
@@ -31,7 +31,6 @@ public class FakeMeetingApiService implements MeetingApiService {
 
     public static final String CST_FORMAT_DATE = "dd/MM/yyyy";
     public static final String CST_FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss:SS";
-    public static final String CST_FORMAT_TIME = "HH:mm:ss:SS";
 
     /**
      * Constructor initialisant les listes de réunion et de salle
@@ -172,6 +171,24 @@ public class FakeMeetingApiService implements MeetingApiService {
     public Calendar getEndMeeting () { return mEndMeeting; }
 
     /**
+     * Sauvegarde la réunion qui a été supprimée pour fermer l'écran de détail si celui-ci
+     * contient l'élément supprimé
+     * @param pMeeting : meeting : réunion supprimée
+     */
+    @Override
+    public void setMeetingDeleted (Meeting pMeeting) { mMeetingdeleted = pMeeting; }
+
+    /**
+     * Récupère la réunion supprimée
+     * @return : meeting : réunion supprimée
+     */
+    @Override
+    public Meeting getMeetingDeleted () {
+        return  mMeetingdeleted;
+    }
+
+
+    /**
      * Suppression d'une réunion
      * @param pMeeting : objet : réunion à supprimer
      */
@@ -249,6 +266,9 @@ public class FakeMeetingApiService implements MeetingApiService {
         }
     }
 
+    /**
+     * Ajout de réunions pour les tests manuels longue liste
+     */
     public void addFakeValidMeetingsLongList() throws MeetingApiServiceException {
 
         addMeeting(
