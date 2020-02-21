@@ -43,6 +43,10 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem pItem) {
         if (pItem.getItemId()==android.R.id.home){
             finish();
+            if (getSupportActionBar()!= null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                getSupportActionBar().setDisplayShowHomeEnabled(false);
+            }
         }
         return super.onOptionsItemSelected(pItem);
     }

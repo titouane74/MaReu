@@ -33,11 +33,7 @@ import butterknife.ButterKnife;
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.ShowDialog.showCalendarDialog;
 import static com.ocr.mareu.utils.ShowDialog.showDialogRooms;
-/*
-import static com.ocr.mareu.utils.SortOrFilter.SORT_DATE;
-import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
-import static com.ocr.mareu.utils.SortOrFilter.SORT_ROOM;
-*/
+
 
 public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
         MeetingRecyclerViewAdapter.OnRecyclerViewListener {
@@ -125,8 +121,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             case R.id.action_remove_filter:
                 mListFragment.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
                 return true;
-            case R.id.action_sort:
-                return true;
             case R.id.sort_date_recent:
                 mListFragment.listToUpdate(SortOrFilterLabel.SORT_DATE_RECENT);
                 return true;
@@ -138,8 +132,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 return true;
             case R.id.sort_room_desc:
                 mListFragment.listToUpdate(SortOrFilterLabel.SORT_ROOM_DESC);
-                return true;
-            case R.id.action_filter:
                 return true;
             case R.id.filter_date:
                 sMeetingApiService.setDateSelected(showCalendarDialog(mContext,mListFragment));
@@ -301,11 +293,11 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
      */
     @Override
     public void onItemClicked(View pView) {
-        manageActionBar(true);
         if (mMainLayout.getTag() == getString(R.string.tablet)) {
             mDetailFragment = new DetailFragment();
             if (!mDetailFragment.isVisible())
                 showRightFragment(mDetailFragment);
+                manageActionBar(true);
         } else {
             Intent lIntent = new Intent(mContext, DetailActivity.class);
             mContext.startActivity(lIntent);
