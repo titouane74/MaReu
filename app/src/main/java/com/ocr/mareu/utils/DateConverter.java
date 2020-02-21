@@ -18,10 +18,14 @@ public class DateConverter {
      * @return : calendar
      * @throws ParseException
      */
-    public static Calendar convertDateTimeStringToCalendar(String pFormat,String pDate) throws ParseException {
+    public static Calendar convertDateTimeStringToCalendar(String pFormat,String pDate)  {
         SimpleDateFormat lSimpleDateFormat = new SimpleDateFormat(pFormat, Locale.FRENCH);
         Calendar lCalendar  = Calendar.getInstance();
-        lCalendar.setTime(lSimpleDateFormat.parse(pDate));
+        try {
+            lCalendar.setTime(lSimpleDateFormat.parse(pDate));
+        } catch (ParseException pE) {
+            pE.printStackTrace();
+        }
         return lCalendar;
     }
 }

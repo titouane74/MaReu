@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.text.ParseException;
 import java.util.List;
 
 import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE;
@@ -38,7 +37,7 @@ public class SortOrFilterTest {
     Context contextMock;
 
     @BeforeEach
-    public void setup() throws MeetingApiServiceException, ParseException {
+    public void setup() throws MeetingApiServiceException {
         initMocks(this);
 
         mApi = new FakeMeetingApiService();
@@ -92,7 +91,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void filterMeetingByDateWithSuccess() throws ParseException {
+    public void filterMeetingByDateWithSuccess()  {
         assertEquals(10,mMeetings.size());
 
         assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),mMeetings.get(0).getDate());
@@ -117,7 +116,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void sortMeetingByRoomAscendantWithSuccess() throws ParseException {
+    public void sortMeetingByRoomAscendantWithSuccess() {
         assertEquals(10,mMeetings.size());
 
         assertEquals("POSEIDON",mMeetings.get(0).getRoom().getNameRoom());
@@ -151,7 +150,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void sortMeetingByRoomDescendantWithSuccess() throws ParseException {
+    public void sortMeetingByRoomDescendantWithSuccess() {
         assertEquals(10,mMeetings.size());
 
         assertEquals("POSEIDON",mMeetings.get(0).getRoom().getNameRoom());
@@ -186,7 +185,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void sortMeetingByDateFromRecentToOlderWithSuccess() throws ParseException {
+    public void sortMeetingByDateFromRecentToOlderWithSuccess() {
 
         assertEquals(10,mMeetings.size());
 
@@ -221,7 +220,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void sortMeetingByDateFromOlderToRecentWithSuccess() throws ParseException {
+    public void sortMeetingByDateFromOlderToRecentWithSuccess()  {
         assertEquals(10,mMeetings.size());
 
         assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),mMeetings.get(0).getDate());

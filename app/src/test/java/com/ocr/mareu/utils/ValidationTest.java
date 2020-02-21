@@ -7,7 +7,6 @@ import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.FakeMeetingApiService;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
-import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.utilstest.MeetingUtils;
 
 import org.junit.jupiter.api.AfterEach;
@@ -15,14 +14,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE;
-import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE_TIME;
-import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
 import static com.ocr.mareu.utils.Validation.CST_DATETIME;
 import static com.ocr.mareu.utils.Validation.CST_EMAIL;
 import static com.ocr.mareu.utils.Validation.CST_ROOM;
@@ -33,7 +28,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -52,7 +46,7 @@ public class ValidationTest {
     Context contextMock;
 
     @BeforeEach
-    public void setup() throws MeetingApiServiceException, ParseException {
+    public void setup() throws MeetingApiServiceException {
         initMocks(this);
 
         mApi = new FakeMeetingApiService();

@@ -6,8 +6,6 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
-import com.ocr.mareu.utils.GsonTransformer;
-import com.ocr.mareu.utils.Validation;
 import com.ocr.mareu.utilstest.MeetingUtils;
 
 import org.junit.jupiter.api.AfterEach;
@@ -15,10 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE;
 import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE_TIME;
@@ -30,7 +26,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 
@@ -70,7 +65,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void addMeetingWithSuccess() throws MeetingApiServiceException, ParseException {
+    public void addMeetingWithSuccess() throws MeetingApiServiceException {
         //Avant ajout on doit avoir 0 meeting
         int nbGetMeetings = mApi.getMeetings().size();
         assertEquals(0,nbGetMeetings);
@@ -87,7 +82,7 @@ public class MeetingApiServiceTest {
 
 
     @Test
-    public void getMeetingsWithSuccess() throws MeetingApiServiceException, ParseException {
+    public void getMeetingsWithSuccess() throws MeetingApiServiceException {
         List<Meeting> lMeetingListExpected = MeetingUtils.add2FakeMeetingsExpected();
         int nbMeetingExpected = lMeetingListExpected.size();
 
@@ -112,7 +107,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void deleteMeetingWithSuccess() throws ParseException {
+    public void deleteMeetingWithSuccess() {
         int initialNbMeeting = mApi.getMeetings().size();
         assertEquals(0,initialNbMeeting);
 
@@ -130,7 +125,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void resetMeetingListWithSuccess() throws MeetingApiServiceException, ParseException {
+    public void resetMeetingListWithSuccess() throws MeetingApiServiceException {
 
         assertEquals(0,mApi.getMeetings().size());
 
@@ -151,7 +146,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void setAndGetMeetingSelectedWithSuccess() throws ParseException {
+    public void setAndGetMeetingSelectedWithSuccess() {
 
         Meeting lMeetingSelectedInitial = mApi.getMeetingSelected();
         assertNull(lMeetingSelectedInitial);
@@ -184,7 +179,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void setAndGetDateSelectedWithSuccess() throws ParseException {
+    public void setAndGetDateSelectedWithSuccess() {
 
         Calendar lDateInitial = mApi.getDateSelected();
         assertNull(lDateInitial);
@@ -199,7 +194,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void setAndGetStartMeetingWithSuccess() throws ParseException {
+    public void setAndGetStartMeetingWithSuccess() {
 
         Calendar lDateTimeInitial = mApi.getStartMeeting();
         assertNull(lDateTimeInitial);
@@ -214,7 +209,7 @@ public class MeetingApiServiceTest {
     }
 
     @Test
-    public void setAndGetEndMeetingWithSuccess() throws ParseException {
+    public void setAndGetEndMeetingWithSuccess()  {
 
         Calendar lDateTimeInitial = mApi.getEndMeeting();
         assertNull(lDateTimeInitial);

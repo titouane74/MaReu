@@ -13,9 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +28,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -42,7 +46,7 @@ public class AddMeetingTest {
     Context contextMock;
 
     @BeforeEach
-    public void setup() throws MeetingApiServiceException, ParseException {
+    public void setup() throws MeetingApiServiceException {
         initMocks(this);
         mApi = new FakeMeetingApiService();
         assertThat(mApi, notNullValue());
@@ -61,7 +65,7 @@ public class AddMeetingTest {
 
     @DisplayName("Case 1 : Meeting Start = Reference start")
     @Test
-    public void givenNewMeeting_whenSameStart_thenFail() throws ParseException {
+    public void givenNewMeeting_whenSameStart_thenFail() {
         String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
@@ -86,7 +90,7 @@ public class AddMeetingTest {
 
     @DisplayName("Case 2 : Meeting end = Reference End")
     @Test
-    public void givenNewMeeting_whenSameEnd_thenFail() throws ParseException {
+    public void givenNewMeeting_whenSameEnd_thenFail()  {
         String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
@@ -111,7 +115,7 @@ public class AddMeetingTest {
 
     @DisplayName("Case 3 : Meeting start before Reference start and Meeting end before Reference start")
     @Test
-    public void givenNewMeeting_whenBeforeReference_thenCreateMeeting() throws ParseException {
+    public void givenNewMeeting_whenBeforeReference_thenCreateMeeting() {
         String lReturn = null;
 
         when(contextMock.getString(R.string.action_add_meeting))
@@ -136,7 +140,7 @@ public class AddMeetingTest {
 
     @DisplayName("Case 4 : Meeting start before Reference start and Meeting end same Reference end")
     @Test
-    public void givenNewMeeting_whenEndSameReferenceStart_thenCreateMeeting() throws ParseException {
+    public void givenNewMeeting_whenEndSameReferenceStart_thenCreateMeeting()  {
         String lReturn = null;
 
         when(contextMock.getString(R.string.action_add_meeting))
@@ -162,7 +166,7 @@ public class AddMeetingTest {
     @DisplayName("Case 5 : Meeting start before Reference start and " +
             "Meeting end before Reference end and after Reference start")
     @Test
-    public void givenNewMeeting_whenEndDuringReference_thenFail() throws ParseException {
+    public void givenNewMeeting_whenEndDuringReference_thenFail() {
         String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
@@ -186,7 +190,7 @@ public class AddMeetingTest {
 
     @DisplayName("Case 6 : Meeting start before Reference start and Meeting end after Reference end")
     @Test
-    public void givenNewMeeting_whenReferenceDuringNewMeeting_thenFail() throws ParseException {
+    public void givenNewMeeting_whenReferenceDuringNewMeeting_thenFail() {
         String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
@@ -211,7 +215,7 @@ public class AddMeetingTest {
 
     @DisplayName("Case 7 : Meeting start after Reference start and Meeting end before Reference end")
     @Test
-    public void givenNewMeeting_whenNewMeetingDuringReference_thenFail() throws ParseException {
+    public void givenNewMeeting_whenNewMeetingDuringReference_thenFail() {
         String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
@@ -236,7 +240,7 @@ public class AddMeetingTest {
     @DisplayName("Case 8 : Meeting start after Reference start and before Reference end and" +
             "Meeting end after Reference end")
     @Test
-    public void givenNewMeeting_whenReferenceEndDuringNewMeeting_thenFail() throws ParseException {
+    public void givenNewMeeting_whenReferenceEndDuringNewMeeting_thenFail() {
         String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
@@ -261,7 +265,7 @@ public class AddMeetingTest {
 
     @DisplayName("Case 9 : Meeting start = Reference end and Meeting end after Reference end")
     @Test
-    public void givenNewMeeting_whenStartSameReferenceEnd_thenCreateMeeting() throws ParseException {
+    public void givenNewMeeting_whenStartSameReferenceEnd_thenCreateMeeting() {
         String lReturn = null;
 
         when(contextMock.getString(R.string.action_add_meeting))
@@ -286,7 +290,7 @@ public class AddMeetingTest {
 
     @DisplayName("Case 10 : Meeting start and end after Reference end")
     @Test
-    public void givenNewMeeting_whenAfterReference_thenCreateMeeting() throws ParseException {
+    public void givenNewMeeting_whenAfterReference_thenCreateMeeting() {
         String lReturn = null;
 
         when(contextMock.getString(R.string.action_add_meeting))
@@ -308,4 +312,54 @@ public class AddMeetingTest {
         assertEquals("Réunion ajoutée",lReturn);
 
     }
+
+
+    @ParameterizedTest
+    @CsvSource({"01/08/2020 06:00:00:00,01/08/2020 07:00:00:00",
+            "01/08/2020 07:00:00:00,01/08/2020 08:00:00:00",
+            "01/08/2020 05:00:00:00,01/08/2020 07:00:00:00",
+            "01/08/2020 05:30:00:00,01/08/2020 09:00:00:00",
+            "01/08/2020 06:30:00:00,01/08/2020 07:30:00:00",
+            "01/08/2020 07:00:00:00,01/08/2020 09:00:00:00"})
+    void givenMeeting_whenMeetingTimeInCommonWithReference_thenFail(String pStart, String pEnd) {
+        final Meeting lMeeting = new Meeting(
+                new Room("GAIA", Color.argb(100,0,150,135)),
+                "Réunion non valide ",
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME, pStart),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME, pEnd),
+                Arrays.asList("toto@gmail.com","titi@gmail.com"));
+
+        Executable lExecutable = new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                mApi.addMeeting(lMeeting);
+            }};
+
+        assertThrows(MeetingApiServiceException.class,lExecutable);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"01/08/2020 04:00:00:00,01/08/2020 05:00:00:00",
+            "01/08/2020 05:00:00:00,01/08/2020 06:00:00:00",
+            "01/08/2020 08:00:00:00,01/08/2020 09:00:00:00",
+            "01/08/2020 09:00:00:00,01/08/2020 10:00:00:00"})
+    void givenMeeting_whenMeetingTimeNotInCommonWitgReference_thenSuccess(String pStart, String pEnd) {
+        final Meeting lMeeting = new Meeting(
+                new Room("GAIA", Color.argb(100,0,150,135)),
+                "Réunion valide ",
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME, pStart),
+                convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME, pEnd),
+                Arrays.asList("toto@gmail.com","titi@gmail.com"));
+
+        Executable lExecutable = new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                mApi.addMeeting(lMeeting);
+            }};
+
+        assertDoesNotThrow(lExecutable);
+    }
+
 }

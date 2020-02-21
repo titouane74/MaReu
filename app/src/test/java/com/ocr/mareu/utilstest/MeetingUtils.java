@@ -7,7 +7,6 @@ import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +20,7 @@ import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
  */
 public class MeetingUtils {
 
-    public static Meeting generate1Meeting() throws ParseException {
+    public static Meeting generate1Meeting() {
         Meeting lMeeting = null;
         lMeeting = new Meeting(new Room("HADES", Color.argb(100,3,169,244)),
                 "Sujet3",
@@ -40,7 +39,7 @@ public class MeetingUtils {
         return lRooms;
     }
 
-    public static List<Meeting> add2FakeMeetingsExpected() throws ParseException {
+    public static List<Meeting> add2FakeMeetingsExpected()  {
         List<Meeting> lMeetings = new ArrayList<>();
 
             lMeetings.add(
@@ -61,7 +60,7 @@ public class MeetingUtils {
         return lMeetings;
     }
 
-    public static MeetingApiService add2FakeMeetings(MeetingApiService mApi) throws MeetingApiServiceException, ParseException {
+    public static MeetingApiService add2FakeMeetings(MeetingApiService mApi) throws MeetingApiServiceException {
 
         mApi.addMeeting(
             new Meeting(new Room("POSEIDON", Color.argb(100,244,67,54)),
@@ -80,7 +79,7 @@ public class MeetingUtils {
         return mApi;
     }
 
-    public static MeetingApiService addFakeValidMeetingsLongList(MeetingApiService mApi) throws MeetingApiServiceException, ParseException {
+    public static MeetingApiService addFakeValidMeetingsLongList(MeetingApiService mApi) throws MeetingApiServiceException  {
 
         mApi.addMeeting(
             new Meeting(new Room("POSEIDON", Color.argb(100,244,67,54)),
@@ -165,7 +164,7 @@ public class MeetingUtils {
     }
 
 
-    public static MeetingApiService generateReferenceMeeting(MeetingApiService mApi) throws ParseException, MeetingApiServiceException {
+    public static MeetingApiService generateReferenceMeeting(MeetingApiService mApi) throws MeetingApiServiceException {
         mApi.addMeeting( new Meeting(new Room("GAIA", Color.argb(100,0,150,135)),
                 "Sujet10 reunion avec quarante caractères",
                 convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
