@@ -61,7 +61,7 @@ public class AddActivity extends AppCompatActivity implements AddFragment.OnList
     private void configureAndShowAddFragment() {
         mAddFragment = (AddFragment) getSupportFragmentManager().findFragmentById(R.id.frame_add);
         if (mAddFragment == null) {
-            mAddFragment = AddFragment.newInstance();
+            mAddFragment = new AddFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame_add, mAddFragment)
                     .commit();

@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     private void configureAndShowRightFragment() {
         mRightFragment = (RightFragment) getSupportFragmentManager().findFragmentById(R.id.frame_right);
         if (mRightFragment == null && findViewById(R.id.frame_right) != null) {
-            mRightFragment = RightFragment.newInstance();
+            mRightFragment = new RightFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame_right, mRightFragment )
                     .commit();
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     public void onButtonAddMeetingClicked(View pView) {
         if (mRightFragment != null && mRightFragment.isVisible()) {
-            mAddFragment = AddFragment.newInstance();
+            mAddFragment = new AddFragment();
             showRightFragment(mAddFragment);
         }
         manageActionBar(true);
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public void onItemClicked(View pView) {
         manageActionBar(true);
         if (mMainLayout.getTag() == getString(R.string.tablet)) {
-            mDetailFragment = DetailFragment.newInstance();
+            mDetailFragment = new DetailFragment();
             if (!mDetailFragment.isVisible())
                 showRightFragment(mDetailFragment);
         } else {

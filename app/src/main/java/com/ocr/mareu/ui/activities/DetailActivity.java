@@ -53,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
     private void configureAndShowDetailFragment() {
         mDetailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_detail);
         if (mDetailFragment == null) {
-            mDetailFragment = DetailFragment.newInstance();
+            mDetailFragment = new DetailFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame_detail, mDetailFragment)
                     .commit();

@@ -1,24 +1,20 @@
 package com.ocr.mareu.ui.fragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.utils.SortOrFilterLabel;
 
-//import static com.ocr.mareu.utils.SortOrFilter.SORT_DEFAULT;
 
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
  */
-public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter.OnRecyclerViewListener{
+public class ListFragment extends BaseFragment implements MeetingRecyclerViewAdapter.OnRecyclerViewListener{
 
     private RecyclerView mRecyclerView;
 
@@ -30,14 +26,17 @@ public class ListFragment extends Fragment implements MeetingRecyclerViewAdapter
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View lView = inflater.inflate(R.layout.fragment_list,container,false);
-        mRecyclerView = (RecyclerView) lView;
+    public BaseFragment newInstance() {return new ListFragment() ;}
+
+    @Override
+    protected int getFragmentLayout() { return R.layout.fragment_list; }
+
+    @Override
+    protected void configureDesign(View pView) {
+        mRecyclerView = (RecyclerView) pView;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         configureRecyclerView(SortOrFilterLabel.SORT_DEFAULT);
-
-        return lView;
     }
 
     /**

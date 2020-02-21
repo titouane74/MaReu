@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import butterknife.BindView;
+
 import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.Validation.CST_DATETIME;
 import static com.ocr.mareu.utils.Validation.CST_EMAIL;
@@ -46,13 +48,23 @@ import static com.ocr.mareu.utils.Validation.errorMessageDateTimeToShow;
 import static com.ocr.mareu.utils.Validation.errorMessageToShow;
 import static com.ocr.mareu.utils.Validation.transformChipGroupInString;
 
-public class AddFragment extends Fragment implements View.OnClickListener {
+public class AddFragment extends BaseFragment implements View.OnClickListener {
 
-    private AutoCompleteTextView mListRoom;
-    private ChipGroup mEmailGroup ;
-    private TextInputLayout mListLayout, mEmail, mTopic, mDate, mTimeStart, mTimeEnd ;
-    private TextInputEditText mEmailEt, mTopicEt, mDateEt, mTimeStartEt, mTimeEndEt ;
-    private Button mBtnCancel, mBtnSave;
+    @BindView(R.id.room_list) AutoCompleteTextView mListRoom;
+    @BindView(R.id.room_list_layout) TextInputLayout mListLayout;
+    @BindView(R.id.email_address) TextInputLayout mEmail;
+    @BindView(R.id.email_address_et) TextInputEditText mEmailEt;
+    @BindView(R.id.email_group_cg) ChipGroup mEmailGroup;
+    @BindView(R.id.meeting_topic) TextInputLayout mTopic;
+    @BindView(R.id.meeting_topic_et) TextInputEditText mTopicEt;
+    @BindView(R.id.meeting_date) TextInputLayout mDate;
+    @BindView(R.id.meeting_date_et) TextInputEditText mDateEt;
+    @BindView(R.id.meeting_start) TextInputLayout mTimeStart;
+    @BindView(R.id.meeting_start_et) TextInputEditText mTimeStartEt;
+    @BindView(R.id.meeting_end) TextInputLayout mTimeEnd;
+    @BindView(R.id.meeting_end_et) TextInputEditText mTimeEndEt;
+    @BindView(R.id.btn_cancel) Button mBtnCancel;
+    @BindView(R.id.btn_save) Button mBtnSave;
 
     private Calendar mDateCal;
     private Context mContext;
@@ -69,21 +81,15 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
     public AddFragment() { }
 
-    public static AddFragment newInstance() {
-        return new AddFragment();
-    }
+    @Override
+    public BaseFragment newInstance()  { return new AddFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    protected int getFragmentLayout() { return R.layout.fragment_scroll_add; }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View lView = inflater.inflate(R.layout.fragment_scroll_add, container, false);
-        mContext = lView.getContext();
-
-        bindObjectToCode(lView);
+    @Override //onCreateView
+    protected void configureDesign(View pView) {
+        mContext = pView.getContext();
 
         List<Room> lRooms = sMeetingApiService.getRooms();
 
@@ -136,9 +142,13 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         mBtnSave.setOnClickListener(v -> {
             if (addMeeting(sMeetingApiService.getStartMeeting(), sMeetingApiService.getEndMeeting(),
                     sMeetingApiService.extractRoomSelected(mListRoom.getText().toString()))) {
-                    mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)); }
+                mCallback.onButtonCancelClickedClose(v, getString(R.string.fragment_right)); }
         });
-        return lView;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     /**
@@ -282,28 +292,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         } else {
             return true;
         }
-    }
-
-    /**
-     * Lie les objets du layout au code
-     * @param pView : view : vue
-     */
-    private void bindObjectToCode(View pView) {
-        mListRoom = pView.findViewById(R.id.room_list) ;
-        mListLayout = pView.findViewById(R.id.room_list_layout) ;
-        mEmail = pView.findViewById(R.id.email_address);
-        mEmailEt = pView.findViewById(R.id.email_address_et) ;
-        mEmailGroup = pView.findViewById(R.id.email_group_cg) ;
-        mTopic = pView.findViewById(R.id.meeting_topic) ;
-        mTopicEt = pView.findViewById(R.id.meeting_topic_et) ;
-        mDate = pView.findViewById(R.id.meeting_date) ;
-        mDateEt = pView.findViewById(R.id.meeting_date_et) ;
-        mTimeStart = pView.findViewById(R.id.meeting_start) ;
-        mTimeStartEt = pView.findViewById(R.id.meeting_start_et) ;
-        mTimeEnd = pView.findViewById(R.id.meeting_end) ;
-        mTimeEndEt = pView.findViewById(R.id.meeting_end_et) ;
-        mBtnCancel = pView.findViewById(R.id.btn_cancel);
-        mBtnSave = pView.findViewById(R.id.btn_save);
     }
 
     @Override
