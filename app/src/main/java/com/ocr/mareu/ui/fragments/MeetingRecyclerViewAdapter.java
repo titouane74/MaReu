@@ -56,7 +56,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
-//        sMeetingApiService.addFakeMeeting();
+        sMeetingApiService.addFakeMeeting();
 //        sMeetingApiService.addFakeValidMeetingsLongList();
         SortOrFilter lSortOrFilter = new SortOrFilter();
 

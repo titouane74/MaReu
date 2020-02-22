@@ -1,4 +1,4 @@
-package com.ocr.mareu.ui;
+package com.ocr.mareu.utils;
 
 import android.view.View;
 
