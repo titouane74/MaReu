@@ -110,7 +110,6 @@ public class Validation {
     /**
      * Validation du contenu  de la liste des particpants et préparation de la liste pour l'ajout dans Meeting
      * ou affichage du message d'erreur
-     * @param pContext : context : context
      * @param pEmailGroup : chipgroup : liste des participants
      * @return : list : liste des particiants préparés pour l'ajout dans Meeting
      */

@@ -72,7 +72,6 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
      * Inteface permettant de gérer le bouton d'annulation dans le MainActivity
      * en focntion de l'appelant
      */
-    //TODO voir si encore utile
     public interface OnListenerAdd {
         void onButtonCancelClickedClose(View pView);
     }

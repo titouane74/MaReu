@@ -191,8 +191,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         if (mMainLayout.getTag() == getString(R.string.tablet)) {
             List<Fragment> lFragmentList = getSupportFragmentManager().getFragments();
             for (Fragment lFragment : lFragmentList) {
-                if (lFragment.getTag() != getString(R.string.fragment_right)
-                        || lFragment.getTag() != getString(R.string.fragment_list)) {
+                if (lFragment.getTag() != getString(R.string.fragment_right) || lFragment.getTag() != getString(R.string.fragment_list)) {
                     if (!lFragment.isDetached()) {
                         lFragment.onDetach();
                         getSupportFragmentManager().beginTransaction().remove(lFragment).commit();

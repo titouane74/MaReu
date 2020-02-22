@@ -8,6 +8,7 @@ import com.ocr.mareu.service.MeetingApiService;
  */
 public class DI {
 
+    private DI(){}
     /**
      * Création d'une nouvelle instance de l'API Service
      */

@@ -46,7 +46,6 @@ public class MeetingApiServiceTest {
     public void setup() {
         initMocks(this);
         mApi = new FakeMeetingApiService();
-        //mApi = DI.sMeetingApiService;
         assertThat(mApi, notNullValue());
 
         mApi.initializeRooms(contextMock);
