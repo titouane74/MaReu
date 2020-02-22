@@ -89,7 +89,6 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
     @Override //onCreateView
     protected void configureDesign(View pView) {
         mContext = pView.getContext();
-
         List<Room> lRooms = sMeetingApiService.getRooms();
 
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
