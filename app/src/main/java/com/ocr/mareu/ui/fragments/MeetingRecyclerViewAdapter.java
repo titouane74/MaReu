@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
+import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.SortOrFilter;
 import com.ocr.mareu.utils.SortOrFilterLabel;
 
@@ -28,8 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.ocr.mareu.di.DI.sIsExecutedOneTimeForTest;
 import static com.ocr.mareu.di.DI.sMeetingApiService;
-
 
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
@@ -56,8 +57,18 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
-        sMeetingApiService.addFakeMeeting();
-//        sMeetingApiService.addFakeValidMeetingsLongList();
+        //Test et chargement uniquement pour les tests de la soutenance
+        if (!sIsExecutedOneTimeForTest) {
+            sMeetingApiService.addFakeMeeting();
+/*
+            try {
+                sMeetingApiService.addFakeValidMeetingsLongList();
+            } catch (MeetingApiServiceException pE) {
+                pE.printStackTrace();
+            }
+*/
+            sIsExecutedOneTimeForTest = true;
+        }
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sMeetingApiService.getMeetings();
@@ -114,6 +125,10 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sMeetingApiService.setMeetingDeleted(lMeeting);
+                sMeetingApiService.deleteMeeting(lMeeting);
+                mCallback.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
+/*
                 AlertDialog.Builder lAlertDialogBuiler = new AlertDialog.Builder(mContext);
                 lAlertDialogBuiler .setTitle(mContext.getString(R.string.app_name));
                 lAlertDialogBuiler
@@ -135,6 +150,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                         });
                 AlertDialog lAlertDialog = lAlertDialogBuiler.create();
                 lAlertDialog.show();
+*/
             }
         });
 

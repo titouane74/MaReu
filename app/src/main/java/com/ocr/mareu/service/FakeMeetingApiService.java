@@ -22,7 +22,7 @@ public class FakeMeetingApiService implements MeetingApiService {
     private List<Meeting> mMeetings ;
     private List<Room> mRooms = new ArrayList<>();
     private Meeting mMeetingSelected;
-    private Meeting mMeetingdeleted;
+    private Meeting mMeetingDeleted;
     private Calendar mDateSelected;
     private List<Room> mRoomsSelected;
     private Calendar mStartMeeting;
@@ -176,7 +176,7 @@ public class FakeMeetingApiService implements MeetingApiService {
      * @param pMeeting : meeting : réunion supprimée
      */
     @Override
-    public void setMeetingDeleted (Meeting pMeeting) { mMeetingdeleted = pMeeting; }
+    public void setMeetingDeleted (Meeting pMeeting) { mMeetingDeleted = pMeeting; }
 
     /**
      * Récupère la réunion supprimée
@@ -184,7 +184,7 @@ public class FakeMeetingApiService implements MeetingApiService {
      */
     @Override
     public Meeting getMeetingDeleted () {
-        return  mMeetingdeleted;
+        return mMeetingDeleted;
     }
 
 
@@ -270,7 +270,6 @@ public class FakeMeetingApiService implements MeetingApiService {
      * Ajout de réunions pour les tests manuels longue liste
      */
     public void addFakeValidMeetingsLongList() throws MeetingApiServiceException {
-
         addMeeting(
                 new Meeting(new Room("POSEIDON", Color.argb(100,244,67,54)),
                         "Sujet",

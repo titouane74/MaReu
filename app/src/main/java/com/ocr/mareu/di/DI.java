@@ -16,4 +16,6 @@ public class DI {
 
     public static MeetingApiService getMeetingApiService() { return sMeetingApiService; }
 
+    public static boolean sIsExecutedOneTimeForTest = false ;
+
 }
