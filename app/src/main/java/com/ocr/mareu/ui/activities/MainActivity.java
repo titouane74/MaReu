@@ -305,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         if (mRightFragment != null && mRightFragment.isVisible()) {
             mAddFragment = new AddFragment();
             replaceRightFragment(mAddFragment);
+            mAddFab.hide();
         }
     }
 
@@ -316,8 +317,9 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     public void onItemClicked(View pView) {
         manageActionBar(true);
-            mDetailFragment = new DetailFragment();
-            if (mMainLayout.getTag() == getString(R.string.tablet)) {
+        mDetailFragment = new DetailFragment();
+        mAddFab.hide();
+        if (mMainLayout.getTag() == getString(R.string.tablet)) {
                 replaceRightFragment(mDetailFragment);
             } else {
                 replaceListFragment(mDetailFragment);
