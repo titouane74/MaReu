@@ -36,7 +36,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 
-import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.ui.activities.MainActivity.sApiService;
 import static com.ocr.mareu.utils.Validation.CST_DATETIME;
 import static com.ocr.mareu.utils.Validation.CST_EMAIL;
 import static com.ocr.mareu.utils.Validation.CST_ROOM;
@@ -88,7 +88,7 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
     @Override //onCreateView
     protected void configureDesign(View pView) {
         mContext = pView.getContext();
-        List<Room> lRooms = sMeetingApiService.getRooms();
+        List<Room> lRooms = sApiService.getRooms();
 
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
         mListRoom.setAdapter(lAdapter);
@@ -137,8 +137,8 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
         mTimeEndEt.setOnClickListener(v -> displayTimeDialog(v));
         mBtnCancel.setOnClickListener(v -> mCallback.onButtonCancelClickedClose(v));
         mBtnSave.setOnClickListener(v -> {
-            if (addMeeting(sMeetingApiService.getStartMeeting(), sMeetingApiService.getEndMeeting(),
-                    sMeetingApiService.extractRoomSelected(mListRoom.getText().toString()))) {
+            if (addMeeting(sApiService.getStartMeeting(), sApiService.getEndMeeting(),
+                    sApiService.extractRoomSelected(mListRoom.getText().toString()))) {
                 mCallback.onButtonCancelClickedClose(v); }
         });
     }
@@ -213,10 +213,10 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
                         String lTimeFormated = sdf.format(lTimeCal.getTime());
                         if (lId == R.id.meeting_start_et) {
                             mTimeStartEt.setText(lTimeFormated);
-                            sMeetingApiService.setStartMeeting(lTimeCal);
+                            sApiService.setStartMeeting(lTimeCal);
                         } else if (lId == R.id.meeting_end_et) {
                             mTimeEndEt.setText(lTimeFormated);
-                            sMeetingApiService.setEndMeeting(lTimeCal);
+                            sApiService.setEndMeeting(lTimeCal);
                         }
                     }
                 },
@@ -234,7 +234,7 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
     public boolean addMeeting(Calendar pStart, Calendar pEnd, Room pRoomSelected)  {
        if (testFieldsValidity(pStart, pEnd)) {
             try {
-                sMeetingApiService.addMeeting(
+                sApiService.addMeeting(
                         new Meeting(pRoomSelected, mTopicEt.getText().toString(), mDateCal, pStart, pEnd, mParticipants));
 
                 Toast.makeText(getContext(), getString(R.string.action_add_meeting), Toast.LENGTH_SHORT).show();

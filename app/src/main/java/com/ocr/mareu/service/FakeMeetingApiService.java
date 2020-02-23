@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.ocr.mareu.ui.activities.MainActivity.sApiService;
 import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
 
 /**
@@ -28,6 +29,8 @@ public class FakeMeetingApiService implements MeetingApiService {
     private Calendar mStartMeeting;
     private Calendar mEndMeeting;
     private boolean isMenuActive = false;
+
+    public boolean sIsExecutedOneTimeForTest = false ;
 
     public static final String CST_FORMAT_DATE = "dd/MM/yyyy";
     public static final String CST_FORMAT_DATE_TIME = "dd/MM/yyyy HH:mm:ss:SS";
@@ -237,10 +240,18 @@ public class FakeMeetingApiService implements MeetingApiService {
         mMeetings = new ArrayList<>();
     }
 
+    public void setIsExecutedOneTimeForTest(boolean pIsExecutedOneTimeForTest) {
+        sIsExecutedOneTimeForTest = pIsExecutedOneTimeForTest;
+    }
+
+    public boolean getIsExecutedOneTimeForTest() {
+        return sIsExecutedOneTimeForTest;
+    }
     /**
      * Ajout de réunions pour les tests manuels
      */
     public void addFakeMeeting()  {
+        sApiService.setIsExecutedOneTimeForTest(true);
 
         try {
             addMeeting(
@@ -270,6 +281,8 @@ public class FakeMeetingApiService implements MeetingApiService {
      * Ajout de réunions pour les tests manuels longue liste
      */
     public void addFakeValidMeetingsLongList() throws MeetingApiServiceException {
+        sApiService.setIsExecutedOneTimeForTest(true);
+
         addMeeting(
                 new Meeting(new Room("POSEIDON", Color.argb(100,244,67,54)),
                         "Sujet",

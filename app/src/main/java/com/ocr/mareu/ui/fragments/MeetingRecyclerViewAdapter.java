@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
-import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.SortOrFilter;
 import com.ocr.mareu.utils.SortOrFilterLabel;
 
@@ -29,8 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.ocr.mareu.di.DI.sIsExecutedOneTimeForTest;
-import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.ui.activities.MainActivity.sApiService;
 
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
@@ -57,21 +55,20 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
      */
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
-        //Test et chargement uniquement pour les tests de la soutenance
-        if (!sIsExecutedOneTimeForTest) {
-            sMeetingApiService.addFakeMeeting();
+        //Test et chargement uniquement pour les tests de la soutenance/demo
 /*
-            try {
-                sMeetingApiService.addFakeValidMeetingsLongList();
-            } catch (MeetingApiServiceException pE) {
-                pE.printStackTrace();
-            }
-*/
-            sIsExecutedOneTimeForTest = true;
+        if (!sApiService.getIsExecutedOneTimeForTest()) {
+            sApiService.addFakeMeeting();
+//            try {
+//                sMeetingApiService.addFakeValidMeetingsLongList();
+//            } catch (MeetingApiServiceException pE) {
+//                pE.printStackTrace();
+//            }
         }
+*/
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
-        mMeetings = sMeetingApiService.getMeetings();
+        mMeetings = sApiService.getMeetings();
         if (pOrder == SortOrFilterLabel.SORT_ROOM_ASC ) {
             mMeetings = lSortOrFilter.sortMeetingRoomAsc(mMeetings);
         } else if (pOrder == SortOrFilterLabel.SORT_ROOM_DESC ) {
@@ -81,15 +78,15 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         } else if (pOrder == SortOrFilterLabel.SORT_DATE_RECENT ) {
             mMeetings = lSortOrFilter.sortMeetingDateRecentToOlder(mMeetings);
         } else if (pOrder == SortOrFilterLabel.FILTER_ROOM ) {
-            mMeetings = lSortOrFilter.filterMeetingRoom(mMeetings, sMeetingApiService.getRoomsSelected());
+            mMeetings = lSortOrFilter.filterMeetingRoom(mMeetings, sApiService.getRoomsSelected());
         } else if (pOrder == SortOrFilterLabel.FILTER_DATE ) {
-            mMeetings = lSortOrFilter.filterMeetingDate(mMeetings, sMeetingApiService.getDateSelected());
+            mMeetings = lSortOrFilter.filterMeetingDate(mMeetings, sApiService.getDateSelected());
         }
 
         if (mMeetings.size() > 0) {
-            sMeetingApiService.setIsMenuActive(true);
+            sApiService.setIsMenuActive(true);
         } else {
-            sMeetingApiService.setIsMenuActive(false);
+            sApiService.setIsMenuActive(false);
         }
         mCallback = (OnRecyclerViewListener) mContext;
     }
@@ -125,8 +122,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sMeetingApiService.setMeetingDeleted(lMeeting);
-                sMeetingApiService.deleteMeeting(lMeeting);
+                sApiService.setMeetingDeleted(lMeeting);
+                sApiService.deleteMeeting(lMeeting);
                 mCallback.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
                 //TODO voir si j'enlèves ce contrôle
 /*
@@ -158,7 +155,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sMeetingApiService.setMeetingSelected(lMeeting);
+                sApiService.setMeetingSelected(lMeeting);
                 mCallback.onItemClicked(v);
             }
         });

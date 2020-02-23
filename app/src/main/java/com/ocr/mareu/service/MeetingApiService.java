@@ -140,9 +140,14 @@ public interface MeetingApiService {
      */
     void resetMeetings();
 
-    /**
-     * Ajout de réunions pour les tests
-     */
+
+    void setIsExecutedOneTimeForTest(boolean pIsExecutedOneTimeForTest);
+
+    boolean getIsExecutedOneTimeForTest();
+
+        /**
+         * Ajout de réunions pour les tests
+         */
     void addFakeMeeting();
 
     /**

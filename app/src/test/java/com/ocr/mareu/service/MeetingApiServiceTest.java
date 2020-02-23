@@ -3,6 +3,7 @@ package com.ocr.mareu.service;
 import android.content.Context;
 
 import com.ocr.mareu.R;
+import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 
@@ -45,7 +46,8 @@ public class MeetingApiServiceTest {
     @BeforeEach
     public void setup() {
         initMocks(this);
-        mApi = new FakeMeetingApiService();
+//        mApi = new FakeMeetingApiService();
+        mApi = DI.getMeetingApiService();
         assertThat(mApi, notNullValue());
 
         mApi.initializeRooms(contextMock);
@@ -54,7 +56,7 @@ public class MeetingApiServiceTest {
 
     @AfterEach
     public void tearDown() {
-        mApi = null;
+        mApi = DI.getMeetingApiServiceNewInstance();
     }
 
     @Test

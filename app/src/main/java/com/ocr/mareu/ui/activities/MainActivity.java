@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ocr.mareu.R;
+import com.ocr.mareu.di.DI;
+import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
@@ -28,13 +30,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.ShowDialog.showCalendarDialog;
 import static com.ocr.mareu.utils.ShowDialog.showDialogRooms;
 
 
 public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
         MeetingRecyclerViewAdapter.OnRecyclerViewListener {
+
+    public static MeetingApiService sApiService;
 
     @BindView(R.id.add_fab)
     FloatingActionButton mAddFab;
@@ -62,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 
         setSupportActionBar(mToolbar);
 
-        sMeetingApiService.initializeRooms(mContext);
+        sApiService = DI.getMeetingApiService();
+        sApiService.initializeRooms(mContext);
 
         configureAndShowListFragment();
         mAddFragment = new AddFragment();
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         MenuItem lActionSort = pMenu.findItem(R.id.action_sort);
         MenuItem lActionFilter = pMenu.findItem(R.id.action_filter);
 
-        boolean isActive = sMeetingApiService.getIsMenuActive();
+        boolean isActive = sApiService.getIsMenuActive();
 
         lActionSort.setEnabled(isActive);
         lActionFilter.setEnabled(isActive);
@@ -143,10 +147,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 mListFragment.listToUpdate(SortOrFilterLabel.SORT_ROOM_DESC);
                 return true;
             case R.id.filter_date:
-                sMeetingApiService.setDateSelected(showCalendarDialog(mContext, mListFragment));
+                sApiService.setDateSelected(showCalendarDialog(mContext, mListFragment));
                 return true;
             case R.id.filter_room:
-                sMeetingApiService.setRoomsSelected(showDialogRooms(mContext, mListFragment, sMeetingApiService.getRooms()));
+                sApiService.setRoomsSelected(showDialogRooms(mContext, mListFragment, sApiService.getRooms()));
                 return true;
             default:
                 return super.onOptionsItemSelected(pItem);
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public void onBackPressed() {
 
         if (mBackPressedTime + 2000 > System.currentTimeMillis()) {
-            sMeetingApiService.resetMeetings();
+            sApiService.resetMeetings();
             mBackToast.cancel();
             super.onBackPressed();
             return;
@@ -177,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sMeetingApiService.resetMeetings();
+        sApiService.resetMeetings();
         invalidateOptionsMenu();
     }
 
@@ -335,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     @Override
     public void listToUpdate(Enum pOrder) {
         mListFragment.listToUpdate(pOrder);
-        if (sMeetingApiService.getMeetingSelected() == sMeetingApiService.getMeetingDeleted()) {
+        if (sApiService.getMeetingSelected() == sApiService.getMeetingDeleted()) {
             if (mMainLayout.getTag() == getString(R.string.tablet)) {
                 if (mDetailFragment.isVisible()) {
                     mRightFragment = new RightFragment();

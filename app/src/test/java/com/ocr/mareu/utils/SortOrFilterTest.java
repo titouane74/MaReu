@@ -2,9 +2,9 @@ package com.ocr.mareu.utils;
 
 import android.content.Context;
 
+import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
-import com.ocr.mareu.service.FakeMeetingApiService;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utilstest.MeetingUtils;
@@ -40,8 +40,7 @@ public class SortOrFilterTest {
     public void setup() throws MeetingApiServiceException {
         initMocks(this);
 
-        mApi = new FakeMeetingApiService();
-        //mApi = DI.sMeetingApiService;
+        mApi = DI.getMeetingApiService();
         assertThat(mApi, notNullValue());
 
         mApi.initializeRooms(contextMock);
@@ -58,7 +57,7 @@ public class SortOrFilterTest {
 
     @AfterEach
     public void tearDown() {
-        mApi = null;
+        mApi = DI.getMeetingApiServiceNewInstance();
     }
 
     @Test

@@ -12,10 +12,12 @@ public class DI {
     /**
      * Création d'une nouvelle instance de l'API Service
      */
-    public static MeetingApiService sMeetingApiService = new FakeMeetingApiService();
+    private static MeetingApiService sMeetingApiService = new FakeMeetingApiService();
 
     public static MeetingApiService getMeetingApiService() { return sMeetingApiService; }
 
-    public static boolean sIsExecutedOneTimeForTest = false ;
+    public static MeetingApiService getMeetingApiServiceNewInstance() {
+        sMeetingApiService = new FakeMeetingApiService();
+    return sMeetingApiService; }
 
 }

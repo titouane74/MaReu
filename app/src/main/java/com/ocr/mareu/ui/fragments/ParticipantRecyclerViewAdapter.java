@@ -15,7 +15,7 @@ import com.ocr.mareu.model.Meeting;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.ui.activities.MainActivity.sApiService;
 
 /**
  * Created by Florence LE BOURNOT on 10/02/2020
@@ -31,7 +31,7 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
      */
     public ParticipantRecyclerViewAdapter(Context pContext) {
         mContext = pContext;
-        mMeetingSelected = sMeetingApiService.getMeetingSelected();
+        mMeetingSelected = sApiService.getMeetingSelected();
     }
 
     @NonNull

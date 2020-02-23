@@ -3,17 +3,11 @@ package com.ocr.mareu.service;
 import android.content.Context;
 
 import com.ocr.mareu.di.DI;
-import com.ocr.mareu.model.Meeting;
-import com.ocr.mareu.model.Room;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -31,7 +25,7 @@ public class InitializeRoomTest {
     @Before
     public void setup() {
         initMocks(this);
-        mApi = DI.sMeetingApiService;
+        mApi = DI.getMeetingApiService();
     }
 
     @Test

@@ -5,22 +5,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.ocr.mareu.R;
-import com.ocr.mareu.service.FakeMeetingApiService;
+import com.ocr.mareu.di.DI;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.utils.DeleteViewAction;
+import com.ocr.mareu.utils.RoomViewAction;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,16 +28,13 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.action.ViewActions.doubleClick;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.ocr.mareu.di.DI.sMeetingApiService;
 import static com.ocr.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertEquals;
@@ -64,8 +61,13 @@ public class MainActivityTest {
         assertNotNull(mActivity);
         assertThat(mActivity, notNullValue());
 
-        mApi = new FakeMeetingApiService();
+        mApi = DI.getMeetingApiService();
         assertNotNull(mApi);
+    }
+
+    @After
+    public void tearDown() {
+        mApi = DI.getMeetingApiServiceNewInstance();
     }
 
     @Test
@@ -82,15 +84,26 @@ public class MainActivityTest {
 
     @Test
     public void givenNewMeeting_whenAddMeeting_thenAddItemInList() {
+
         //Contrôle que la liste est vide
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
 
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+        onView(allOf(withId(R.id.room_list))).perform(doubleClick());
+
+        onView(withText("POSEIDON"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+
+        onView(allOf(withId(R.id.room_list))).check(matches(withText("POSEIDON")));
+
 
 /*
-        //Contrôle qie la liste à un item
+        //Contrôle que la liste à un item
         onView(withId(R.id.activity_list_rv)).check(withItemCount(1));
 */
 
@@ -99,35 +112,34 @@ public class MainActivityTest {
     @Test
     public void givenItem_whenClickOnItem_thenDisplayDetail() {
         int idItemToTest = 0;
-        //Click sur un item de la liste des voisins
+
+        mApi.addFakeMeeting();
+
         onView(allOf(withId(R.id.activity_list_rv), isDisplayed()))
                 .perform(actionOnItemAtPosition(idItemToTest, click()));
 
+        onView(allOf(withId(R.id.detail_fragment_layout))).check(matches(isDisplayed()));
 
-        //Compare que le nom de la salle affiché est celui de l'item sélectionné
-        onView(allOf(withId(R.id.room_name), isDisplayed()))
-                .check(matches(withText("POSEIDON")));
         onView(allOf(withId(R.id.room_name),isDisplayed()))
-                .check(matches(withText(sMeetingApiService.getMeetingSelected().getRoom().getNameRoom())));
-
+                .check(matches(withText(mApi.getMeetingSelected().getRoom().getNameRoom())));
     }
 
     @Test
     public void givenItem_whenClickDeleteAction_thenRemoveItem() {
 
+        //Chargement de fausses réunions
         mApi.addFakeMeeting();
 
-        // Given : We remove the element at position 2
-        onView(ViewMatchers.withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
-        // When perform a click on a delete icon
-        onView(ViewMatchers.withId(R.id.activity_list_rv))
+        onView(withId(R.id.activity_list_rv))
                 .perform(actionOnItemAtPosition(1, new DeleteViewAction()));
 
-        // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT-1));
-
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT-1));
     }
+
+
+
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {

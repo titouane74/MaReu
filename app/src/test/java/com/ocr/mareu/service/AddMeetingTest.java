@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 
 import com.ocr.mareu.R;
+import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
 import com.ocr.mareu.utilstest.MeetingUtils;
@@ -48,7 +49,7 @@ public class AddMeetingTest {
     @BeforeEach
     public void setup() throws MeetingApiServiceException {
         initMocks(this);
-        mApi = new FakeMeetingApiService();
+        mApi = DI.getMeetingApiService();
         assertThat(mApi, notNullValue());
 
         mApi = MeetingUtils.generateReferenceMeeting(mApi);
@@ -59,7 +60,7 @@ public class AddMeetingTest {
 
     @AfterEach
     public void tearDown() {
-        mApi = null;
+        mApi = DI.getMeetingApiServiceNewInstance();
     }
 
 

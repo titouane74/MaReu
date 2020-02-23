@@ -17,7 +17,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 
-import static com.ocr.mareu.di.DI.sMeetingApiService;
+import static com.ocr.mareu.ui.activities.MainActivity.sApiService;
 
 /**
  * Created by Florence LE BOURNOT on 12/02/2020
@@ -50,7 +50,7 @@ public class DetailFragment  extends BaseFragment {
 
     @Override //onCreateView
     protected void configureDesign(View pView) {
-        mMeeting = sMeetingApiService.getMeetingSelected();
+        mMeeting = sApiService.getMeetingSelected();
         setInfoMeeting();
         configureRecyclerViewParts();
     }
