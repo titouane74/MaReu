@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -26,15 +27,22 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.view.KeyEvent.KEYCODE_ENTER;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.doubleClick;
+import static androidx.test.espresso.action.ViewActions.pressKey;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.ocr.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertEquals;
@@ -93,6 +101,7 @@ public class MainActivityTest {
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
+        //Saisie de la salle de réunion
         onView(allOf(withId(R.id.room_list))).perform(doubleClick());
 
         onView(withText("POSEIDON"))
@@ -100,6 +109,22 @@ public class MainActivityTest {
                 .perform(click());
 
         onView(allOf(withId(R.id.room_list))).check(matches(withText("POSEIDON")));
+
+        //Saisie du sujet
+        String lText = "Première réunion";
+
+        onView(allOf(withId(R.id.meeting_topic_et)))
+                .perform(replaceText(lText))
+                .check(matches(withText(lText)));
+
+        //saisie d'une adresse email
+        lText = "toto@gmail.com";
+        ViewInteraction lEmailET = onView(allOf(withId(R.id.email_address_et)));
+        lEmailET.perform(replaceText(lText))
+            .perform(scrollTo(), click())
+            .perform(pressKey(KEYCODE_ENTER))
+            .check(matches(withText("")));
+
 
 
 /*
