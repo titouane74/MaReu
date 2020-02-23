@@ -1,19 +1,14 @@
 package com.ocr.mareu.ui.activities;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import androidx.appcompat.widget.AppCompatCheckedTextView;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.PickerActions;
-import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.material.internal.NavigationMenuItemView;
 import com.ocr.mareu.R;
 import com.ocr.mareu.di.DI;
 import com.ocr.mareu.service.MeetingApiService;
@@ -21,7 +16,6 @@ import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.DeleteViewAction;
 import com.ocr.mareu.utils.ToastMatcher;
 
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -36,7 +30,6 @@ import java.util.Locale;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.doubleClick;
 import static androidx.test.espresso.action.ViewActions.pressKey;
@@ -45,10 +38,7 @@ import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
-import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -270,23 +260,19 @@ public class MainActivityTest {
 
     @Test
     public void given10Meeting_whenFilterByDate_thenShowMeetingWithSameDate () throws MeetingApiServiceException {
-        mApi.addFakeValidMeetingsLongList();
+        mApi.addFakeMeeting();
 
         //Contrôle que la liste est vide
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(10));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(2));
 
         //Saisie de la date de filtrage
         Calendar lCalDate = Calendar.getInstance(Locale.FRANCE);
         DateFormat lDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
-        lCalDate.set(2020,8,01);
+        lCalDate.set(2020,8,30);
         lCalDate.set(Calendar.MINUTE,00);
         lCalDate.set(Calendar.SECOND,0);
         lCalDate.set(Calendar.MILLISECOND,0);
 
-
-
-//        onView(getNavigationItemWithString(mActivity.getApplicationContext().getString(R.string.filter_room)))
-//                .check(matches(isEnabled()));
 
 
 /*
@@ -302,12 +288,5 @@ public class MainActivityTest {
 */
 
     }
-
-/*
-    public static Matcher<View> getNavigationItemWithString(String string) {
-        Matcher<View> childMatcher = allOf(isAssignableFrom(AppCompatCheckedTextView.class), withText(string));
-        return allOf(isAssignableFrom(NavigationMenuItemView.class), withChild(childMatcher));
-    }
-*/
 
 }

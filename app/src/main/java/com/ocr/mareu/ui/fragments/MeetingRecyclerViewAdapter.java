@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.model.Meeting;
+import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.SortOrFilter;
 import com.ocr.mareu.utils.SortOrFilterLabel;
 
@@ -56,16 +57,16 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
         //Test et chargement uniquement pour les tests de la soutenance/demo
-/*
-        if (!sApiService.getIsExecutedOneTimeForTest()) {
-            sApiService.addFakeMeeting();
+
+//        if (!sApiService.getIsExecutedOneTimeForTest()) {
+////            sApiService.addFakeMeeting();
 //            try {
-//                sMeetingApiService.addFakeValidMeetingsLongList();
+//                sApiService.addFakeValidMeetingsLongList();
 //            } catch (MeetingApiServiceException pE) {
 //                pE.printStackTrace();
 //            }
-        }
-*/
+//        }
+
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sApiService.getMeetings();

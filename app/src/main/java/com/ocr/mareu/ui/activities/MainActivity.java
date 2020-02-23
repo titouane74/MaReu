@@ -90,13 +90,21 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu pMenu) {
-        MenuItem lActionSort = pMenu.findItem(R.id.action_sort);
-        MenuItem lActionFilter = pMenu.findItem(R.id.action_filter);
+        MenuItem lSortAscRoom = pMenu.findItem(R.id.sort_room_asc);
+        MenuItem lSortDescRoom = pMenu.findItem(R.id.sort_room_desc);
+        MenuItem lSortRecentDate = pMenu.findItem(R.id.sort_date_recent);
+        MenuItem lSortOlderDate = pMenu.findItem(R.id.sort_date_older);
+        MenuItem lFilterRoom = pMenu.findItem(R.id.filter_room);
+        MenuItem lFilterDate = pMenu.findItem(R.id.filter_date);
 
         boolean isActive = sApiService.getIsMenuActive();
 
-        lActionSort.setEnabled(isActive);
-        lActionFilter.setEnabled(isActive);
+        lSortAscRoom.setEnabled(isActive);
+        lSortDescRoom.setEnabled(isActive);
+        lSortRecentDate.setEnabled(isActive);
+        lSortOlderDate.setEnabled(isActive);
+        lFilterRoom.setEnabled(isActive);
+        lFilterDate.setEnabled(isActive);
 
         return true;
     }
