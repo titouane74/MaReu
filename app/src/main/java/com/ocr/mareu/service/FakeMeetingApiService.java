@@ -280,79 +280,118 @@ public class FakeMeetingApiService implements MeetingApiService {
     /**
      * Ajout de réunions pour les tests manuels longue liste
      */
-    public void addFakeValidMeetingsLongList() throws MeetingApiServiceException {
+    public void addFakeValidMeetingsLongList()  {
         sApiService.setIsExecutedOneTimeForTest(true);
 
-        addMeeting(
+        try {
+            addMeeting(
                 new Meeting(new Room("POSEIDON", Color.argb(100,244,67,54)),
-                        "Sujet",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-
-        addMeeting(
+                    "Sujet",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("ARES", Color.argb(100,103,58,183)),
-                        "Sujet2",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 11:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        addMeeting(
+                    "Sujet2",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 11:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("HADES", Color.argb(100,3,169,244)),
-                        "Sujet3",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 14:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 15:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        addMeeting(
+                    "Sujet3",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 14:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 15:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("ZEUS", Color.argb(100,233,30,99)),
-                        "Sujet4",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 09:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        addMeeting(
+                    "Sujet4",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 09:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("ARES", Color.argb(100,103,58,183)),
-                        "Sujet5",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"22/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"22/08/2020 16:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"22/08/2020 17:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        addMeeting(
+                    "Sujet5",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"22/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"22/08/2020 16:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"22/08/2020 17:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("PLUTON", Color.argb(100,63,81,181)),
-                        "Sujet6",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"22/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"22/08/2020 10:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"22/08/2020 12:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        addMeeting(
+                    "Sujet6",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"22/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"22/08/2020 10:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"22/08/2020 12:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("VENUS", Color.argb(100,156,39,176)),
-                        "Sujet7",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 12:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 14:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        addMeeting(
+                    "Sujet7",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 12:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 14:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("DEMETER", Color.argb(100,76,175,80)),
-                        "Sujet8",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 16:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 18:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        addMeeting(
+                    "Sujet8",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/09/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 16:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/09/2020 18:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("HADES", Color.argb(100,3,169,244)),
-                        "Sujet9",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 09:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 13:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        addMeeting(
+                    "Sujet9",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 09:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 13:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
+        try {
+            addMeeting(
                 new Meeting(new Room("GAIA", Color.argb(100,0,150,135)),
-                        "Sujet10 reunion avec quarante caractères",
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 10:00:00:00"),
-                        convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 12:00:00:00"),
-                        Arrays.asList("toto@gmail.com","titi@gmail.com")));
+                    "Sujet10 reunion avec quarante caractères",
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"01/08/2020"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 10:00:00:00"),
+                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"01/08/2020 12:00:00:00"),
+                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+        } catch (MeetingApiServiceException pE) {
+            pE.printStackTrace();
+        }
     }
 }
