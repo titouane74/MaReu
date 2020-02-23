@@ -126,7 +126,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                 sApiService.deleteMeeting(lMeeting);
                 mCallback.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
                 //TODO voir si j'enlèves ce contrôle
-/*
+
                 AlertDialog.Builder lAlertDialogBuiler = new AlertDialog.Builder(mContext);
                 lAlertDialogBuiler .setTitle(mContext.getString(R.string.app_name));
                 lAlertDialogBuiler
@@ -135,8 +135,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                         .setPositiveButton(mContext.getString(R.string.btn_yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                sMeetingApiService.setMeetingDeleted(lMeeting);
-                                sMeetingApiService.deleteMeeting(lMeeting);
+                                sApiService.setMeetingDeleted(lMeeting);
+                                sApiService.deleteMeeting(lMeeting);
                                 mCallback.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
                             }
                         })
@@ -148,7 +148,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                         });
                 AlertDialog lAlertDialog = lAlertDialogBuiler.create();
                 lAlertDialog.show();
-*/
             }
         });
 
