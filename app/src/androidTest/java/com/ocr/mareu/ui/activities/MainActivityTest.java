@@ -258,6 +258,7 @@ public class MainActivityTest {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT-1));
     }
 
+    @Test
 
 
 }
