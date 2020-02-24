@@ -3,6 +3,7 @@ package com.ocr.mareu.ui.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,12 +18,14 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ocr.mareu.R;
 import com.ocr.mareu.di.DI;
+import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.ui.fragments.AddFragment;
 import com.ocr.mareu.ui.fragments.DetailFragment;
 import com.ocr.mareu.ui.fragments.ListFragment;
 import com.ocr.mareu.ui.fragments.MeetingRecyclerViewAdapter;
 import com.ocr.mareu.ui.fragments.RightFragment;
+import com.ocr.mareu.utils.RoomsFilterDialogFragment;
 import com.ocr.mareu.utils.SortOrFilterLabel;
 
 import java.util.List;
@@ -30,12 +33,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.ocr.mareu.utils.ShowDialogBox.showCalendarDialog;
-import static com.ocr.mareu.utils.ShowDialogBox.showDialogRooms;
+import static com.ocr.mareu.utils.ShowDateDialog.showCalendarDialog;
 
 
 public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
-        MeetingRecyclerViewAdapter.OnRecyclerViewListener {
+        MeetingRecyclerViewAdapter.OnRecyclerViewListener, RoomsFilterDialogFragment.OnDialogRoomsListener {
 
     public static MeetingApiService sApiService;
 
@@ -158,7 +160,8 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
                 sApiService.setDateSelected(showCalendarDialog(mContext, mListFragment));
                 return true;
             case R.id.filter_room:
-                sApiService.setRoomsSelected(showDialogRooms(mContext, mListFragment, sApiService.getRooms()));
+                DialogFragment lDialogRooms = new RoomsFilterDialogFragment();
+                lDialogRooms.show(getSupportFragmentManager(),"RoomsFilterDialogFragment");
                 return true;
             default:
                 return super.onOptionsItemSelected(pItem);
@@ -356,5 +359,11 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             }
         }
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onRoomsOkClicked(List<Room> pRoomsSelected) {
+        sApiService.setRoomsSelected(pRoomsSelected);
+        mListFragment.listToUpdate(SortOrFilterLabel.FILTER_ROOM);
     }
 }

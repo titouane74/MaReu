@@ -5,6 +5,8 @@ import android.content.Context;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import androidx.fragment.app.DialogFragment;
+
 import com.ocr.mareu.R;
 import com.ocr.mareu.ui.fragments.ListFragment;
 
@@ -13,19 +15,18 @@ import java.util.Calendar;
 /**
  * Created by Florence LE BOURNOT on 07/02/2020
  */
-public class ShowDialogBox  {
+public class ShowDateDialog extends DialogFragment {
 
     /**
      * Affichage du calendrier pour l'application du filtre par date
      * @param pContext
      */
-
     public static Calendar showCalendarDialog(Context pContext, ListFragment pListFragment) {
 
         Calendar lCalendar = Calendar.getInstance();
         Calendar lCalendarSelected = Calendar.getInstance();
 
-       DatePickerDialog lDatePickerDialog = new DatePickerDialog(
+        DatePickerDialog lDatePickerDialog = new DatePickerDialog(
                 pContext,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
