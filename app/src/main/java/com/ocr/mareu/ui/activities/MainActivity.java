@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         }
         mAddFab.setOnClickListener(v -> {
             mAddFragment = new AddFragment();
-            replaceListFragment(mAddFragment);
+            replaceFragment(mAddFragment);
             mAddFab.hide();
         });
     }
@@ -133,10 +133,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             case android.R.id.home:
                 if ((mAddFragment != null && mAddFragment.isVisible()) || (mDetailFragment != null && mDetailFragment.isVisible())) {
                     if (mMainLayout.getTag() == getString(R.string.tablet)) {
-                        replaceRightFragment(mRightFragment);
+                        replaceFragment(mRightFragment);
                     } else {
                         mAddFab.show();
-                        replaceListFragment(mListFragment);
+                        replaceFragment(mListFragment);
                     }
                 }
                 manageActionBar(false);
@@ -254,26 +254,19 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     }
 
     /**
-     * Méthode d'affichage du fragment de la partie droite lors du changement de fragment
+     * Méthode remplacement de fragmentne fonction du mode tablette ou non
      * @param pFragment : fragment : fragment à afficher
      */
-    private void replaceRightFragment(final Fragment pFragment) {
-        final FragmentManager lFragmentManager = getSupportFragmentManager();
-        final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
-        lFragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-        lFragmentTransaction.replace(R.id.frame_right, pFragment);
-        lFragmentTransaction.commit();
-    }
 
-    /**
-     * Méthode d'affichage du fragment de la partie gauche lors du changement de fragment ou en mode téléphone
-     * @param pFragment : fragment : fragment à afficher
-     */
-    private void replaceListFragment(final Fragment pFragment) {
+    private void replaceFragment(final Fragment pFragment) {
         final FragmentManager lFragmentManager = getSupportFragmentManager();
         final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
         lFragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-        lFragmentTransaction.replace(R.id.frame_list, pFragment);
+        if (mMainLayout.getTag() == getString(R.string.tablet)) {
+            lFragmentTransaction.replace(R.id.frame_right, pFragment);
+        } else {
+            lFragmentTransaction.replace(R.id.frame_list, pFragment);
+        }
         lFragmentTransaction.commit();
     }
 
@@ -298,9 +291,9 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
     public void onButtonCancelClickedClose(View pView) {
         if (mAddFragment != null && mAddFragment.isVisible()) {
             if (mMainLayout.getTag() == getString(R.string.tablet)) {
-                replaceRightFragment(mRightFragment);
+               replaceFragment(mRightFragment);
             } else {
-                replaceListFragment(mListFragment);
+               replaceFragment(mListFragment);
                 mAddFab.show();
             }
         }
@@ -319,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         manageActionBar(true);
         if (mRightFragment != null && mRightFragment.isVisible()) {
             mAddFragment = new AddFragment();
-            replaceRightFragment(mAddFragment);
+            replaceFragment(mAddFragment);
             mAddFab.hide();
         }
     }
@@ -335,10 +328,10 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         mDetailFragment = new DetailFragment();
         mAddFab.hide();
         if (mMainLayout.getTag() == getString(R.string.tablet)) {
-                replaceRightFragment(mDetailFragment);
-            } else {
-                replaceListFragment(mDetailFragment);
-            }
+            replaceFragment(mDetailFragment);
+        } else {
+            replaceFragment(mDetailFragment);
+        }
     }
 
     /**
@@ -354,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
             if (mMainLayout.getTag() == getString(R.string.tablet)) {
                 if (mDetailFragment.isVisible()) {
                     mRightFragment = new RightFragment();
-                    replaceRightFragment(mRightFragment);
+                    replaceFragment(mRightFragment);
                 }
             }
         }
