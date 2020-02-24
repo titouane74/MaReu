@@ -30,8 +30,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.ocr.mareu.utils.ShowDialog.showCalendarDialog;
-import static com.ocr.mareu.utils.ShowDialog.showDialogRooms;
+import static com.ocr.mareu.utils.ShowDialogBox.showCalendarDialog;
+import static com.ocr.mareu.utils.ShowDialogBox.showDialogRooms;
 
 
 public class MainActivity extends AppCompatActivity implements RightFragment.OnRightListener,AddFragment.OnListenerAdd,
