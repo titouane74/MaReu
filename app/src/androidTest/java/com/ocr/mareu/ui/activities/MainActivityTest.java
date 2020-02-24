@@ -104,7 +104,7 @@ public class MainActivityTest {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
     }
 
-    @Test //KO
+    @Test //OK
     public void givenNewMeeting_whenAddMeeting_thenAddItemInList() {
 
         //Contrôle que la liste est vide
@@ -218,14 +218,12 @@ public class MainActivityTest {
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
-        //Saisie de la salle de réunion
-        onView(allOf(withId(R.id.room_list))).perform(doubleClick());
+        //Saisie du sujet de la réunion
+        String lText = "Première réunion";
 
-        onView(withText("POSEIDON"))
-                .inRoot(isPlatformPopup())
-                .perform(click());
-
-        onView(allOf(withId(R.id.room_list))).check(matches(withText("POSEIDON")));
+        onView(allOf(withId(R.id.meeting_topic_et)))
+                .perform(replaceText(lText))
+                .check(matches(withText(lText)));
 
         //On annule la saisie de la réunion
         onView(allOf(withId(R.id.btn_cancel))).perform(click());
