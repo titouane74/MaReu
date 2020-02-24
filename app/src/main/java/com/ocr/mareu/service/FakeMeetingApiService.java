@@ -260,7 +260,7 @@ public class FakeMeetingApiService implements MeetingApiService {
                     convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
                     convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
                     convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
-                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+                    Arrays.asList("loki@marvel.com","thor@marvel.com","captainamerica@marvel.com","wintersoldier@marvel.com")));
         } catch (MeetingApiServiceException pE) {
             pE.printStackTrace();
         }
@@ -290,7 +290,7 @@ public class FakeMeetingApiService implements MeetingApiService {
                     convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
                     convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
                     convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
-                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
+                        Arrays.asList("loki@marvel.com","thor@marvel.com","captainamerica@marvel.com","wintersoldier@marvel.com")));
         } catch (MeetingApiServiceException pE) {
             pE.printStackTrace();
         }

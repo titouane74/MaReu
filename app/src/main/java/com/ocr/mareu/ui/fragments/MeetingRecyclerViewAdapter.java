@@ -58,6 +58,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         mContext = pContext;
         //Test et chargement uniquement pour les tests de la soutenance/demo
 
+
+/*
         if (!sApiService.getIsExecutedOneTimeForTest()) {
 //            sApiService.addFakeMeeting();
             try {
@@ -66,6 +68,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                 pE.printStackTrace();
             }
         }
+*/
 
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
@@ -107,16 +110,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
         final Meeting lMeeting = mMeetings.get(position);
 
-        @SuppressLint("SimpleDateFormat")
-        String lDescription = TextUtils.join(" - ", Arrays.asList(
-                lMeeting.getRoom().getNameRoom(),
-                new SimpleDateFormat("HH:mm").format(lMeeting.getStart().getTime()),
-                lMeeting.getTopic()));
-
-        holder.mDescription.setText(lDescription);
-        holder.mParticipants.setText(
-                TextUtils.join(", ",
-                        lMeeting.getParticpants()));
+        holder.mDescription.setText(lMeeting.toStringDescription());
+        holder.mParticipants.setText(lMeeting.toStringParticipants());
 
         ((GradientDrawable)holder.mRoomColor.getBackground()).setColor(lMeeting.getRoom().getColorRoom());
 

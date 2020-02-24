@@ -1,5 +1,11 @@
 package com.ocr.mareu.model;
 
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -79,4 +85,17 @@ public class Meeting  {
      */
     public Room getRoom() { return mRoom; }
 
+    public String toStringDescription() {
+
+         return TextUtils.join(" - ", Arrays.asList(
+                getRoom().getNameRoom(),
+                new SimpleDateFormat("HH:mm").format(getStart().getTime()),
+                getTopic()));
+
+    }
+
+    public String toStringParticipants() {
+
+       return TextUtils.join(", ", getParticpants());
+    }
 }
