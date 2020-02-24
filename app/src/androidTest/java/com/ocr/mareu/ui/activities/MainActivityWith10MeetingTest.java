@@ -26,6 +26,7 @@ import org.junit.runner.RunWith;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +35,7 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.LayoutMatchers.hasEllipsizedText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -58,14 +60,14 @@ public class MainActivityWith10MeetingTest {
 
     private MeetingApiService mApi = null;
     private MainActivity mActivity = null;
-    private static int ITEMS_COUNT = 2;
+    private List<Meeting> mMeetings = new ArrayList<>();
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule =
             new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void setUp() throws MeetingApiServiceException {
+    public void setUp() {
         mActivity = mActivityTestRule.getActivity();
         assertNotNull(mActivity);
         assertThat(mActivity, notNullValue());
@@ -73,7 +75,10 @@ public class MainActivityWith10MeetingTest {
         mApi = DI.getMeetingApiService();
         assertNotNull(mApi);
 
-        mApi.addFakeValidMeetingsLongList();
+        mApi.addFakeMeeting();
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(2));
+
+        mMeetings = mApi.getMeetings();
     }
 
     @After
@@ -87,6 +92,26 @@ public class MainActivityWith10MeetingTest {
         assertEquals("com.ocr.mareu", appContext.getPackageName());
     }
 
+    @Test //KO
+    public void given2Meeting_whenTextEllipsized_thenSucces() {
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(2));
+
+        System.out.println("PARTICIPANTS :" + mMeetings.get(0).toStringParticipants());
+
+/*
+        onView(allOf(withId(R.id.item_description), withText(startsWith("POSEIDON"))))
+                .check(matches(withText(lMeetings.get(0).toStringDescription())));
+*/
+
+    }
 
 
 }
