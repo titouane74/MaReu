@@ -1,4 +1,4 @@
-package com.ocr.mareu.utils;
+package com.ocr.mareu.matchers;
 
 import android.view.View;
 import android.view.ViewGroup;

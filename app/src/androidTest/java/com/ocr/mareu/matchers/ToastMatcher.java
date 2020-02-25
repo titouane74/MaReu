@@ -1,4 +1,4 @@
-package com.ocr.mareu.utils;
+package com.ocr.mareu.matchers;
 
 import android.os.IBinder;
 import android.view.WindowManager;

@@ -251,7 +251,6 @@ public class FakeMeetingApiService implements MeetingApiService {
      * Ajout de réunions pour les tests manuels
      */
     public void addFakeMeeting()  {
-        sApiService.setIsExecutedOneTimeForTest(true);
 
         try {
             addMeeting(
@@ -281,7 +280,6 @@ public class FakeMeetingApiService implements MeetingApiService {
      * Ajout de réunions pour les tests manuels longue liste
      */
     public void addFakeValidMeetingsLongList()  {
-        sApiService.setIsExecutedOneTimeForTest(true);
 
         try {
             addMeeting(

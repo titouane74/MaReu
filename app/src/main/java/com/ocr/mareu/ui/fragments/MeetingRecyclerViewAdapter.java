@@ -67,6 +67,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             } catch (MeetingApiServiceException pE) {
                 pE.printStackTrace();
             }
+            sApiService.setIsExecutedOneTimeForTest(true);
         }
 */
 

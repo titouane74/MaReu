@@ -1,5 +1,6 @@
 package com.ocr.mareu.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -45,7 +47,7 @@ import static com.ocr.mareu.utils.Validation.errorMessageDateTimeToShow;
 import static com.ocr.mareu.utils.Validation.errorMessageToShow;
 import static com.ocr.mareu.utils.Validation.transformChipGroupInString;
 
-public class AddFragment extends BaseFragment implements View.OnClickListener {
+public class AddFragment extends BaseFragment implements View.OnClickListener, View.OnTouchListener {
 
     @BindView(R.id.room_list) AutoCompleteTextView mListRoom;
     @BindView(R.id.room_list_layout) TextInputLayout mListLayout;
@@ -68,6 +70,7 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
     private List<String> mParticipants;
     private OnListenerAdd mCallback;
 
+
     /**
      * Inteface permettant de gérer le bouton d'annulation dans le MainActivity
      * en focntion de l'appelant
@@ -85,6 +88,7 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected int getFragmentLayout() { return R.layout.fragment_scroll_add; }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override //onCreateView
     protected void configureDesign(View pView) {
         mContext = pView.getContext();
@@ -93,16 +97,14 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
         ArrayAdapter<Room> lAdapter = new ArrayAdapter<>(mContext,R.layout.activity_room_item,lRooms);
         mListRoom.setAdapter(lAdapter);
         mListRoom.setShowSoftInputOnFocus(false);
-        mListRoom.setOnClickListener(v -> mListRoom.showDropDown() );
-        mListRoom.setOnKeyListener(new View.OnKeyListener() {
+        mListRoom.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode != KeyEvent.KEYCODE_DPAD_DOWN || keyCode != KeyEvent.KEYCODE_DPAD_UP) {
-                        mListRoom.showDropDown();
-                    }
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mListRoom.showDropDown();
+                    return true;
                 }
-                return true;
+                return (event.getAction() == MotionEvent.ACTION_UP);
             }
         });
 
@@ -310,4 +312,8 @@ public class AddFragment extends BaseFragment implements View.OnClickListener {
             throw new ClassCastException(e.toString()+ " must implement OnButtonClickedListenerAdd");
         }
     }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) { return false; }
+
 }

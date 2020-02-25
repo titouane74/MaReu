@@ -8,16 +8,16 @@ import com.ocr.mareu.service.MeetingApiService;
  */
 public class DI {
 
-    private DI(){}
+    //private DI(){}
     /**
      * Création d'une nouvelle instance de l'API Service
      */
-    private static MeetingApiService sMeetingApiService = new FakeMeetingApiService();
+    private static MeetingApiService sApiService = new FakeMeetingApiService();
 
-    public static MeetingApiService getMeetingApiService() { return sMeetingApiService; }
+    public static MeetingApiService getMeetingApiService() { return sApiService; }
 
     public static MeetingApiService getMeetingApiServiceNewInstance() {
-        sMeetingApiService = new FakeMeetingApiService();
-    return sMeetingApiService; }
+        sApiService = new FakeMeetingApiService();
+    return sApiService; }
 
 }
