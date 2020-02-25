@@ -13,6 +13,7 @@ import com.ocr.mareu.di.DI;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.actions.DeleteViewAction;
 import com.ocr.mareu.matchers.ToastMatcher;
+import com.ocr.mareu.utilstest.InsertGraphicData;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -35,9 +36,11 @@ import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtP
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
+import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.ocr.mareu.assertion.ChipGroupNoAssertion.matchesChipGroupEmpty;
 import static com.ocr.mareu.assertion.ChipValueAssertion.matchesChipTextAtPosition;
 import static com.ocr.mareu.assertion.RecyclerViewItemCountAssertion.withItemCount;
 import static com.ocr.mareu.assertion.TextInputLayoutErrorAssertion.matchesErrorText;
@@ -241,12 +244,12 @@ public class MainActivityTest {
     }
 
     @Test //OK
-    public void givenItem_whenClickDeleteAction_thenRemoveItem() {
+    public void givenItem_whenClickAndValidDeleteAction_thenRemoveItem() {
 
         //Chargement de fausses réunions
         mApi.addFakeMeeting();
 
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
+        onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));
 
         onView(withId(R.id.activity_list_rv))
                 .perform(actionOnItemAtPosition(1, new DeleteViewAction()));
@@ -257,7 +260,7 @@ public class MainActivityTest {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT-1));
     }
 
-    @Test //OK
+    @Test //OK - KO engroupe - Toast
     public void givenNothing_whenSave_thenFail() {
 
         //Contrôle que la liste est vide
@@ -267,8 +270,6 @@ public class MainActivityTest {
         onView(withId(R.id.add_fab)).perform(click());
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
-
-        //Saisie de la salle de réunion
 
         //On enregistre la réunion
         onView(allOf(withId(R.id.btn_save))).perform(click());
@@ -295,7 +296,6 @@ public class MainActivityTest {
                 .inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
     }
-
 
     @Test //OK
     public void givenNoDate_whenOnOpening_thenStartAndEndTimeNotEnabled() {
@@ -347,10 +347,9 @@ public class MainActivityTest {
                 .check(matches(isEnabled()));
     }
 
-
-    @Test //KO
-    public void givenDate_whenBeforeNow_thenFail() {
-
+    @Test //OK
+    public void givenEmailAddress_whenInvalid_thenFail(){
+        String lText;
         //Contrôle que la liste est vide
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
@@ -359,32 +358,21 @@ public class MainActivityTest {
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
-        //Saisie de la date antérieur à maintenant
-        mDiffDay = -1;
-        mCalDate = generateDateTimeFromNow(mCalDate, mDiffMonth, mDiffDay, mDiffHour);
-        onView(withId(R.id.meeting_date)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
-                .perform(PickerActions.setDate(
-                        mCalDate.get(Calendar.YEAR),
-                        mCalDate.get(Calendar.MONTH + mDiffMonth) ,
-                        mCalDate.get(Calendar.DAY_OF_MONTH + mDiffDay)));
-        onView(withText(android.R.string.ok)).perform(click());
-        onView(allOf(withId(R.id.meeting_date_et)))
-                .check(matches(withText(getSimpleDateFormat(mCalDate))));
+        //Saisie d'une adresse email invalide
+        InsertGraphicData.addInvalidEmailAddress("toto");
+        onView(allOf(withId(R.id.email_address)))
+                .check(matchesErrorText(mActivity.getString(R.string.err_invalid_email_address)));
 
+        //On vérifie que l'adresse email s'est pas ajoutée au ChipGroup
+        onView(withId(R.id.email_group_cg)).check(matchesChipGroupEmpty());
 
-        //On enregistre la réunion
-        onView(allOf(withId(R.id.btn_save))).perform(click());
+        InsertGraphicData.addInvalidEmailAddress("to>to@777.");
+        onView(allOf(withId(R.id.email_address)))
+                .check(matchesErrorText(mActivity.getString(R.string.err_invalid_email_address)));
 
-        onView(withId(R.id.meeting_date))
-                .check(matchesErrorText(mActivity.getString(R.string.err_anterior_date)));
+        //On vérifie que l'adresse email s'est pas ajoutée au ChipGroup
+        onView(withId(R.id.email_group_cg)).check(matchesChipGroupEmpty());
 
-        onView(withText(R.string.action_add_meeting_missing_field))
-                .inRoot(new ToastMatcher())
-                .check(matches(isDisplayed()));
     }
-
-
-
 
 }

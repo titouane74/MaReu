@@ -122,7 +122,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                 sApiService.setMeetingDeleted(lMeeting);
                 sApiService.deleteMeeting(lMeeting);
                 mCallback.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
-                //TODO voir si j'enlèves ce contrôle
 
                 AlertDialog.Builder lAlertDialogBuiler = new AlertDialog.Builder(mContext);
                 lAlertDialogBuiler .setTitle(mContext.getString(R.string.app_name));

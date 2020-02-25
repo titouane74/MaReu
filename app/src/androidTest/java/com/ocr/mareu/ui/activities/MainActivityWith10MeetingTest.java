@@ -10,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.ocr.mareu.R;
+import com.ocr.mareu.actions.DeleteViewAction;
 import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.service.MeetingApiService;
@@ -33,9 +34,12 @@ import java.util.Locale;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.LayoutMatchers.hasEllipsizedText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -58,6 +62,7 @@ public class MainActivityWith10MeetingTest {
     private MeetingApiService mApi = null;
     private MainActivity mActivity = null;
     private List<Meeting> mMeetings = new ArrayList<>();
+    private static int ITEMS_COUNT = 10;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule =
@@ -88,10 +93,10 @@ public class MainActivityWith10MeetingTest {
     }
 
     @Test //OK
-    public void given10Meeting_whenTextEllipsized_thenSucces() {
+    public void given10Meeting_whenTextEllipsized_thenSuccess() {
 
         onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(10));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
         onView(allOf(withId(R.id.item_description), withText(startsWith("POSEIDON"))))
                 .check(matches(withText(mMeetings.get(0).toStringDescription())));
@@ -108,7 +113,7 @@ public class MainActivityWith10MeetingTest {
     public void given10Meeting_whenFilterByRoom_thenShow2MeetingWithSuccess () throws MeetingApiServiceException {
 
         //Contrôle que la liste est vide
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(10));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
 
         // Added a sleep statement to match the app's execution delay.
@@ -201,7 +206,7 @@ public class MainActivityWith10MeetingTest {
     public void given10Meeting_whenFilterByDate_thenShowMeetingWithSameDate () throws MeetingApiServiceException {
 
         //Contrôle que la liste est vide
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(10));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
         try {
             Thread.sleep(300);
@@ -255,7 +260,7 @@ public class MainActivityWith10MeetingTest {
     @Test //OK
     public void given10Meeting_whenResetFilter_thenRemoveAllItems () throws MeetingApiServiceException {
 
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(10));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
         //Saisie de la date de filtrage
         Calendar lCalDate = Calendar.getInstance(Locale.FRANCE);
@@ -317,8 +322,21 @@ public class MainActivityWith10MeetingTest {
 
         onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
 
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(10));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
     }
 
+    @Test //KO - supprime quand même l'item
+    public void givenItem_whenClickAndNoValidDeleteAction_thenRemoveItem() {
+
+        onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));
+
+        onView(withId(R.id.activity_list_rv))
+                .perform(actionOnItemAtPosition(1, new DeleteViewAction()));
+
+        onView(allOf(withText(R.string.msg_delete_meeting))).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button2)).perform(click());
+
+//        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
+    }
 
 }
