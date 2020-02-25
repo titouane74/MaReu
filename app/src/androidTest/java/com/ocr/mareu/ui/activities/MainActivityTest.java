@@ -21,8 +21,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -36,6 +34,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -46,6 +45,7 @@ import static com.ocr.mareu.assertion.TextInputLayoutNoErrorAssertion.matchesNoE
 import static com.ocr.mareu.utilstest.FakeDateTime.generateDateTimeFromNow;
 import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateFormat;
 import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateOrTimeFormat;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertNotNull;
@@ -60,6 +60,11 @@ public class MainActivityTest {
 
     private MeetingApiService mApi = null;
     private MainActivity mActivity = null;
+    private Calendar mNow = Calendar.getInstance(Locale.FRANCE);
+    private int mDiffMonth = 0;
+    private int mDiffDay = 0;
+    private int mDiffHour = 0;
+    private Calendar mCalDate;
     private static int ITEMS_COUNT = 2;
 
     @Rule
@@ -74,6 +79,8 @@ public class MainActivityTest {
 
         mApi = DI.getMeetingApiService();
         assertNotNull(mApi);
+
+        mCalDate = mNow;
     }
 
     @After
@@ -115,43 +122,41 @@ public class MainActivityTest {
                 .check(matches(withText(lText)));
 
         //Saisie de la date du lendemain
-        Calendar lCalDate = Calendar.getInstance(Locale.FRANCE);
-        int lDiffMonth = 0;
-        int lDiffDay = 1;
-        int lDiffHour = 0;
-        lCalDate = generateDateTimeFromNow(lCalDate, lDiffMonth, lDiffDay, lDiffHour);
+        mDiffDay = 1;
+        mCalDate = generateDateTimeFromNow(mCalDate, mDiffMonth, mDiffDay, mDiffHour);
 
         onView(withId(R.id.meeting_date)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
                 .perform(PickerActions.setDate(
-                        lCalDate.get(Calendar.YEAR),
-                        lCalDate.get(Calendar.MONTH + lDiffMonth) ,
-                        lCalDate.get(Calendar.DAY_OF_MONTH + lDiffDay)));
+                        mCalDate.get(Calendar.YEAR),
+                        mCalDate.get(Calendar.MONTH + mDiffMonth) ,
+                        mCalDate.get(Calendar.DAY_OF_MONTH + mDiffDay)));
         onView(withText(android.R.string.ok)).perform(click());
         onView(allOf(withId(R.id.meeting_date_et)))
-                .check(matches(withText(getSimpleDateFormat(lCalDate))));
+                .check(matches(withText(getSimpleDateFormat(mCalDate))));
 
 
         //Saisie de l'heure de début de la réunion
         onView(withId(R.id.meeting_start_et)).perform(click());
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName())))
                 .perform(PickerActions.setTime(
-                        lCalDate.get(Calendar.HOUR_OF_DAY),
-                        lCalDate.get(Calendar.MINUTE)));
+                        mCalDate.get(Calendar.HOUR_OF_DAY),
+                        mCalDate.get(Calendar.MINUTE)));
         onView(withText(android.R.string.ok)).perform(click());
         onView(allOf(withId(R.id.meeting_start_et)))
-                .check(matches(withText(getSimpleDateOrTimeFormat(lCalDate))));
+                .check(matches(withText(getSimpleDateOrTimeFormat(mCalDate))));
 
         //Saisie de l'heure de fin de la réunion
-        lCalDate.add(Calendar.HOUR_OF_DAY ,1);
+        mDiffHour = 1;
+        mCalDate.add(Calendar.HOUR_OF_DAY , mDiffHour);
         onView(withId(R.id.meeting_end_et)).perform(click());
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName())))
                 .perform(PickerActions.setTime(
-                        lCalDate.get(Calendar.HOUR_OF_DAY) ,
-                        lCalDate.get(Calendar.MINUTE)));
+                        mCalDate.get(Calendar.HOUR_OF_DAY) ,
+                        mCalDate.get(Calendar.MINUTE)));
         onView(withText(android.R.string.ok)).perform(click());
         onView(allOf(withId(R.id.meeting_end_et)))
-                .check(matches(withText(getSimpleDateOrTimeFormat(lCalDate))));
+                .check(matches(withText(getSimpleDateOrTimeFormat(mCalDate))));
 
         //Saisie d'une adresse email
         lText = "toto@gmail.com";
@@ -291,7 +296,59 @@ public class MainActivityTest {
                 .check(matches(isDisplayed()));
     }
 
+
     @Test //OK
+    public void givenNoDate_whenOnOpening_thenStartAndEndTimeNotEnabled() {
+
+        //Contrôle que la liste est vide
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
+
+        //Ajout une nouvelle réunion
+        onView(withId(R.id.add_fab)).perform(click());
+
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+        onView(withId(R.id.meeting_start_et))
+                .check(matches(not(isEnabled())));
+
+        onView(withId(R.id.meeting_end_et))
+                .check(matches(not(isEnabled())));
+    }
+
+    @Test //OK
+    public void givenDate_whenAfterUpdate_thenStartAndEndTimeEnabled() {
+
+        //Contrôle que la liste est vide
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
+
+        //Ajout une nouvelle réunion
+        onView(withId(R.id.add_fab)).perform(click());
+
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+        mDiffDay = 1;
+        mCalDate = generateDateTimeFromNow(mCalDate, mDiffMonth, mDiffDay, mDiffHour);
+
+        onView(withId(R.id.meeting_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
+                .perform(PickerActions.setDate(
+                        mCalDate.get(Calendar.YEAR),
+                        mCalDate.get(Calendar.MONTH + mDiffMonth) ,
+                        mCalDate.get(Calendar.DAY_OF_MONTH + mDiffDay)));
+        onView(withText(android.R.string.ok)).perform(click());
+        onView(allOf(withId(R.id.meeting_date_et)))
+                .check(matches(withText(getSimpleDateFormat(mCalDate))));
+
+
+        onView(withId(R.id.meeting_start_et))
+                .check(matches(isEnabled()));
+
+        onView(withId(R.id.meeting_end_et))
+                .check(matches(isEnabled()));
+    }
+
+
+    @Test //KO
     public void givenDate_whenBeforeNow_thenFail() {
 
         //Contrôle que la liste est vide
@@ -302,28 +359,25 @@ public class MainActivityTest {
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
-        //Saisie de la salle de réunion
+        //Saisie de la date antérieur à maintenant
+        mDiffDay = -1;
+        mCalDate = generateDateTimeFromNow(mCalDate, mDiffMonth, mDiffDay, mDiffHour);
+        onView(withId(R.id.meeting_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
+                .perform(PickerActions.setDate(
+                        mCalDate.get(Calendar.YEAR),
+                        mCalDate.get(Calendar.MONTH + mDiffMonth) ,
+                        mCalDate.get(Calendar.DAY_OF_MONTH + mDiffDay)));
+        onView(withText(android.R.string.ok)).perform(click());
+        onView(allOf(withId(R.id.meeting_date_et)))
+                .check(matches(withText(getSimpleDateFormat(mCalDate))));
+
 
         //On enregistre la réunion
         onView(allOf(withId(R.id.btn_save))).perform(click());
 
-        onView(withId(R.id.room_list_layout))
-                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
-
-        onView(withId(R.id.meeting_topic))
-                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
-
         onView(withId(R.id.meeting_date))
-                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
-
-        onView(withId(R.id.meeting_start))
-                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
-
-        onView(withId(R.id.meeting_end))
-                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
-
-        onView(withId(R.id.email_address))
-                .check(matchesErrorText(mActivity.getString(R.string.err_list_participants)));
+                .check(matchesErrorText(mActivity.getString(R.string.err_anterior_date)));
 
         onView(withText(R.string.action_add_meeting_missing_field))
                 .inRoot(new ToastMatcher())
