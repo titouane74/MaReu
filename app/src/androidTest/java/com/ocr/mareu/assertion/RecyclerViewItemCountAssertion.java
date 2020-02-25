@@ -1,4 +1,4 @@
-package com.ocr.mareu.utils;
+package com.ocr.mareu.assertion;
 
 import android.view.View;
 

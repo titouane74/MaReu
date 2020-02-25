@@ -11,7 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 import com.ocr.mareu.R;
 import com.ocr.mareu.di.DI;
 import com.ocr.mareu.service.MeetingApiService;
-import com.ocr.mareu.utils.DeleteViewAction;
+import com.ocr.mareu.actions.DeleteViewAction;
 import com.ocr.mareu.matchers.ToastMatcher;
 
 import org.hamcrest.Matchers;
@@ -39,8 +39,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.ocr.mareu.utils.ChipValueAssertion.matchesChipTextAtPosition;
-import static com.ocr.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static com.ocr.mareu.assertion.ChipValueAssertion.matchesChipTextAtPosition;
+import static com.ocr.mareu.assertion.RecyclerViewItemCountAssertion.withItemCount;
+import static com.ocr.mareu.assertion.TextInputLayoutErrorAssertion.matchesErrorText;
+import static com.ocr.mareu.assertion.TextInputLayoutNoErrorAssertion.matchesNoErrorText;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertNotNull;
@@ -160,6 +162,8 @@ public class MainActivityTest {
             .perform(scrollTo(), click())
             .perform(pressKey(KEYCODE_ENTER))
             .check(matches(withText("")));
+        onView(allOf(withId(R.id.email_address))).check(matchesNoErrorText());
+
 
         //On vérifie que l'adresse email s'est ajoutée au ChipGroup
         onView(withId(R.id.email_group_cg)).check(matchesChipTextAtPosition(0, lText));
@@ -171,6 +175,7 @@ public class MainActivityTest {
                 .perform(scrollTo(), click())
                 .perform(pressKey(KEYCODE_ENTER))
                 .check(matches(withText("")));
+        onView(allOf(withId(R.id.email_address))).check(matchesNoErrorText());
 
         //On vérifie que l'adresse email s'est ajoutée au ChipGroup
         onView(withId(R.id.email_group_cg)).check(matchesChipTextAtPosition(1, lText));
@@ -250,7 +255,7 @@ public class MainActivityTest {
     }
 
     @Test //OK
-    public void givenNewMeeting_whenRoomNotImplemented_thenFail() {
+    public void givenNothing_whenSave_thenFail() {
 
         //Contrôle que la liste est vide
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
@@ -261,25 +266,35 @@ public class MainActivityTest {
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
         //Saisie de la salle de réunion
-        onView(allOf(withId(R.id.room_list))).perform(click());
-
-        onView(withText("POSEIDON"))
-                .inRoot(isPlatformPopup())
-                .perform(click());
-
-        onView(allOf(withId(R.id.room_list))).check(matches(withText("POSEIDON")));
 
         //On enregistre la réunion
         onView(allOf(withId(R.id.btn_save))).perform(click());
 
-//        onView(withId(R.id.room_list_layout))
-//                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+        onView(withId(R.id.room_list_layout))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
 
+        onView(withId(R.id.meeting_topic))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
 
-//        onView(withText(R.string.action_add_meeting_missing_field))
-//                .inRoot(new ToastMatcher())
-//                .check(matches(isDisplayed()));
+        onView(withId(R.id.meeting_date))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+
+        onView(withId(R.id.meeting_start))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+
+        onView(withId(R.id.meeting_end))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+
+        onView(withId(R.id.email_address))
+                .check(matchesErrorText(mActivity.getString(R.string.err_list_participants)));
+
+        onView(withText(R.string.action_add_meeting_missing_field))
+                .inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
     }
+
+
+
 
 
 }
