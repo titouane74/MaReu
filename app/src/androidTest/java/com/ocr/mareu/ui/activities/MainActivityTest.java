@@ -10,6 +10,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.di.DI;
+import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.actions.DeleteViewAction;
 import com.ocr.mareu.matchers.ToastMatcher;
@@ -22,10 +23,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.pressKey;
@@ -47,6 +52,12 @@ import static com.ocr.mareu.assertion.TextInputLayoutNoErrorAssertion.matchesNoE
 import static com.ocr.mareu.utilstest.FakeDateTime.generateDateTimeFromNow;
 import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateFormat;
 import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateOrTimeFormat;
+import static com.ocr.mareu.utilstest.InsertGraphicData.addDate;
+import static com.ocr.mareu.utilstest.InsertGraphicData.addFakeMeeting;
+import static com.ocr.mareu.utilstest.InsertGraphicData.addRoom;
+import static com.ocr.mareu.utilstest.InsertGraphicData.toto;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
@@ -169,7 +180,6 @@ public class MainActivityTest {
             .check(matches(withText("")));
         onView(allOf(withId(R.id.email_address))).check(matchesNoErrorText());
 
-
         //On vérifie que l'adresse email s'est ajoutée au ChipGroup
         onView(withId(R.id.email_group_cg)).check(matchesChipTextAtPosition(0, lText));
 
@@ -261,10 +271,6 @@ public class MainActivityTest {
 
     @Test //OK - KO engroupe - Toast
     public void givenNothing_whenSave_thenFail() {
-
-        //Contrôle que la liste est vide
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
-
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
 
@@ -298,10 +304,6 @@ public class MainActivityTest {
 
     @Test //OK
     public void givenNoDate_whenOnOpening_thenStartAndEndTimeNotEnabled() {
-
-        //Contrôle que la liste est vide
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
-
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
 
@@ -316,9 +318,6 @@ public class MainActivityTest {
 
     @Test //OK
     public void givenDate_whenAfterUpdate_thenStartAndEndTimeEnabled() {
-
-        //Contrôle que la liste est vide
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
@@ -348,7 +347,48 @@ public class MainActivityTest {
 
     @Test //OK
     public void givenEmailAddress_whenInvalid_thenFail(){
-        String lText;
+        //Ajout une nouvelle réunion
+        onView(withId(R.id.add_fab)).perform(click());
+
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+        //Saisie d'une adresse email invalide
+        InsertGraphicData.addEmailAddress("toto");
+        onView(allOf(withId(R.id.email_address)))
+                .check(matchesErrorText(mActivity.getString(R.string.err_invalid_email_address)));
+
+        //On vérifie que l'adresse email s'est pas ajoutée au ChipGroup
+        onView(withId(R.id.email_group_cg)).check(matchesChipGroupEmpty());
+
+        InsertGraphicData.addEmailAddress("to>to@777.");
+        onView(allOf(withId(R.id.email_address)))
+                .check(matchesErrorText(mActivity.getString(R.string.err_invalid_email_address)));
+
+        //On vérifie que l'adresse email s'est pas ajoutée au ChipGroup
+        onView(withId(R.id.email_group_cg)).check(matchesChipGroupEmpty());
+
+    }
+
+    @Test
+    public void givenTopic_whenMoreThan40Caracters_thenMeesageError() {
+
+        //Ajout une nouvelle réunion
+        onView(withId(R.id.add_fab)).perform(click());
+
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+        //Saisie d'un sujet trop long
+        InsertGraphicData.addTopic("Sujet de réunion de plus de quarante caractères impossible");
+
+        onView(allOf(withId(R.id.btn_save))).perform(click());
+
+        onView(allOf(withId(R.id.meeting_topic)))
+                .check(matchesErrorText(mActivity.getString(R.string.err_topic_length)));
+
+    }
+
+    @Test
+    public void givenNewMeeting_whenSave_thenAddItemInList() {
         //Contrôle que la liste est vide
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
@@ -357,20 +397,33 @@ public class MainActivityTest {
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
-        //Saisie d'une adresse email invalide
-        InsertGraphicData.addInvalidEmailAddress("toto");
-        onView(allOf(withId(R.id.email_address)))
-                .check(matchesErrorText(mActivity.getString(R.string.err_invalid_email_address)));
+        //Saisie de la salle de réunion
+        onView(allOf(withId(R.id.room_list))).perform(click());
 
-        //On vérifie que l'adresse email s'est pas ajoutée au ChipGroup
-        onView(withId(R.id.email_group_cg)).check(matchesChipGroupEmpty());
+        addFakeMeeting("ARES", "LA guerre des boutons",
+                mCalDate,0,  1, 2,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-        InsertGraphicData.addInvalidEmailAddress("to>to@777.");
-        onView(allOf(withId(R.id.email_address)))
-                .check(matchesErrorText(mActivity.getString(R.string.err_invalid_email_address)));
+        onView(allOf(withId(R.id.btn_save))).perform(click());
 
-        //On vérifie que l'adresse email s'est pas ajoutée au ChipGroup
-        onView(withId(R.id.email_group_cg)).check(matchesChipGroupEmpty());
+        onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
+
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(1));
+
+    }
+
+    @Test
+    public void test() {
+
+        //Contrôle que la liste est vide
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
+
+        //Ajout une nouvelle réunion
+        onView(withId(R.id.add_fab)).perform(click());
+
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+
 
     }
 

@@ -107,7 +107,6 @@ public class AddFragment extends BaseFragment implements View.OnClickListener, V
                 return (event.getAction() == MotionEvent.ACTION_UP);
             }
         });
-
         mEmailEt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

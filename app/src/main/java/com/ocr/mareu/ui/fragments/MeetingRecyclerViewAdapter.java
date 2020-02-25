@@ -58,8 +58,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         mContext = pContext;
         //Test et chargement uniquement pour les tests de la soutenance/demo
 
-
 /*
+
         if (!sApiService.getIsExecutedOneTimeForTest()) {
 //            sApiService.addFakeMeeting();
             try {
@@ -69,8 +69,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             }
             sApiService.setIsExecutedOneTimeForTest(true);
         }
-*/
 
+*/
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sApiService.getMeetings();

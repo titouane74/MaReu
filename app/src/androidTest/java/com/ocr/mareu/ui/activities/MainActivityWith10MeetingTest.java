@@ -91,7 +91,7 @@ public class MainActivityWith10MeetingTest {
     }
 
     @Test //OK
-    public void given10Meeting_whenTextEllipsized_thenSuccess() {
+    public void given10Meeting_whenTextEllipsizedAndGoodFormat_thenSuccess() {
 
         onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
@@ -110,7 +110,6 @@ public class MainActivityWith10MeetingTest {
     @Test //OK
     public void given10Meeting_whenFilterByRoom_thenShow2MeetingWithSuccess () throws MeetingApiServiceException {
 
-        //Contrôle que la liste est vide
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
 
@@ -336,5 +335,7 @@ public class MainActivityWith10MeetingTest {
 
 //        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
     }
+
+
 
 }
