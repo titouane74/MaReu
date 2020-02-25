@@ -43,13 +43,13 @@ import static com.ocr.mareu.assertion.ChipValueAssertion.matchesChipTextAtPositi
 import static com.ocr.mareu.assertion.RecyclerViewItemCountAssertion.withItemCount;
 import static com.ocr.mareu.assertion.TextInputLayoutErrorAssertion.matchesErrorText;
 import static com.ocr.mareu.assertion.TextInputLayoutNoErrorAssertion.matchesNoErrorText;
+import static com.ocr.mareu.utilstest.FakeDateTime.generateDateTimeFromNow;
+import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateFormat;
+import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateOrTimeFormat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-
-//import static local.workstation.mareu.utils.assertions.TextInputLayoutErrorValueAssertion.matchesErrorText;
-//import static local.workstation.mareu.utils.assertions.TextInputLayoutNoErrorValueAssertion.matchesNoErrorText;
 
 
 /**
@@ -116,25 +116,23 @@ public class MainActivityTest {
 
         //Saisie de la date du lendemain
         Calendar lCalDate = Calendar.getInstance(Locale.FRANCE);
-        DateFormat lDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
-        lCalDate.add(Calendar.DATE,1);
-        lCalDate.set(Calendar.MINUTE,00);
-        lCalDate.set(Calendar.SECOND,0);
-        lCalDate.set(Calendar.MILLISECOND,0);
+        int lDiffMonth = 0;
+        int lDiffDay = 1;
+        int lDiffHour = 0;
+        lCalDate = generateDateTimeFromNow(lCalDate, lDiffMonth, lDiffDay, lDiffHour);
 
         onView(withId(R.id.meeting_date)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
                 .perform(PickerActions.setDate(
                         lCalDate.get(Calendar.YEAR),
-                        lCalDate.get(Calendar.MONTH) + 1,
-                        lCalDate.get(Calendar.DAY_OF_MONTH)));
+                        lCalDate.get(Calendar.MONTH + lDiffMonth) ,
+                        lCalDate.get(Calendar.DAY_OF_MONTH + lDiffDay)));
         onView(withText(android.R.string.ok)).perform(click());
         onView(allOf(withId(R.id.meeting_date_et)))
-                .check(matches(withText(lDateFormat.format(lCalDate.getTime()))));
+                .check(matches(withText(getSimpleDateFormat(lCalDate))));
 
 
         //Saisie de l'heure de début de la réunion
-        SimpleDateFormat lSimpleTimeFormat = new SimpleDateFormat("HH:mm", Locale.FRENCH);
         onView(withId(R.id.meeting_start_et)).perform(click());
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName())))
                 .perform(PickerActions.setTime(
@@ -142,7 +140,7 @@ public class MainActivityTest {
                         lCalDate.get(Calendar.MINUTE)));
         onView(withText(android.R.string.ok)).perform(click());
         onView(allOf(withId(R.id.meeting_start_et)))
-                .check(matches(withText(lSimpleTimeFormat.format(lCalDate.getTime()))));
+                .check(matches(withText(getSimpleDateOrTimeFormat(lCalDate))));
 
         //Saisie de l'heure de fin de la réunion
         lCalDate.add(Calendar.HOUR_OF_DAY ,1);
@@ -153,7 +151,7 @@ public class MainActivityTest {
                         lCalDate.get(Calendar.MINUTE)));
         onView(withText(android.R.string.ok)).perform(click());
         onView(allOf(withId(R.id.meeting_end_et)))
-                .check(matches(withText(lSimpleTimeFormat.format(lCalDate.getTime()))));
+                .check(matches(withText(getSimpleDateOrTimeFormat(lCalDate))));
 
         //Saisie d'une adresse email
         lText = "toto@gmail.com";
@@ -293,6 +291,44 @@ public class MainActivityTest {
                 .check(matches(isDisplayed()));
     }
 
+    @Test //OK
+    public void givenDate_whenBeforeNow_thenFail() {
+
+        //Contrôle que la liste est vide
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
+
+        //Ajout une nouvelle réunion
+        onView(withId(R.id.add_fab)).perform(click());
+
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+        //Saisie de la salle de réunion
+
+        //On enregistre la réunion
+        onView(allOf(withId(R.id.btn_save))).perform(click());
+
+        onView(withId(R.id.room_list_layout))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+
+        onView(withId(R.id.meeting_topic))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+
+        onView(withId(R.id.meeting_date))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+
+        onView(withId(R.id.meeting_start))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+
+        onView(withId(R.id.meeting_end))
+                .check(matchesErrorText(mActivity.getString(R.string.err_empty_field)));
+
+        onView(withId(R.id.email_address))
+                .check(matchesErrorText(mActivity.getString(R.string.err_list_participants)));
+
+        onView(withText(R.string.action_add_meeting_missing_field))
+                .inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
+    }
 
 
 
