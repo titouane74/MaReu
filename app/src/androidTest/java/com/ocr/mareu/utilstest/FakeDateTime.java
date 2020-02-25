@@ -1,21 +1,9 @@
 package com.ocr.mareu.utilstest;
 
-import android.graphics.Color;
-
-import com.ocr.mareu.model.Meeting;
-import com.ocr.mareu.model.Room;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
-
-import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE;
-import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE_TIME;
-import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
 
 /**
  * Created by Florence LE BOURNOT on 25/02/2020

@@ -11,7 +11,7 @@ import org.hamcrest.TypeSafeMatcher;
 /**
  * Created by Florence LE BOURNOT on 24/02/2020
  */
-public class FilterRoomMatcher {
+public class ChildAtPositionMatcher {
 
     public static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {

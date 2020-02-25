@@ -3,7 +3,6 @@ package com.ocr.mareu.utilstest;
 import androidx.test.espresso.ViewInteraction;
 
 import com.ocr.mareu.R;
-import com.ocr.mareu.ui.activities.MainActivity;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
 import static androidx.test.espresso.Espresso.onView;
