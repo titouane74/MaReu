@@ -12,7 +12,6 @@
     <string name="text_divider"> - </string>
     <string name="action_add_meeting">Réunion ajoutée</string>
     <string name="action_add_meeting_missing_field">Ajout impossible. Des éléments sont manquants ou erronés.</string>
-    <string name="empty_list">Pas de réunion programmée</string>
     <string name="meeting_topic">Sujet de la réunion</string>
     <string name="meeting_email">Adresse mail</string>
     <string name="meeting_date">Date</string>

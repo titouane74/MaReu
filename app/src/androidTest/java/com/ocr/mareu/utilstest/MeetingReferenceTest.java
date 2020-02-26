@@ -29,10 +29,6 @@ public class MeetingReferenceTest {
         lCalStart.add(Calendar.HOUR_OF_DAY,pDiffHourStart);
         lCalEnd.add(Calendar.HOUR_OF_DAY,pDiffHourEnd);
 
-       System.out.println("REFERENCE DATE : " + pCalDate.getTime());
-       System.out.println("REFERENCE START : " + lCalStart.getTime());
-       System.out.println("REFERENCE END : " + lCalEnd.getTime());
-
         mApi.addMeeting( new Meeting(new Room("ARES", Color.argb(100,0,150,135)),
                 "Sujet Référence",
                 pCalDate,

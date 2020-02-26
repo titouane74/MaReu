@@ -46,21 +46,18 @@ public class InsertGraphicData {
 
         addTopic(pTopic);
 
-        pDateCal.add(Calendar.DAY_OF_MONTH, pDiffDay);
+        //pDateCal.add(Calendar.DAY_OF_MONTH, pDiffDay);
         addDate(pDateCal);
-        System.out.println("REFERENCE DATE : " + pDateCal.getTime());
 
         Calendar lCalStart = (Calendar) pDateCal.clone();
         lCalStart.add(Calendar.HOUR_OF_DAY, pDiffHourStart);
         onView(withId(R.id.meeting_start_et)).perform(click());
         addTime(lCalStart);
-        System.out.println("REFERENCE START : " + lCalStart.getTime());
 
         Calendar lCalEnd = (Calendar) pDateCal.clone();
         lCalEnd.add(Calendar.HOUR_OF_DAY, pDiffHourEnd);
         onView(withId(R.id.meeting_end_et)).perform(click());
         addTime(lCalEnd);
-        System.out.println("REFERENCE END : " + lCalEnd.getTime());
 
         for (String lParticipants : pParticipants) {
             addEmailAddress(lParticipants);
