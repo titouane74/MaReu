@@ -73,7 +73,7 @@ public class MainActivityTest {
     public void givenItem_whenClickOnItem_thenDisplayDetail() {
         int idItemToTest = 0;
 
-        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,2,
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
         onView(allOf(withId(R.id.activity_list_rv), isDisplayed()))
@@ -88,10 +88,10 @@ public class MainActivityTest {
     @Test //OK
     public void givenItem_whenClickAndValidDeleteAction_thenRemoveItem() {
 
-        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,2,
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,5,
+        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,0,5,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
         onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));
@@ -108,10 +108,10 @@ public class MainActivityTest {
     @Test //OK - Mentorat - voir si test utilie
     public void givenItem_whenClickAndNoValidDeleteAction_thenRemoveItem() {
 
-        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,2,
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,5,
+        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,0,5,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
         onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));

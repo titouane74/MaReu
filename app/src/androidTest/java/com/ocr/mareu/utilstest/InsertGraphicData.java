@@ -35,7 +35,7 @@ public class InsertGraphicData {
 
 
     public static void addFakeMeeting(String pRoom, String pTopic,
-                                      Calendar pDateCal, int pDiffDay, int pDiffHour, List<String> pParticipants) {
+                                      Calendar pDateCal, int pDiffDay, int pDiffHourStart, int pDiffHourEnd, List<String> pParticipants) {
 
         onView(withId(R.id.add_fab)).perform(click());
 
@@ -48,14 +48,19 @@ public class InsertGraphicData {
 
         pDateCal.add(Calendar.DAY_OF_MONTH, pDiffDay);
         addDate(pDateCal);
+        System.out.println("REFERENCE DATE : " + pDateCal.getTime());
 
+        Calendar lCalStart = (Calendar) pDateCal.clone();
+        lCalStart.add(Calendar.HOUR_OF_DAY, pDiffHourStart);
         onView(withId(R.id.meeting_start_et)).perform(click());
-        addTime(pDateCal);
+        addTime(lCalStart);
+        System.out.println("REFERENCE START : " + lCalStart.getTime());
 
-        pDateCal.add(Calendar.HOUR_OF_DAY, pDiffHour);
-
+        Calendar lCalEnd = (Calendar) pDateCal.clone();
+        lCalEnd.add(Calendar.HOUR_OF_DAY, pDiffHourEnd);
         onView(withId(R.id.meeting_end_et)).perform(click());
-        addTime(pDateCal);
+        addTime(lCalEnd);
+        System.out.println("REFERENCE END : " + lCalEnd.getTime());
 
         for (String lParticipants : pParticipants) {
             addEmailAddress(lParticipants);

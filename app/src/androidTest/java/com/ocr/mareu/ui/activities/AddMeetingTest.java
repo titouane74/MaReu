@@ -202,10 +202,10 @@ public class AddMeetingTest {
     public void given2NewMeeting_whenSave_thenAddItemInList() {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
-        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,2,
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,5,
+        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,0,5,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
         onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
