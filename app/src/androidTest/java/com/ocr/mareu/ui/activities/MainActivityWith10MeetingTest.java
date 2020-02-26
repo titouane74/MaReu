@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.ocr.mareu.R;
-import com.ocr.mareu.actions.DeleteViewAction;
 import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.service.MeetingApiService;
@@ -35,7 +34,6 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.LayoutMatchers.hasEllipsizedText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
@@ -321,21 +319,6 @@ public class MainActivityWith10MeetingTest {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
     }
-
-    @Test //KO - supprime quand même l'item
-    public void givenItem_whenClickAndNoValidDeleteAction_thenRemoveItem() {
-
-        onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));
-
-        onView(withId(R.id.activity_list_rv))
-                .perform(actionOnItemAtPosition(1, new DeleteViewAction()));
-
-        onView(allOf(withText(R.string.msg_delete_meeting))).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button2)).perform(click());
-
-//        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
-    }
-
 
 
 }

@@ -10,7 +10,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.ocr.mareu.R;
 import com.ocr.mareu.di.DI;
-import com.ocr.mareu.model.Room;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.actions.DeleteViewAction;
 import com.ocr.mareu.matchers.ToastMatcher;
@@ -23,14 +22,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.pressKey;
@@ -52,12 +48,7 @@ import static com.ocr.mareu.assertion.TextInputLayoutNoErrorAssertion.matchesNoE
 import static com.ocr.mareu.utilstest.FakeDateTime.generateDateTimeFromNow;
 import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateFormat;
 import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateOrTimeFormat;
-import static com.ocr.mareu.utilstest.InsertGraphicData.addDate;
 import static com.ocr.mareu.utilstest.InsertGraphicData.addFakeMeeting;
-import static com.ocr.mareu.utilstest.InsertGraphicData.addRoom;
-import static com.ocr.mareu.utilstest.InsertGraphicData.toto;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
@@ -73,10 +64,10 @@ public class MainActivityTest {
 
     private MeetingApiService mApi = null;
     private MainActivity mActivity = null;
-    private Calendar mNow = Calendar.getInstance(Locale.FRANCE);
+    private Calendar mNow ;
     private int mDiffMonth = 0;
-    private int mDiffDay = 0;
-    private int mDiffHour = 0;
+    private int mDiffDay = 1;
+    private int mDiffHour = 2;
     private Calendar mCalDate;
     private static int ITEMS_COUNT = 2;
 
@@ -93,17 +84,20 @@ public class MainActivityTest {
         mApi = DI.getMeetingApiService();
         assertNotNull(mApi);
 
-        mCalDate = mNow;
+        mNow = Calendar.getInstance(Locale.FRANCE);
+        mCalDate = (Calendar) mNow.clone();
+        mDiffDay = 1;
+        mDiffHour = 2;
     }
 
     @After
     public void tearDown() {
         mApi = DI.getMeetingApiServiceNewInstance();
+        mNow = Calendar.getInstance(Locale.FRANCE);
     }
 
     @Test //OK
     public void givenNothing_whenOpen_thenListIsEmpty() {
-        //Contrôle que la liste est vide
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
     }
 
@@ -210,8 +204,22 @@ public class MainActivityTest {
     }
 
     @Test //OK
+    public void given2NewMeeting_whenSave_thenAddItemInList() {
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
+
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,2,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
+
+        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,5,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
+
+        onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
+
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(2));
+    }
+
+    @Test //OK
     public void givenNewMeeting_whenClickCancelButton_thenNoItemAddedInList() {
-        //Contrôle que la liste est vide
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
         //Ajout une nouvelle réunion
@@ -241,7 +249,8 @@ public class MainActivityTest {
     public void givenItem_whenClickOnItem_thenDisplayDetail() {
         int idItemToTest = 0;
 
-        mApi.addFakeMeeting();
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,2,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
         onView(allOf(withId(R.id.activity_list_rv), isDisplayed()))
                 .perform(actionOnItemAtPosition(idItemToTest, click()));
@@ -255,8 +264,11 @@ public class MainActivityTest {
     @Test //OK
     public void givenItem_whenClickAndValidDeleteAction_thenRemoveItem() {
 
-        //Chargement de fausses réunions
-        mApi.addFakeMeeting();
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,2,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
+
+        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,5,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
         onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));
 
@@ -269,7 +281,7 @@ public class MainActivityTest {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT-1));
     }
 
-    @Test //OK - KO engroupe - Toast
+    @Test //OK
     public void givenNothing_whenSave_thenFail() {
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
@@ -296,6 +308,18 @@ public class MainActivityTest {
 
         onView(withId(R.id.email_address))
                 .check(matchesErrorText(mActivity.getString(R.string.err_list_participants)));
+
+    }
+
+    @Test //OK
+    public void givenNothing_whenSave_thenToastImpossibleAdd() {
+        //Ajout une nouvelle réunion
+        onView(withId(R.id.add_fab)).perform(click());
+
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+        //On enregistre la réunion
+        onView(allOf(withId(R.id.btn_save))).perform(click());
 
         onView(withText(R.string.action_add_meeting_missing_field))
                 .inRoot(new ToastMatcher())
@@ -369,10 +393,9 @@ public class MainActivityTest {
 
     }
 
-    @Test
+    @Test //OK
     public void givenTopic_whenMoreThan40Caracters_thenMeesageError() {
 
-        //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
@@ -387,44 +410,29 @@ public class MainActivityTest {
 
     }
 
-    @Test
-    public void givenNewMeeting_whenSave_thenAddItemInList() {
-        //Contrôle que la liste est vide
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
+    @Test //OK - Mentorat - voir si test utilie
+    public void givenItem_whenClickAndNoValidDeleteAction_thenRemoveItem() {
 
-        //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
-
-        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
-
-        //Saisie de la salle de réunion
-        onView(allOf(withId(R.id.room_list))).perform(click());
-
-        addFakeMeeting("ARES", "LA guerre des boutons",
-                mCalDate,0,  1, 2,
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-        onView(allOf(withId(R.id.btn_save))).perform(click());
+        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,5,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-        onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));
 
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(1));
+        //On exécute le DeleteActionView qui appelle la demande de confirmation de suppression
+        onView(withId(R.id.activity_list_rv))
+                .perform(actionOnItemAtPosition(0, new DeleteViewAction()));
 
-    }
+        //On s'assure que le message s'est ouvert
+        onView(allOf(withText(R.string.msg_delete_meeting))).check(matches(isDisplayed()));
 
-    @Test
-    public void test() {
+        //On clique sur annuler pour refuser la suppression
+        onView(withId(android.R.id.button2)).perform(click());
 
-        //Contrôle que la liste est vide
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
-
-        //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
-
-        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
-
-
-
+        //On met -1 car graphiquement on a déjà supprimé l'item
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT - 1));
     }
 
 }

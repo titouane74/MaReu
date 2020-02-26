@@ -10,24 +10,22 @@ import com.ocr.mareu.R;
 
 import org.hamcrest.Matchers;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 
 /**
@@ -35,22 +33,43 @@ import static org.hamcrest.core.AllOf.allOf;
  */
 public class InsertGraphicData {
 
-    public static void toto(String pText){
-        onView(withText(pText))
-                .inRoot(isPlatformPopup())
-                .perform(click());
+
+    public static void addFakeMeeting(String pRoom, String pTopic,
+                                      Calendar pDateCal, int pDiffDay, int pDiffHour, List<String> pParticipants) {
+
+        onView(withId(R.id.add_fab)).perform(click());
+
+        onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
+
+        onView(allOf(withId(R.id.room_list))).perform(click());
+        addRoom(pRoom);
+
+        addTopic(pTopic);
+        pDateCal.add(Calendar.DAY_OF_MONTH, pDiffDay);
+        onView(withId(R.id.meeting_date)).perform(click());
+        addDate(pDateCal);
+
+        onView(withId(R.id.meeting_start_et)).perform(click());
+        addTime(pDateCal);
+
+        pDateCal.add(Calendar.HOUR_OF_DAY, pDiffHour);
+
+        onView(withId(R.id.meeting_end_et)).perform(click());
+        addTime(pDateCal);
+
+        for (String lParticipants : pParticipants) {
+            addEmailAddress(lParticipants);
+        }
+
+        onView(allOf(withId(R.id.btn_save))).perform(click());
 
     }
 
-    public  static void addRoom(String pRoom) {
+
+    public static void addRoom(String pRoom) {
         onView(withText(pRoom))
                 .inRoot(isPlatformPopup())
                 .perform(click());
-/*
-        onData(allOf(is(instanceOf(String.class)), is(pRoom)))
-                .inAdapterView(withId(R.id.room_list))
-                .perform(click());
-*/
     }
 
 
@@ -60,17 +79,18 @@ public class InsertGraphicData {
     }
 
 
-    public static void addDate(Calendar pCalDate, int pDiffMonth, int pDiffDay) {
+    public static void addDate(Calendar pCalDate) {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
                 .perform(PickerActions.setDate(
                         pCalDate.get(Calendar.YEAR),
-                        pCalDate.get(Calendar.MONTH + pDiffMonth) ,
-                        pCalDate.get(Calendar.DAY_OF_MONTH + pDiffDay)));
+                        pCalDate.get(Calendar.MONTH) + 1,
+                        pCalDate.get(Calendar.DAY_OF_MONTH)));
         onView(withText(android.R.string.ok)).perform(click());
 
     }
 
-    public  static void addTime(Calendar pCalDate) {
+    public static void addTime(Calendar pCalDate) {
+
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName())))
                 .perform(PickerActions.setTime(
                         pCalDate.get(Calendar.HOUR_OF_DAY),
@@ -82,41 +102,18 @@ public class InsertGraphicData {
     public static void addEmailAddress(String pText) {
         ViewInteraction lEmailET = onView(allOf(withId(R.id.email_address_et)));
         lEmailET.perform(replaceText(pText))
-                .perform(scrollTo(),click())
+                .perform(scrollTo(), click())
                 .perform(pressKey(KEYCODE_ENTER));
     }
 
-    public static void addFakeMeeting(String pRoom, String pTopic, Calendar pDateCal,
-                                      int pDiffMonth, int pDiffDay, int pDiffHour, List<String> pParticipants) {
-        addRoom(pRoom);
-        addTopic(pTopic);
-        onView(withId(R.id.meeting_date)).perform(click());
-        addDate(pDateCal, pDiffMonth, pDiffDay);
-        onView(withId(R.id.meeting_start_et)).perform(click());
-        addTime(pDateCal);
-        pDateCal.add(Calendar.HOUR_OF_DAY , pDiffHour);
-        onView(withId(R.id.meeting_end_et)).perform(click());
-        addTime(pDateCal);
-            for (String lParticipants : pParticipants) {
-                addEmailAddress(lParticipants);
-            }
-    }
 
-    public static void insertFakeMetingRecyclerView(String pDescription, String pParticipants) {
 /*
+    public static void add10FakeMeeting() {
+        addFakeMeeting("ARES", "La guerre des boutons",
+                mCalDate, 2,2,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-        insertFakeMeting("CRONOS - 16:00 - Réunion DG",
-                "loki@gmail.com, thor@gmail.com, captainamerica@gamail.com");
-
-        insertFakeMeting("POSEIDON - 10:00 - Réunion Commerciale",
-                "loki@gmail.com, thor@gmail.com, captainamerica@gamail.com");
-*/
-
-
-        ViewInteraction lDescription = onView(allOf(withId(R.id.item_description)));
-        lDescription.perform(replaceText(pDescription));
-
-        ViewInteraction lParticipants = onView(allOf(withId(R.id.item_participant)));
-        lParticipants.perform(replaceText(pParticipants));
     }
+*/
 }
+
