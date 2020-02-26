@@ -1,6 +1,9 @@
 package com.ocr.mareu.ui.activities;
 
+import android.util.DisplayMetrics;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.ocr.mareu.R;
@@ -33,6 +36,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeTrue;
 
 
 /**
@@ -46,19 +50,24 @@ public class MainActivityTest {
     private Calendar mNow ;
     private Calendar mCalDate;
     private static int ITEMS_COUNT = 2;
+    private boolean mIsScreenSw600dp;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule =
             new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void setUp() {
+    public void setUp()  {
+//        injectInstrumentation(InstrumentationRegistry.getInstrumentation());
+
         mActivity = mActivityTestRule.getActivity();
         assertNotNull(mActivity);
         assertThat(mActivity, notNullValue());
 
         mApi = DI.getMeetingApiService();
         assertNotNull(mApi);
+
+        mIsScreenSw600dp = isScreenSw600dp();
 
         mNow = Calendar.getInstance(Locale.FRANCE);
         mCalDate = (Calendar) mNow.clone();
@@ -137,5 +146,24 @@ public class MainActivityTest {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT - 1));
     }
 
+    @Test
+    public void givenAddFabAndFrameRight_whenTabletOrPhone_thenNotVisibleOrVisible() {
+        if (mIsScreenSw600dp) {
+            onView(allOf(withId(R.id.add_fab))).check(matches(not(isDisplayed())));
+            onView(allOf(withId(R.id.frame_right))).check(matches(isDisplayed()));
+        } else {
+            onView(allOf(withId(R.id.add_fab))).check(matches(isDisplayed()));
+        }
+
+    }
+
+    private boolean isScreenSw600dp() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        mActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        float widthDp = displayMetrics.widthPixels / displayMetrics.density;
+        float heightDp = displayMetrics.heightPixels / displayMetrics.density;
+        float screenSw = Math.min(widthDp, heightDp);
+        return screenSw >= 600;
+    }
 
 }
