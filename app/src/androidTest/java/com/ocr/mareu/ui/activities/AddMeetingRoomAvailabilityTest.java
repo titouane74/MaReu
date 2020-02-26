@@ -55,11 +55,13 @@ public class AddMeetingRoomAvailabilityTest {
         mNow = Calendar.getInstance(Locale.FRANCE);
         mCalDate = (Calendar) mNow.clone();
         mDiffDay = 2;
+        mCalDate.add(Calendar.DAY_OF_MONTH,mDiffDay);
 
         //Meeting de référence
         mApi = addReferenceMeeting(mApi,mCalDate,mDiffDay,0,3);
         onView(withId(R.id.activity_list_rv)).check(withItemCount(1));
 
+        mDiffDay = 0;
     }
 
     @After
@@ -71,8 +73,6 @@ public class AddMeetingRoomAvailabilityTest {
     //("Case 1 : Meeting Start = Reference start")
     @Test //OK
     public void givenNewMeeting_whenSameStart_thenFail() {
-
-        System.out.println("BEFORE NEW MEETING DATE : " + mCalDate.getTime());
 
         addFakeMeeting("ARES", "Sujet 1 KO", mCalDate, mDiffDay,0,1,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
@@ -86,6 +86,7 @@ public class AddMeetingRoomAvailabilityTest {
     //("Case 2 : Meeting end = Reference End")
     @Test //OK
     public void  givenNewMeeting_whenSameEnd_thenFail() {
+
         addFakeMeeting("ARES", "Sujet 2 KO", mCalDate, mDiffDay,2,3,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 

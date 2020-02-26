@@ -18,12 +18,10 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static androidx.test.espresso.contrib.RecyclerViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -73,9 +71,7 @@ public class MainActivityTest {
         mNow = Calendar.getInstance(Locale.FRANCE);
     }
 
-    //Tous KO à cause du addFac.click() -> doit provenir d'une autre erreur
-
-    @Test //KO
+    @Test //OK
     public void givenItem_whenClickOnItem_thenDisplayDetail() {
         int idItemToTest = 0;
 
@@ -91,16 +87,17 @@ public class MainActivityTest {
                 .check(matches(withText(mApi.getMeetingSelected().getRoom().getNameRoom())));
     }
 
-    @Test //KO
+    @Test //OK
     public void givenItem_whenClickAndValidDeleteAction_thenRemoveItem() {
 
-        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate , 2,0,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,0,5,
+        mCalDate = (Calendar) mNow.clone();
+        addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate ,5,0,5,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
-//        onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));
+        onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(ITEMS_COUNT));
 
         onView(withId(R.id.activity_list_rv))
                 .perform(actionOnItemAtPosition(1, new DeleteViewAction()));
@@ -110,16 +107,17 @@ public class MainActivityTest {
 
         onView(withId(R.id.activity_list_rv))
                 .check(matches(not(hasDescendant(withText("PLUTON")))));
-//        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT-1));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT-1));
 
     }
 
-    @Test //KO - Mentorat - voir si test utilie
+    @Test //OK - Mentorat - voir si test utilie
     public void givenItem_whenClickAndNoValidDeleteAction_thenRemoveItem() {
 
         addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
+        mCalDate = (Calendar) mNow.clone();
         addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,0,5,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 

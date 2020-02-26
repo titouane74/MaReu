@@ -111,6 +111,7 @@ public class MainActivityWith10MeetingTest {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
+/*
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -120,6 +121,7 @@ public class MainActivityWith10MeetingTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+*/
 
 
         onView(allOf(withId(R.id.action_filter))).perform(click());
@@ -201,14 +203,13 @@ public class MainActivityWith10MeetingTest {
     @Test //OK
     public void given10Meeting_whenFilterByDate_thenShowMeetingWithSameDate () throws MeetingApiServiceException {
 
-        //Contrôle que la liste est vide
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
-        try {
+/*        try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
         //Saisie de la date de filtrage
         Calendar lCalDate = Calendar.getInstance(Locale.FRANCE);
@@ -298,11 +299,11 @@ public class MainActivityWith10MeetingTest {
         onView(allOf(withId(R.id.item_description), withText(startsWith("GAIA"))))
                 .check(matches(withText(lMeetings.get(9).toStringDescription())));
 
-        try {
+/*        try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
         onView(allOf(withId(R.id.action_filter))).perform(click());
 

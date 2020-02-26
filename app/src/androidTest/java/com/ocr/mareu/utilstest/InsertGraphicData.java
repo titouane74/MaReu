@@ -46,8 +46,10 @@ public class InsertGraphicData {
 
         addTopic(pTopic);
 
-        //pDateCal.add(Calendar.DAY_OF_MONTH, pDiffDay);
-        addDate(pDateCal);
+
+        Calendar lCalDate = (Calendar) pDateCal.clone();
+        lCalDate.add(Calendar.DAY_OF_MONTH, pDiffDay);
+        addDate(lCalDate);
 
         Calendar lCalStart = (Calendar) pDateCal.clone();
         lCalStart.add(Calendar.HOUR_OF_DAY, pDiffHourStart);

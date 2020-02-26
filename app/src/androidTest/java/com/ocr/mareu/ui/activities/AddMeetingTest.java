@@ -205,6 +205,7 @@ public class AddMeetingTest {
         addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
+        mCalDate = (Calendar) mNow.clone();
         addFakeMeeting("PLUTON", "La guerre des étoiles", mCalDate,5,0,5,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
 
