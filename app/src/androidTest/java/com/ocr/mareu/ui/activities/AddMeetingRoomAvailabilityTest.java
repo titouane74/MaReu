@@ -201,4 +201,5 @@ public class AddMeetingRoomAvailabilityTest {
                 .check(matches(isDisplayed()));
 
     }
+
 }

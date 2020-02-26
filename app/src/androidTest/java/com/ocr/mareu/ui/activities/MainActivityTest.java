@@ -1,9 +1,9 @@
 package com.ocr.mareu.ui.activities;
 
+import android.content.pm.ActivityInfo;
 import android.util.DisplayMetrics;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.ocr.mareu.R;
@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assume.assumeTrue;
+
 
 
 /**
@@ -58,7 +58,6 @@ public class MainActivityTest {
 
     @Before
     public void setUp()  {
-//        injectInstrumentation(InstrumentationRegistry.getInstrumentation());
 
         mActivity = mActivityTestRule.getActivity();
         assertNotNull(mActivity);
@@ -154,6 +153,20 @@ public class MainActivityTest {
         } else {
             onView(allOf(withId(R.id.add_fab))).check(matches(isDisplayed()));
         }
+
+    }
+
+    @Test
+    public void given1Meeting_whenRotateScreen_thenListIsEmpty() {
+
+        addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
+                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
+
+        onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(1));
+
+        mActivityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(0));
 
     }
 

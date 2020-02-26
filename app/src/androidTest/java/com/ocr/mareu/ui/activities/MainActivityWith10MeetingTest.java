@@ -111,19 +111,6 @@ public class MainActivityWith10MeetingTest {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
-/*
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
-
-
         onView(allOf(withId(R.id.action_filter))).perform(click());
 
         ViewInteraction appCompatTextView = onView(
@@ -204,12 +191,6 @@ public class MainActivityWith10MeetingTest {
     public void given10Meeting_whenFilterByDate_thenShowMeetingWithSameDate () throws MeetingApiServiceException {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
-
-/*        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
 
         //Saisie de la date de filtrage
         Calendar lCalDate = Calendar.getInstance(Locale.FRANCE);
@@ -298,12 +279,6 @@ public class MainActivityWith10MeetingTest {
                 .check(matches(withText(lMeetings.get(8).toStringDescription())));
         onView(allOf(withId(R.id.item_description), withText(startsWith("GAIA"))))
                 .check(matches(withText(lMeetings.get(9).toStringDescription())));
-
-/*        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
 
         onView(allOf(withId(R.id.action_filter))).perform(click());
 
