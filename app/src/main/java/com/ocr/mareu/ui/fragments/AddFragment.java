@@ -277,11 +277,8 @@ public class AddFragment extends BaseFragment implements View.OnClickListener, V
         boolean isValidTimeEnd = errorMessageToShow(mTimeEnd, lReturn);
 
         if (isValidDate && isValidTimeStart && isValidTimeEnd  ) {
-            lReturn = Validation.validationDateTime(getContext(), pStart, pEnd);
-            if (lReturn.contains("/")) {
-                List<String> lError = GsonTransformer.getGsonToListString(lReturn);
-                isValidDateTime = errorMessageDateTimeToShow(mTimeStart, lError.get(0), mTimeEnd,lError.get(2));
-            }
+            List<String> lReturnDateTime = Validation.validationDateTime(getContext(), pStart, pEnd);
+            isValidDateTime = errorMessageDateTimeToShow(mTimeStart, lReturnDateTime.get(0), mTimeEnd,lReturnDateTime.get(1));
         }
         String lParts = transformChipGroupInString(mEmailGroup);
         lReturn = Validation.validationParticipants(getContext(), lParts);

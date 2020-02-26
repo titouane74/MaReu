@@ -14,6 +14,7 @@ import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
+import com.ocr.mareu.ui.activities.MainActivity;
 
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsInstanceOf;

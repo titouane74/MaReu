@@ -163,8 +163,7 @@ public class ValidationTest {
         when(contextMock.getString(R.string.err_start_before_now))
                 .thenReturn("L\'heure de début ne peut pas être antérieure à maintenant");
 
-        lReturn = Validation.validationDateTime(contextMock, lStart,lEnd);
-        List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+        List<String> lError = Validation.validationDateTime(contextMock, lStart,lEnd);
 
         assertEquals("L\'heure de début ne peut pas être antérieure à maintenant",lError.get(0));
 
@@ -179,8 +178,7 @@ public class ValidationTest {
         Calendar lEnd = Calendar.getInstance(Locale.FRANCE);
         lEnd.add(Calendar.HOUR_OF_DAY,+3);
 
-        lReturn = Validation.validationDateTime(contextMock, lStart,lEnd);
-        List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+        List<String> lError = Validation.validationDateTime(contextMock, lStart,lEnd);
 
         assertTrue(lError.get(0).isEmpty());
 
@@ -209,10 +207,9 @@ public class ValidationTest {
         when(contextMock.getString(R.string.err_end_before_start))
                 .thenReturn("L\'heure de fin ne peut pas être antérieure à l\'heure début");
 
-        lReturn = Validation.validationDateTime(contextMock, lStart,lEnd);
-        List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+        List<String> lError = Validation.validationDateTime(contextMock, lStart,lEnd);
 
-        assertEquals("L\'heure de fin ne peut pas être antérieure à l\'heure début",lError.get(2));
+        assertEquals("L\'heure de fin ne peut pas être antérieure à l\'heure début",lError.get(1));
 
     }
 
@@ -225,8 +222,7 @@ public class ValidationTest {
         Calendar lEnd = Calendar.getInstance(Locale.FRANCE);
         lEnd.add(Calendar.HOUR_OF_DAY,+3);
 
-        lReturn = Validation.validationDateTime(contextMock, lStart,lEnd);
-        List<String> lError = GsonTransformer.getGsonToListString(lReturn);
+        List<String> lError = Validation.validationDateTime(contextMock, lStart,lEnd);
 
         assertTrue(lError.get(1).isEmpty());
 

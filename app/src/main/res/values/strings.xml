@@ -26,7 +26,7 @@
     <string name="err_topic_length">Libellé du sujet trop long</string>
     <string name="err_meeting_room_not_choose">Choisissez une salle de réunion</string>
     <string name="err_anterior_date">La date ne peut pas être antérieur à aujourd\'hui</string>
-    <string name="err_end_before_start">L\'heure de fin ne peut pas être antérieure à lheure début</string>
+    <string name="err_end_before_start">L\'heure de fin ne peut pas être antérieure à l\'heure début</string>
     <string name="err_start_before_now">L\'heure de début ne peut pas être antérieure à maintenant</string>
     <string name="err_meeting_room_not_free">La salle de réunion n\'est pas disponible</string>
     <string name="err_meeting_date_empty">Veuillez saisir la date de la réunion</string>

@@ -86,9 +86,9 @@ public class Validation {
      * Validation du contenu d'une zone de type TextInputLayout contenant une date ou une heure
      * ou affichage du message d'erreur
      * @param pContext : context : context
-     * @return : boolean : indicateur si la zone est valide ou non
+     * @return : List<String> : indicateur si la zone est valide ou non
      */
-    public static String validationDateTime (Context pContext, Calendar pStartSaved, Calendar pEndSaved)  {
+    public static List<String> validationDateTime (Context pContext, Calendar pStartSaved, Calendar pEndSaved)  {
         Calendar lCalendar = Calendar.getInstance() ;
         List<String> lReturn = new ArrayList<>();
 
@@ -98,12 +98,11 @@ public class Validation {
             lReturn.add("");
         }
         if (pStartSaved.after(pEndSaved)) {
-            lReturn.add("/");
             lReturn.add(pContext.getString(R.string.err_end_before_start));
         } else {
             lReturn.add("");
         }
-        return GsonTransformer.getGsonToString(lReturn);
+        return lReturn;
     }
 
 

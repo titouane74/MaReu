@@ -37,7 +37,7 @@ public class InsertGraphicData {
     public static void addFakeMeeting(String pRoom, String pTopic,
                                       Calendar pDateCal, int pDiffDay, int pDiffHour, List<String> pParticipants) {
 
-        onView(withId(R.id.add_fab)).perform(click());
+//        onView(withId(R.id.add_fab)).perform(click());
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
