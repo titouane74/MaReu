@@ -45,8 +45,8 @@ public class InsertGraphicData {
         addRoom(pRoom);
 
         addTopic(pTopic);
+
         pDateCal.add(Calendar.DAY_OF_MONTH, pDiffDay);
-        onView(withId(R.id.meeting_date)).perform(click());
         addDate(pDateCal);
 
         onView(withId(R.id.meeting_start_et)).perform(click());
@@ -80,6 +80,9 @@ public class InsertGraphicData {
 
 
     public static void addDate(Calendar pCalDate) {
+
+        onView(withId(R.id.meeting_date)).perform(click());
+
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
                 .perform(PickerActions.setDate(
                         pCalDate.get(Calendar.YEAR),
