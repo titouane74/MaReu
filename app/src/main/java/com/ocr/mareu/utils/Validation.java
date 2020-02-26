@@ -72,11 +72,11 @@ public class Validation {
     }
     public static boolean errorMessageDateTimeToShow (TextInputLayout pStart, String pMessageStart, TextInputLayout pEnd, String pMessageEnd) {
         boolean isValid = true;
-        if (pMessageStart != null ) {
+        if (!pMessageStart.equals("") ) {
             pStart.setError(pMessageStart);
             isValid =  false;
         }
-        if (pMessageEnd != null ) {
+        if (!pMessageEnd.equals("")) {
             pEnd.setError(pMessageEnd);
             isValid = false;
         }

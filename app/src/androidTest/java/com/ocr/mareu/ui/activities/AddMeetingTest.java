@@ -8,7 +8,6 @@ import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.rule.ActivityTestRule;
 
 import com.ocr.mareu.R;
-import com.ocr.mareu.actions.DeleteViewAction;
 import com.ocr.mareu.di.DI;
 import com.ocr.mareu.matchers.ToastMatcher;
 import com.ocr.mareu.service.MeetingApiService;
@@ -31,7 +30,6 @@ import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;

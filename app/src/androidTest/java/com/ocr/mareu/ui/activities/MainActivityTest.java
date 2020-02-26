@@ -7,7 +7,6 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.di.DI;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.actions.DeleteViewAction;
-import com.ocr.mareu.ui.activities.MainActivity;
 
 import org.junit.After;
 import org.junit.Before;
