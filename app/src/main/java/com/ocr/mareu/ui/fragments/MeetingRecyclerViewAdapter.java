@@ -1,11 +1,9 @@
 package com.ocr.mareu.ui.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.GradientDrawable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +20,6 @@ import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utils.SortOrFilter;
 import com.ocr.mareu.utils.SortOrFilterLabel;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,11 +53,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
         //Test et chargement uniquement pour les tests de la soutenance/demo
-
 /*
-
         if (!sApiService.getIsExecutedOneTimeForTest()) {
-//            sApiService.addFakeMeeting();
             try {
                 sApiService.addFakeValidMeetingsLongList();
             } catch (MeetingApiServiceException pE) {
@@ -69,7 +62,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             }
             sApiService.setIsExecutedOneTimeForTest(true);
         }
-
 */
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
@@ -120,7 +112,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             @Override
             public void onClick(View v) {
                 sApiService.setMeetingDeleted(lMeeting);
-                sApiService.deleteMeeting(lMeeting);
                 mCallback.listToUpdate(SortOrFilterLabel.SORT_DEFAULT);
 
                 AlertDialog.Builder lAlertDialogBuiler = new AlertDialog.Builder(mContext);
@@ -154,7 +145,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                 mCallback.onItemClicked(v);
             }
         });
-
     }
 
     @Override

@@ -18,9 +18,10 @@ import java.util.List;
 public class SortOrFilter {
 
     /**
-     * Filtre les réunions en fonction du paramètre pOrder (salle de réunion ou date)
-     * @param pMeetings : list : liste des réunions
-     * @return : list : liste des réunions filtrée
+     * Filtre les réunions en fonctions des salles de réunion sélectionnées
+     * @param pMeetings : objet : liste des réunions
+     * @param pListRoomsSelected : objet : liste des salles sélectionnées
+     * @return : objet : liste des réunions filtrée
      */
     public static List<Meeting> filterMeetingRoom(List<Meeting> pMeetings,List<Room> pListRoomsSelected ) {
         List<Meeting> lMeetingRoomFiltered = new ArrayList<>();
@@ -34,6 +35,12 @@ public class SortOrFilter {
         return lMeetingRoomFiltered;
     }
 
+    /**
+     * Filtre les réunions en fonction de la date sélectionnée
+     * @param pMeetings : objet : liste des réunions
+     * @param pDateSelected : calendar : date sélectionnée
+     * @return : objet : liste des réunions filtrée
+     */
     public static  List<Meeting> filterMeetingDate(List<Meeting> pMeetings, Calendar pDateSelected) {
         List<Meeting> lMeetingDateFiltered = new ArrayList<>();
         String lCalSelectedFormat = new SimpleDateFormat("dd/MM/yyyy").format(pDateSelected.getTime());
@@ -49,10 +56,9 @@ public class SortOrFilter {
     }
 
     /**
-     * Trie les réunions en fonction du paramètre pOrder (salle de réunion ou date)
-     * de façon ascendante ou descendante
-     * @param pMeetings : list : liste des réunions
-     * @return : list : liste des réunions triée
+     * Tri la liste des réunions par ordre alphabétique ascendant
+     * @param pMeetings : obet : liste des réunions
+     * @return : objet : liste des réunions triée
      */
     public static List<Meeting>sortMeetingRoomAsc(List<Meeting> pMeetings) {
 
@@ -66,6 +72,11 @@ public class SortOrFilter {
         return pMeetings;
     }
 
+    /**
+     * Tri la liste des réunions par ordre alphabétique descendant
+     * @param pMeetings : obet : liste des réunions
+     * @return : objet : liste des réunions triée
+     */
     public static List<Meeting>sortMeetingRoomDesc(List<Meeting> pMeetings) {
 
         Collections.sort(pMeetings, new Comparator<Meeting>() {
@@ -79,6 +90,11 @@ public class SortOrFilter {
     }
 
 
+    /**
+     * Tri la liste des réunions par date de la plus ancienne à la plus récente
+     * @param pMeetings : obet : liste des réunions
+     * @return : objet : liste des réunions triée
+     */
     public static List<Meeting> sortMeetingDateOlderToRecent(List<Meeting> pMeetings) {
 
         Collections.sort(pMeetings, new Comparator<Meeting>() {
@@ -95,6 +111,11 @@ public class SortOrFilter {
         return pMeetings;
     }
 
+    /**
+     * Tri la liste des réunions par date de la plus récente à la plus ancienne
+     * @param pMeetings : obet : liste des réunions
+     * @return : objet : liste des réunions triée
+     */
     public static List<Meeting> sortMeetingDateRecentToOlder(List<Meeting> pMeetings) {
 
         Collections.sort(pMeetings, new Comparator<Meeting>() {
@@ -110,5 +131,4 @@ public class SortOrFilter {
 
         return pMeetings;
     }
-
 }

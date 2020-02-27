@@ -42,7 +42,7 @@ public class ParticipantsListFragment extends Fragment {
      */
     private void configureRecyclerView() {
         ParticipantRecyclerViewAdapter mListAdapter;
-        mListAdapter = new ParticipantRecyclerViewAdapter(getActivity());
+        mListAdapter = new ParticipantRecyclerViewAdapter();
         mRecyclerView.setAdapter(mListAdapter);
     }
 }

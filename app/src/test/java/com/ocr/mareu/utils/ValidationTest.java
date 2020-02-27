@@ -5,7 +5,6 @@ import com.ocr.mareu.R;
 import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
-import com.ocr.mareu.service.FakeMeetingApiService;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
 import com.ocr.mareu.utilstest.MeetingUtils;
@@ -131,13 +130,6 @@ public class ValidationTest {
 
         lReturn = Validation.validationText(contextMock, CST_DATETIME,"");
         assertEquals("Le champ ne peut pas être vide",lReturn);
-    }
-
-    @Test
-    public void givenDate_whenBeforeNow_thenFail() {
-//        Erreur gérée dans DatePicker
-//        when(contextMock.getString(R.string.err_anterior_date))
-//                .thenReturn("La date ne peut pas être antérieur à aujourd\\'hui");
     }
 
     @Test

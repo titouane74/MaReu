@@ -2,7 +2,6 @@ package com.ocr.mareu.service;
 
 import android.content.Context;
 
-import com.ocr.mareu.R;
 import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.model.Room;
@@ -46,7 +45,6 @@ public class MeetingApiServiceTest {
     @BeforeEach
     public void setup() {
         initMocks(this);
-//        mApi = new FakeMeetingApiService();
         mApi = DI.getMeetingApiService();
         assertThat(mApi, notNullValue());
 
@@ -92,8 +90,7 @@ public class MeetingApiServiceTest {
         assertEquals(0,nbGetMeetings);
 
         //Après ajout on doit avoir le nombre attendu
-        //addFakeMeeting utilise la méthode addMeeting qui ajoute les réunions
-        //mApi.addFakeMeeting();
+        //add2FakeMeeting utilise la méthode addMeeting qui ajoute les réunions
         mApi = MeetingUtils.add2FakeMeetings(mApi);
         mMeetings = mApi.getMeetings();
         nbGetMeetings = mMeetings.size();
@@ -236,5 +233,4 @@ public class MeetingApiServiceTest {
         assertTrue(isMenuActiveGet);
 
     }
-
 }

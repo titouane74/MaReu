@@ -41,12 +41,9 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
 
     public static MeetingApiService sApiService;
 
-    @BindView(R.id.add_fab)
-    FloatingActionButton mAddFab;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.main_layout)
-    View mMainLayout;
+    @BindView(R.id.add_fab) FloatingActionButton mAddFab;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.main_layout) View mMainLayout;
 
     private ListFragment mListFragment;
     private RightFragment mRightFragment;
@@ -257,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
      * Méthode remplacement de fragmentne fonction du mode tablette ou non
      * @param pFragment : fragment : fragment à afficher
      */
-
     private void replaceFragment(final Fragment pFragment) {
         final FragmentManager lFragmentManager = getSupportFragmentManager();
         final FragmentTransaction lFragmentTransaction = lFragmentManager.beginTransaction();
@@ -327,11 +323,7 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         manageActionBar(true);
         mDetailFragment = new DetailFragment();
         mAddFab.hide();
-        if (mMainLayout.getTag() == getString(R.string.tablet)) {
-            replaceFragment(mDetailFragment);
-        } else {
-            replaceFragment(mDetailFragment);
-        }
+        replaceFragment(mDetailFragment);
     }
 
     /**
@@ -354,6 +346,11 @@ public class MainActivity extends AppCompatActivity implements RightFragment.OnR
         invalidateOptionsMenu();
     }
 
+    /**
+     * Met la liste des réunions à jour après avoir validé la sélection des salles
+     * de réunion pour le filtre
+     * @param pRoomsSelected
+     */
     @Override
     public void onRoomsOkClicked(List<Room> pRoomsSelected) {
         sApiService.setRoomsSelected(pRoomsSelected);

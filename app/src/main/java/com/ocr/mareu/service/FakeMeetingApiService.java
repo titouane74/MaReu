@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.ocr.mareu.ui.activities.MainActivity.sApiService;
 import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
 
 /**
@@ -240,40 +239,21 @@ public class FakeMeetingApiService implements MeetingApiService {
         mMeetings = new ArrayList<>();
     }
 
+    /**
+     * Sauvegarde l'indicateur d'exécution pour le chargement des réunions exemples pour la démo
+     * Indicateur qui permet de ne charger la liste qu'une seule fois à l'ouverture
+     * @param pIsExecutedOneTimeForTest
+     */
     public void setIsExecutedOneTimeForTest(boolean pIsExecutedOneTimeForTest) {
         sIsExecutedOneTimeForTest = pIsExecutedOneTimeForTest;
     }
 
+    /**
+     * Récupère l'indicateur d'exécution du chargement des réunions exemples pour la démo
+     * @return : boolean : indicateur d'exécution de chargement des données
+     */
     public boolean getIsExecutedOneTimeForTest() {
         return sIsExecutedOneTimeForTest;
-    }
-    /**
-     * Ajout de réunions pour les tests manuels
-     */
-    public void addFakeMeeting()  {
-
-        try {
-            addMeeting(
-                new Meeting(new Room("POSEIDON", Color.argb(100,244,67,54)),
-                    "Sujet",
-                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),
-                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 14:00:00:00"),
-                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"30/08/2020 15:00:00:00"),
-                    Arrays.asList("loki@marvel.com","thor@marvel.com","captainamerica@marvel.com","wintersoldier@marvel.com")));
-        } catch (MeetingApiServiceException pE) {
-            pE.printStackTrace();
-        }
-        try {
-            addMeeting(
-                new Meeting(new Room("ARES", Color.argb(100,103,58,183)),
-                    "Sujet2",
-                    convertDateTimeStringToCalendar(CST_FORMAT_DATE,"15/08/2020"),
-                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 10:00:00:00"),
-                    convertDateTimeStringToCalendar(CST_FORMAT_DATE_TIME,"15/08/2020 11:00:00:00"),
-                    Arrays.asList("toto@gmail.com","titi@gmail.com")));
-        } catch (MeetingApiServiceException pE) {
-            pE.printStackTrace();
-        }
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.ocr.mareu.ui.fragments;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +21,12 @@ import static com.ocr.mareu.ui.activities.MainActivity.sApiService;
  */
 public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<ParticipantRecyclerViewAdapter.ViewHolder>  {
 
-    private Context mContext;
     private Meeting mMeetingSelected;
 
     /**
      * Constructor de l'adapter du RecyclerView
-     * @param pContext : context : context
      */
-    public ParticipantRecyclerViewAdapter(Context pContext) {
-        mContext = pContext;
+    public ParticipantRecyclerViewAdapter() {
         mMeetingSelected = sApiService.getMeetingSelected();
     }
 

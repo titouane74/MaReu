@@ -91,12 +91,12 @@ public class AddMeetingTest {
         mNow = Calendar.getInstance(Locale.FRANCE);
     }
 
-    @Test //OK
+    @Test
     public void givenNothing_whenOpen_thenListIsEmpty() {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
     }
 
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenAddMeeting_thenAddItemInList() {
 
         //Contrôle que la liste est vide
@@ -198,7 +198,7 @@ public class AddMeetingTest {
                 .check(matches(isDisplayed()));
     }
 
-    @Test //OK
+    @Test
     public void given2NewMeeting_whenSave_thenAddItemInList() {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
@@ -214,7 +214,7 @@ public class AddMeetingTest {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(2));
     }
 
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenClickCancelButton_thenNoItemAddedInList() {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
@@ -241,7 +241,7 @@ public class AddMeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void givenNothing_whenSave_thenErrorMessage() {
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
@@ -271,7 +271,7 @@ public class AddMeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void givenNothing_whenSave_thenToastImpossibleAdd() {
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
@@ -286,7 +286,7 @@ public class AddMeetingTest {
                 .check(matches(isDisplayed()));
     }
 
-    @Test //OK
+    @Test
     public void givenNoDate_whenOnOpening_thenStartAndEndTimeNotEnabled() {
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
@@ -300,7 +300,7 @@ public class AddMeetingTest {
                 .check(matches(not(isEnabled())));
     }
 
-    @Test //OK
+    @Test
     public void givenDate_whenAfterUpdate_thenStartAndEndTimeEnabled() {
 
         //Ajout une nouvelle réunion
@@ -329,7 +329,7 @@ public class AddMeetingTest {
                 .check(matches(isEnabled()));
     }
 
-    @Test //OK
+    @Test
     public void givenEmailAddress_whenInvalid_thenFail(){
         //Ajout une nouvelle réunion
         onView(withId(R.id.add_fab)).perform(click());
@@ -353,7 +353,7 @@ public class AddMeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void givenTopic_whenMoreThan40Caracters_thenErrorMessage() {
 
         onView(withId(R.id.add_fab)).perform(click());
@@ -370,7 +370,7 @@ public class AddMeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void givenDateBeforeNow_whenSave_thenErrorMessage() {
 
         onView(withId(R.id.add_fab)).perform(click());
@@ -393,7 +393,7 @@ public class AddMeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void givenTimeStartBeforeNow_whenSave_thenErrorMessage() {
 
         onView(withId(R.id.add_fab)).perform(click());
@@ -417,7 +417,7 @@ public class AddMeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void givenTimeEndBeforeStart_whenSave_thenErrorMessage() {
 
         onView(withId(R.id.add_fab)).perform(click());

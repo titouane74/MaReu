@@ -82,7 +82,7 @@ public class DetailFragment  extends BaseFragment {
      */
     private void configureRecyclerViewParts( ) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ParticipantRecyclerViewAdapter  mListAdapter = new ParticipantRecyclerViewAdapter(getActivity());
+        ParticipantRecyclerViewAdapter  mListAdapter = new ParticipantRecyclerViewAdapter();
         mRecyclerView.setAdapter(mListAdapter);
     }
 

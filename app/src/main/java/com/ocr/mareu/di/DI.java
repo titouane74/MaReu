@@ -8,14 +8,26 @@ import com.ocr.mareu.service.MeetingApiService;
  */
 public class DI {
 
-    //private DI(){}
     /**
-     * Création d'une nouvelle instance de l'API Service
+     * Constructor
+     */
+    private DI(){}
+
+    /**
+     * Déclaration d'une nouvelle instance d'Api Service
      */
     private static MeetingApiService sApiService = new FakeMeetingApiService();
 
+    /**
+     * Récupère l'ApiService en cours
+     * @return : objet : api service
+     */
     public static MeetingApiService getMeetingApiService() { return sApiService; }
 
+    /**
+     * Récupère une nouvelle instance d'Api Service
+     * @return : objet : api service
+     */
     public static MeetingApiService getMeetingApiServiceNewInstance() {
         sApiService = new FakeMeetingApiService();
     return sApiService; }

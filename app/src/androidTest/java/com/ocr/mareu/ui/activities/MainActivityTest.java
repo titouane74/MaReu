@@ -79,7 +79,7 @@ public class MainActivityTest {
         mNow = Calendar.getInstance(Locale.FRANCE);
     }
 
-    @Test //OK
+    @Test
     public void givenItem_whenClickOnItem_thenDisplayDetail() {
         int idItemToTest = 0;
 
@@ -95,7 +95,7 @@ public class MainActivityTest {
                 .check(matches(withText(mApi.getMeetingSelected().getRoom().getNameRoom())));
     }
 
-    @Test //OK
+    @Test
     public void givenItem_whenClickAndValidDeleteAction_thenRemoveItem() {
 
         addFakeMeeting("ARES", "La guerre des boutons", mCalDate , 2,0,2,
@@ -119,8 +119,8 @@ public class MainActivityTest {
 
     }
 
-    @Test //OK - Mentorat - voir si test utilie
-    public void givenItem_whenClickAndNoValidDeleteAction_thenRemoveItem() {
+    @Test
+    public void givenItem_whenClickAndNoValidDeleteAction_thenItemNotRemoved() {
 
         addFakeMeeting("ARES", "La guerre des boutons", mCalDate, 2,0,2,
                 Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
@@ -141,8 +141,7 @@ public class MainActivityTest {
         //On clique sur annuler pour refuser la suppression
         onView(withId(android.R.id.button2)).perform(click());
 
-        //On met -1 car graphiquement on a déjà supprimé l'item
-        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT - 1));
+        onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
     }
 
     @Test

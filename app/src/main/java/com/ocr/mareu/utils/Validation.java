@@ -70,6 +70,15 @@ public class Validation {
             return true;
         }
     }
+
+    /**
+     * Affiche le message d'erreur sur le textinput correspondant pour les heures de réunion
+     * @param pStart : textinputlayout : textinputlayout concerné par l'erreur
+     * @param pMessageStart : string : message d'erreur rattaché à l'heure de début
+     * @param pEnd : textinputlayout : textinputlayout concerné par l'erreur
+     * @param pMessageEnd : string : message d'erreur rattaché à l'heure de fin
+     * @return : boolean : indicateur si une des zones est en erreur
+     */
     public static boolean errorMessageDateTimeToShow (TextInputLayout pStart, String pMessageStart, TextInputLayout pEnd, String pMessageEnd) {
         boolean isValid = true;
         if (!pMessageStart.equals("") ) {
@@ -105,14 +114,11 @@ public class Validation {
         return lReturn;
     }
 
-
     /**
-     * Validation du contenu  de la liste des particpants et préparation de la liste pour l'ajout dans Meeting
-     * ou affichage du message d'erreur
-     * @param pEmailGroup : chipgroup : liste des participants
-     * @return : list : liste des particiants préparés pour l'ajout dans Meeting
+     * Transforme les items du ChipGroup en en chaîne de caractères
+     * @param pEmailGroup : chipgroup : items des participants
+     * @return : string : liste des participants
      */
-
     public static String transformChipGroupInString(ChipGroup pEmailGroup) {
         int lNbPart = pEmailGroup.getChildCount();
         List<String> lParts = new ArrayList<>();
@@ -128,6 +134,13 @@ public class Validation {
         }
     }
 
+    /**
+     * Validation du contenu  de la liste des particpants et préparation de la liste pour l'ajout dans Meeting
+     * ou affichage du message d'erreur
+     * @param pContext : context : context
+     * @param pParts : string : liste des participants
+     * @return : list : liste des particiants préparés pour l'ajout dans Meeting
+     */
     public static String validationParticipants (Context pContext,String pParts) {
 
         if (pParts.isEmpty()) {

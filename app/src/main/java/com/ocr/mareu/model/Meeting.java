@@ -2,8 +2,6 @@ package com.ocr.mareu.model;
 
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
-
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -85,17 +83,26 @@ public class Meeting  {
      */
     public Room getRoom() { return mRoom; }
 
+    /**
+     * Récupère la description de la réunion contenant :
+     * le nom de la salle, l'heure de début et le sujet sous forme de chaîne de caractères
+     * pour l'affichage dans la liste de réunion
+     * @return : string : description de la réunion
+     */
     public String toStringDescription() {
 
          return TextUtils.join(" - ", Arrays.asList(
                 getRoom().getNameRoom(),
                 new SimpleDateFormat("HH:mm").format(getStart().getTime()),
                 getTopic()));
-
     }
 
+    /**
+     * Récupération de la liste des participants sous forme de chaîne de caractères
+     * pour l'affichage dans la liste des réunions
+     * @return : string : liste des participants
+     */
     public String toStringParticipants() {
-
        return TextUtils.join(", ", getParticpants());
     }
 }

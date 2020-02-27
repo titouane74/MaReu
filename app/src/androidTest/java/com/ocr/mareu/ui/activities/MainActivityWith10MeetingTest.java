@@ -14,7 +14,6 @@ import com.ocr.mareu.di.DI;
 import com.ocr.mareu.model.Meeting;
 import com.ocr.mareu.service.MeetingApiService;
 import com.ocr.mareu.service.MeetingApiServiceException;
-import com.ocr.mareu.ui.activities.MainActivity;
 
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsInstanceOf;
@@ -89,7 +88,7 @@ public class MainActivityWith10MeetingTest {
         mApi = DI.getMeetingApiServiceNewInstance();
     }
 
-    @Test //OK
+    @Test
     public void given10Meeting_whenTextEllipsizedAndGoodFormat_thenSuccess() {
 
         onView(allOf(withId(R.id.activity_list_rv))).check(matches(isDisplayed()));
@@ -106,7 +105,7 @@ public class MainActivityWith10MeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void given10Meeting_whenFilterByRoom_thenShow2MeetingWithSuccess () throws MeetingApiServiceException {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
@@ -187,7 +186,7 @@ public class MainActivityWith10MeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void given10Meeting_whenFilterByDate_thenShowMeetingWithSameDate () throws MeetingApiServiceException {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
@@ -235,7 +234,7 @@ public class MainActivityWith10MeetingTest {
 
     }
 
-    @Test //OK
+    @Test
     public void given10Meeting_whenResetFilter_thenRemoveAllItems () throws MeetingApiServiceException {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
@@ -296,6 +295,4 @@ public class MainActivityWith10MeetingTest {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
     }
-
-
 }

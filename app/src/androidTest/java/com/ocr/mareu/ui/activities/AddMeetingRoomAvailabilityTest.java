@@ -71,7 +71,7 @@ public class AddMeetingRoomAvailabilityTest {
     }
 
     //("Case 1 : Meeting Start = Reference start")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenSameStart_thenFail() {
 
         addFakeMeeting("ARES", "Sujet 1 KO", mCalDate, mDiffDay,0,1,
@@ -84,7 +84,7 @@ public class AddMeetingRoomAvailabilityTest {
     }
 
     //("Case 2 : Meeting end = Reference End")
-    @Test //OK
+    @Test
     public void  givenNewMeeting_whenSameEnd_thenFail() {
 
         addFakeMeeting("ARES", "Sujet 2 KO", mCalDate, mDiffDay,2,3,
@@ -97,7 +97,7 @@ public class AddMeetingRoomAvailabilityTest {
     }
 
     //("Case 3 : Meeting start before Reference start and Meeting end before Reference start")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenBeforeReference_thenCreateMeeting() {
 
         addFakeMeeting("ARES", "Sujet 3 OK", mCalDate, mDiffDay,-2,-1,
@@ -109,7 +109,7 @@ public class AddMeetingRoomAvailabilityTest {
     }
 
     //("Case 4 : Meeting start before Reference start and Meeting end same Reference end")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenEndSameReferenceStart_thenCreateMeeting() {
 
         addFakeMeeting("ARES", "Sujet 4 OK", mCalDate, mDiffDay,-1,0,
@@ -123,7 +123,7 @@ public class AddMeetingRoomAvailabilityTest {
 
     //("Case 5 : Meeting start before Reference start and " +
     //        "Meeting end before Reference end and after Reference start")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenEndDuringReference_thenFail() {
 
         addFakeMeeting("ARES", "Sujet 5 KO", mCalDate, mDiffDay,-1,1,
@@ -136,7 +136,7 @@ public class AddMeetingRoomAvailabilityTest {
     }
 
     //("Case 6 : Meeting start before Reference start and Meeting end after Reference end")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenReferenceDuringNewMeeting_thenFail() {
 
         addFakeMeeting("ARES", "Sujet 6 KO", mCalDate, mDiffDay,-1,+4,
@@ -149,7 +149,7 @@ public class AddMeetingRoomAvailabilityTest {
     }
 
     //("Case 7 : Meeting start after Reference start and Meeting end before Reference end")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenNewMeetingDuringReference_thenFail() {
 
         addFakeMeeting("ARES", "Sujet 7 KO", mCalDate, mDiffDay,1,2,
@@ -163,7 +163,7 @@ public class AddMeetingRoomAvailabilityTest {
 
     //("Case 8 : Meeting start after Reference start and before Reference end and" +
     //        "Meeting end after Reference end")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenReferenceEndDuringNewMeeting_thenFail() {
 
         addFakeMeeting("ARES", "Sujet 8 KO", mCalDate, mDiffDay,2,4,
@@ -177,7 +177,7 @@ public class AddMeetingRoomAvailabilityTest {
     }
 
     //("Case 9 : Meeting start = Reference end and Meeting end after Reference end")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenStartSameReferenceEnd_thenCreateMeeting() {
 
         addFakeMeeting("ARES", "Sujet 9 OK", mCalDate, mDiffDay,3,4,
@@ -190,7 +190,7 @@ public class AddMeetingRoomAvailabilityTest {
     }
 
     //("Case 10 : Meeting start and end after Reference end")
-    @Test //OK
+    @Test
     public void givenNewMeeting_whenAfterReference_thenCreateMeeting() {
 
         addFakeMeeting("ARES", "Sujet 10 OK", mCalDate, mDiffDay,4,5,

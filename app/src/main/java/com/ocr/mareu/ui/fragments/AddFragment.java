@@ -82,7 +82,7 @@ public class AddFragment extends BaseFragment implements View.OnClickListener, V
     public AddFragment() { }
 
     /**
-     * Retourne le layout à utilisr pour le fragment pour la création de la view
+     * Retourne le layout à utilisé pour le fragment pour la création de la view
      * @return : layout : layout à utiliser
      */
     @Override
@@ -237,7 +237,6 @@ public class AddFragment extends BaseFragment implements View.OnClickListener, V
             try {
                 sApiService.addMeeting(
                         new Meeting(pRoomSelected, mTopicEt.getText().toString(), mDateCal, pStart, pEnd, mParticipants));
-
                 Toast.makeText(getContext(), getString(R.string.action_add_meeting), Toast.LENGTH_SHORT).show();
                 return true;
             } catch (MeetingApiServiceException pE) {
@@ -311,5 +310,4 @@ public class AddFragment extends BaseFragment implements View.OnClickListener, V
 
     @Override
     public boolean onTouch(View v, MotionEvent event) { return false; }
-
 }

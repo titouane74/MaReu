@@ -10,7 +10,6 @@ import com.ocr.mareu.R;
 
 import org.hamcrest.Matchers;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -113,14 +112,5 @@ public class InsertGraphicData {
                 .perform(pressKey(KEYCODE_ENTER));
     }
 
-
-/*
-    public static void add10FakeMeeting() {
-        addFakeMeeting("ARES", "La guerre des boutons",
-                mCalDate, 2,2,
-                Arrays.asList("tigrou@disney.com", "geotrouvetout@disney.com", "donald@disney.com"));
-
-    }
-*/
 }
 

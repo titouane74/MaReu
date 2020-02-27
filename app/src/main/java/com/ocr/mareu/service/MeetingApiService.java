@@ -140,15 +140,18 @@ public interface MeetingApiService {
      */
     void resetMeetings();
 
-
+    /**
+     * Sauvegarde l'indicateur d'exécution pour le chargement des réunions exemples pour la démo
+     * Indicateur qui permet de ne charger la liste qu'une seule fois à l'ouverture
+     * @param pIsExecutedOneTimeForTest
+     */
     void setIsExecutedOneTimeForTest(boolean pIsExecutedOneTimeForTest);
 
+    /**
+     * Récupère l'indicateur d'exécution du chargement des réunions exemples pour la démo
+     * @return : boolean : indicateur d'exécution de chargement des données
+     */
     boolean getIsExecutedOneTimeForTest();
-
-        /**
-         * Ajout de réunions pour les tests
-         */
-    void addFakeMeeting();
 
     /**
      * Ajout de réunions pour les tests longue liste
