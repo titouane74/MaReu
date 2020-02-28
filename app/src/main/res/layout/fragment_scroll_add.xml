@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_button">
+        android:paddingBottom="@dimen/padding_button"
+        android:paddingEnd="@dimen/padding_button"
+        android:paddingStart="@dimen/padding_button">
 
         <Button
             android:id="@+id/btn_cancel"
