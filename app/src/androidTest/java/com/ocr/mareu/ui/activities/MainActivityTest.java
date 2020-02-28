@@ -1,7 +1,6 @@
 package com.ocr.mareu.ui.activities;
 
 import android.content.pm.ActivityInfo;
-import android.util.DisplayMetrics;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
@@ -31,6 +30,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.ocr.mareu.assertion.RecyclerViewItemCountAssertion.withItemCount;
 import static com.ocr.mareu.utilstest.InsertGraphicData.addFakeMeeting;
+import static com.ocr.mareu.utilstest.IsScreenSw600dp.isScreenSw600dp;
+import static com.ocr.mareu.utilstest.IsScreenSw600dp.sIsScreenSw600dp;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
@@ -50,7 +51,6 @@ public class MainActivityTest {
     private Calendar mNow ;
     private Calendar mCalDate;
     private static int ITEMS_COUNT = 2;
-    private boolean mIsScreenSw600dp;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule =
@@ -66,7 +66,7 @@ public class MainActivityTest {
         mApi = DI.getMeetingApiService();
         assertNotNull(mApi);
 
-        mIsScreenSw600dp = isScreenSw600dp();
+        sIsScreenSw600dp = isScreenSw600dp(mActivity);
 
         mNow = Calendar.getInstance(Locale.FRANCE);
         mCalDate = (Calendar) mNow.clone();
@@ -146,7 +146,7 @@ public class MainActivityTest {
 
     @Test
     public void givenAddFabAndFrameRight_whenTabletOrPhone_thenNotVisibleOrVisible() {
-        if (mIsScreenSw600dp) {
+        if (sIsScreenSw600dp) {
             onView(allOf(withId(R.id.add_fab))).check(matches(not(isDisplayed())));
             onView(allOf(withId(R.id.frame_right))).check(matches(isDisplayed()));
         } else {
@@ -163,19 +163,14 @@ public class MainActivityTest {
 
         onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(1));
 
-        mActivityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        if (!sIsScreenSw600dp) {
+            mActivityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            mActivityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         onView(allOf(withId(R.id.activity_list_rv),isDisplayed())).check(withItemCount(0));
 
-    }
-
-    private boolean isScreenSw600dp() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        mActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        float widthDp = displayMetrics.widthPixels / displayMetrics.density;
-        float heightDp = displayMetrics.heightPixels / displayMetrics.density;
-        float screenSw = Math.min(widthDp, heightDp);
-        return screenSw >= 600;
     }
 
 }

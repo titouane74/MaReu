@@ -70,7 +70,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validationTextRoomWithSuccess () {
+    public void givenRoom_whenValidatingAddMeeting_thenValidationWithSuccess() {
         String lReturn = null;
 
         lReturn = Validation.validationText(contextMock, CST_ROOM,"NOT EMPTY KEYBOARD INPUT BLOCKED");
@@ -78,7 +78,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validationTextRoomFailing () {
+    public void givenNoRoom_whenValidatingAddMeeting_thenValidationFail () {
         String lReturn = null;
 
         when(contextMock.getString(R.string.err_empty_field))
@@ -89,7 +89,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validationTextTopicWithSuccess () {
+    public void givenTopic_whenValidatingAddMeeting_thenValidationWithSuccess () {
         String lReturn = null;
 
         lReturn = Validation.validationText(contextMock, CST_TOPIC,"Un texte normal");
@@ -104,7 +104,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validationTextTopicFailing () {
+    public void givenNoTopic_whenValidationgAddMeeting_thenValidationFail () {
         String lReturn = null;
 
         when(contextMock.getString(R.string.err_empty_field))
@@ -221,7 +221,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validationEmailAddressWithSuccess() {
+    public void givenEmailAddress_whenInputParticipants_thenValidationWithSuccess() {
         String lReturn ;
 
         lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto@gmail.com");
@@ -236,7 +236,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validationEmailAddressFailing() {
+    public void givenWrongEmailAddress_whenInputParticipants_thenValidationFail() {
         String lReturn ;
 
         when(contextMock.getString(R.string.err_invalid_email_address))
@@ -262,7 +262,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validationParticipantsWithSuccess() {
+    public void givenParticpants_whenValidatingAddMeeting_thenValidationWithSuccess() {
         String lReturn ;
 
         lReturn = Validation.validationText(contextMock, CST_EMAIL,"toto@gmail.com,toto12@gmail.com," +
@@ -272,7 +272,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void validationParticipantsFailing() {
+    public void givenNoParticipants_whenValidationgAddMeeting_thenValidationFail() {
         String lReturn ;
 
         when(contextMock.getString(R.string.err_list_participants))

@@ -25,6 +25,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.ocr.mareu.utilstest.IsScreenSw600dp.sIsScreenSw600dp;
 import static org.hamcrest.core.AllOf.allOf;
 
 /**
@@ -36,7 +37,7 @@ public class InsertGraphicData {
     public static void addFakeMeeting(String pRoom, String pTopic,
                                       Calendar pDateCal, int pDiffDay, int pDiffHourStart, int pDiffHourEnd, List<String> pParticipants) {
 
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -110,6 +111,14 @@ public class InsertGraphicData {
         lEmailET.perform(replaceText(pText))
                 .perform(scrollTo(), click())
                 .perform(pressKey(KEYCODE_ENTER));
+    }
+
+    public static void clickAddButtonInFonctionOfSizeScreen() {
+        if(!sIsScreenSw600dp) {
+            onView(withId(R.id.add_fab)).perform(click());
+        } else {
+            onView(withId(R.id.btn_add)).perform(click());
+        }
     }
 
 }

@@ -61,7 +61,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void filterMeetingByRoomWithSuccess() {
+    public void givenRooms_whenFilterSelected_thenFilterByRoomsWithSuccess() {
         assertEquals(10,mMeetings.size());
 
         assertEquals("POSEIDON",mMeetings.get(0).getRoom().getNameRoom());
@@ -90,7 +90,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void filterMeetingByDateWithSuccess()  {
+    public void givenDate_whenFilterSelected_thenFilterByDateWithSuccess()  {
         assertEquals(10,mMeetings.size());
 
         assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),mMeetings.get(0).getDate());
@@ -115,7 +115,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void sortMeetingByRoomAscendantWithSuccess() {
+    public void givenRoomSortAscendant_whenSortSelected_thenSortWithSuccess() {
         assertEquals(10,mMeetings.size());
 
         assertEquals("POSEIDON",mMeetings.get(0).getRoom().getNameRoom());
@@ -149,7 +149,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void sortMeetingByRoomDescendantWithSuccess() {
+    public void givenRoomSortDescendant_whenSortSelected_thenSortWithSuccess() {
         assertEquals(10,mMeetings.size());
 
         assertEquals("POSEIDON",mMeetings.get(0).getRoom().getNameRoom());
@@ -184,8 +184,7 @@ public class SortOrFilterTest {
     }
 
     @Test
-    public void sortMeetingByDateFromRecentToOlderWithSuccess() {
-
+    public void givenDateSortFromRecentToOlder_whenSortSelected_thenSortWithSuccess() {
         assertEquals(10,mMeetings.size());
 
         assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),mMeetings.get(0).getDate());
@@ -215,11 +214,10 @@ public class SortOrFilterTest {
         assertEquals("VENUS",mMeetings.get(7).getRoom().getNameRoom());
         assertEquals("GAIA",mMeetings.get(8).getRoom().getNameRoom());
         assertEquals("HADES",mMeetings.get(9).getRoom().getNameRoom());
-
     }
 
     @Test
-    public void sortMeetingByDateFromOlderToRecentWithSuccess()  {
+    public void givenDateSortFromOlderToRecent_whenSortSelected_thenSortWithSuccess()  {
         assertEquals(10,mMeetings.size());
 
         assertEquals(convertDateTimeStringToCalendar(CST_FORMAT_DATE,"30/08/2020"),mMeetings.get(0).getDate());

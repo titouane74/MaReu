@@ -24,6 +24,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.ocr.mareu.assertion.RecyclerViewItemCountAssertion.withItemCount;
 import static com.ocr.mareu.utilstest.InsertGraphicData.addFakeMeeting;
+import static com.ocr.mareu.utilstest.IsScreenSw600dp.isScreenSw600dp;
+import static com.ocr.mareu.utilstest.IsScreenSw600dp.sIsScreenSw600dp;
 import static com.ocr.mareu.utilstest.MeetingReferenceTest.addReferenceMeeting;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
@@ -45,12 +47,14 @@ public class AddMeetingRoomAvailabilityTest {
 
     @Before
     public void setUp() throws MeetingApiServiceException {
+        mApi = DI.getMeetingApiService();
+        assertNotNull(mApi);
+
         mActivity = mActivityTestRule.getActivity();
         assertNotNull(mActivity);
         assertThat(mActivity, notNullValue());
 
-        mApi = DI.getMeetingApiService();
-        assertNotNull(mApi);
+        sIsScreenSw600dp = isScreenSw600dp(mActivity);
 
         mNow = Calendar.getInstance(Locale.FRANCE);
         mCalDate = (Calendar) mNow.clone();
@@ -60,6 +64,7 @@ public class AddMeetingRoomAvailabilityTest {
         //Meeting de référence
         mApi = addReferenceMeeting(mApi,mCalDate,mDiffDay,0,3);
         onView(withId(R.id.activity_list_rv)).check(withItemCount(1));
+
 
         mDiffDay = 0;
     }

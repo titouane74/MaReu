@@ -47,6 +47,9 @@ import static com.ocr.mareu.utilstest.FakeDateTime.getSimpleDateOrTimeFormat;
 import static com.ocr.mareu.utilstest.InsertGraphicData.addDate;
 import static com.ocr.mareu.utilstest.InsertGraphicData.addFakeMeeting;
 import static com.ocr.mareu.utilstest.InsertGraphicData.addTime;
+import static com.ocr.mareu.utilstest.InsertGraphicData.clickAddButtonInFonctionOfSizeScreen;
+import static com.ocr.mareu.utilstest.IsScreenSw600dp.isScreenSw600dp;
+import static com.ocr.mareu.utilstest.IsScreenSw600dp.sIsScreenSw600dp;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.AllOf.allOf;
@@ -71,12 +74,14 @@ public class AddMeetingTest {
 
     @Before
     public void setUp() {
+        mApi = DI.getMeetingApiService();
+        assertNotNull(mApi);
+
         mActivity = mActivityTestRule.getActivity();
         assertNotNull(mActivity);
         assertThat(mActivity, notNullValue());
 
-        mApi = DI.getMeetingApiService();
-        assertNotNull(mApi);
+        sIsScreenSw600dp = isScreenSw600dp(mActivity);
 
         mNow = Calendar.getInstance(Locale.FRANCE);
         mCalDate = (Calendar) mNow.clone();
@@ -103,7 +108,7 @@ public class AddMeetingTest {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
         //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -219,7 +224,7 @@ public class AddMeetingTest {
         onView(withId(R.id.activity_list_rv)).check(withItemCount(0));
 
         //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -244,7 +249,7 @@ public class AddMeetingTest {
     @Test
     public void givenNothing_whenSave_thenErrorMessage() {
         //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -274,7 +279,7 @@ public class AddMeetingTest {
     @Test
     public void givenNothing_whenSave_thenToastImpossibleAdd() {
         //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -289,7 +294,7 @@ public class AddMeetingTest {
     @Test
     public void givenNoDate_whenOnOpening_thenStartAndEndTimeNotEnabled() {
         //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -304,7 +309,7 @@ public class AddMeetingTest {
     public void givenDate_whenAfterUpdate_thenStartAndEndTimeEnabled() {
 
         //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -332,7 +337,7 @@ public class AddMeetingTest {
     @Test
     public void givenEmailAddress_whenInvalid_thenFail(){
         //Ajout une nouvelle réunion
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -356,7 +361,7 @@ public class AddMeetingTest {
     @Test
     public void givenTopic_whenMoreThan40Caracters_thenErrorMessage() {
 
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -373,7 +378,7 @@ public class AddMeetingTest {
     @Test
     public void givenDateBeforeNow_whenSave_thenErrorMessage() {
 
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -396,7 +401,7 @@ public class AddMeetingTest {
     @Test
     public void givenTimeStartBeforeNow_whenSave_thenErrorMessage() {
 
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
@@ -420,7 +425,7 @@ public class AddMeetingTest {
     @Test
     public void givenTimeEndBeforeStart_whenSave_thenErrorMessage() {
 
-        onView(withId(R.id.add_fab)).perform(click());
+        clickAddButtonInFonctionOfSizeScreen();
 
         onView(allOf(withId(R.id.add_fragment_layout))).check(matches(isDisplayed()));
 
