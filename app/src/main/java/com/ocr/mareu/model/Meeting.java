@@ -12,9 +12,6 @@ import java.util.List;
  */
 public class Meeting  {
 
-    private static Integer mMaxId = 0;
-
-    private Integer mId;
     private Room mRoom;
     private String mTopic;
     private Calendar mDate;
@@ -25,14 +22,13 @@ public class Meeting  {
     /**
      * Constructor d'une réunion
      * @param pRoom : objet : salle de réunion
-     * @param pTopic : strinf : sujet de la réunion
+     * @param pTopic : string : sujet de la réunion
      * @param pDate : calendar : date
      * @param pStart : calendar : date et heure de début
      * @param pEnd : calendar : date et heure de fin
      * @param pParticpants : list : liste e participants
      */
     public Meeting(Room pRoom, String pTopic,Calendar pDate, Calendar pStart, Calendar pEnd, List<String> pParticpants) {
-        mId = ++mMaxId;
         mRoom = pRoom;
         mTopic = pTopic;
         mDate = pDate;
@@ -40,12 +36,6 @@ public class Meeting  {
         mEnd = pEnd;
         mParticpants = pParticpants;
     }
-
-    /**
-     * Récupération de l'id de la réunion
-     * @return : integer : id
-     */
-    public Integer getId() { return mId; }
 
     /**
      * Récupération du sujet de la réunion

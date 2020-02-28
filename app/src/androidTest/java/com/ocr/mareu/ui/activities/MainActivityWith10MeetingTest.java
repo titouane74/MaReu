@@ -23,8 +23,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -106,7 +104,7 @@ public class MainActivityWith10MeetingTest {
     }
 
     @Test
-    public void given10Meeting_whenFilterByRoom_thenShow2MeetingWithSuccess () throws MeetingApiServiceException {
+    public void given10Meeting_whenFilterByRoom_thenShow2MeetingWithSuccess () {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
@@ -187,13 +185,12 @@ public class MainActivityWith10MeetingTest {
     }
 
     @Test
-    public void given10Meeting_whenFilterByDate_thenShowMeetingWithSameDate () throws MeetingApiServiceException {
+    public void given10Meeting_whenFilterByDate_thenShowMeetingWithSameDate () {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
         //Saisie de la date de filtrage
         Calendar lCalDate = Calendar.getInstance(Locale.FRANCE);
-        DateFormat lDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
         lCalDate.set(2020,8,01);
         lCalDate.set(Calendar.MINUTE,00);
         lCalDate.set(Calendar.SECOND,0);
@@ -235,13 +232,12 @@ public class MainActivityWith10MeetingTest {
     }
 
     @Test
-    public void given10Meeting_whenResetFilter_thenRemoveAllItems () throws MeetingApiServiceException {
+    public void given10Meeting_whenResetFilter_thenRemoveAllItems ()  {
 
         onView(withId(R.id.activity_list_rv)).check(withItemCount(ITEMS_COUNT));
 
         //Saisie de la date de filtrage
         Calendar lCalDate = Calendar.getInstance(Locale.FRANCE);
-        DateFormat lDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
         lCalDate.set(2020,8,01);
         lCalDate.set(Calendar.MINUTE,00);
         lCalDate.set(Calendar.SECOND,0);

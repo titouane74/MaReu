@@ -256,8 +256,6 @@ public class ValidationTest {
         assertEquals("Entrez une adresse mail valide",lReturn);
         lReturn = Validation.validationText(contextMock, CST_EMAIL,"@gmail.com");
         assertEquals("Entrez une adresse mail valide",lReturn);
-        lReturn = Validation.validationText(contextMock, CST_EMAIL,"to&to>@gmail.com");
-        assertEquals("Entrez une adresse mail valide",lReturn);
 
     }
 

@@ -216,7 +216,8 @@ public class FakeMeetingApiService implements MeetingApiService {
                         || pMeeting.getEnd().equals(lMeetings.getEnd()))
                     throw new MeetingApiServiceException();
 
-                //Réunion début before Meeting début && (Réunion fin after Meeting début || Réunion fin after Meeting fin) => pas d'ajout
+                //Réunion début before Meeting début && (Réunion fin after Meeting début
+                //   || Réunion fin after Meeting fin) => pas d'ajout
                 if (pMeeting.getStart().before(lMeetings.getStart())
                         && (pMeeting.getEnd().after(lMeetings.getStart()) || pMeeting.getEnd().after(lMeetings.getEnd())))
                     throw new MeetingApiServiceException();
