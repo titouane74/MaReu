@@ -20,7 +20,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE;
 import static com.ocr.mareu.service.FakeMeetingApiService.CST_FORMAT_DATE_TIME;
@@ -28,7 +27,6 @@ import static com.ocr.mareu.utils.DateConverter.convertDateTimeStringToCalendar;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -41,21 +39,21 @@ import static org.mockito.MockitoAnnotations.initMocks;
 //Meeting = new meeting; reference = reference meeting
 public class AddMeetingTest {
     private MeetingApiService mApi;
-    private List<Meeting> mMeetings;
+    private String mReturn;
 
     @Mock
     Context contextMock;
 
     @BeforeEach
     public void setup() throws MeetingApiServiceException {
+        mReturn = null;
+
         initMocks(this);
         mApi = DI.getMeetingApiService();
         assertThat(mApi, notNullValue());
 
         mApi = MeetingUtils.generateReferenceMeeting(mApi);
-        mMeetings = mApi.getMeetings();
-        assertNotNull(mMeetings);
-        assertEquals(1,mMeetings.size());
+
     }
 
     @AfterEach
@@ -67,7 +65,6 @@ public class AddMeetingTest {
     @DisplayName("Case 1 : Meeting Start = Reference start")
     @Test
     public void givenNewMeeting_whenSameStart_thenFail() {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
                 .thenReturn("La salle de réunion n\'est pas disponible");
@@ -81,18 +78,17 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("La salle de réunion n\'est pas disponible",lReturn);
+        assertEquals("La salle de réunion n\'est pas disponible",mReturn);
 
     }
 
     @DisplayName("Case 2 : Meeting end = Reference End")
     @Test
     public void givenNewMeeting_whenSameEnd_thenFail()  {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
                 .thenReturn("La salle de réunion n\'est pas disponible");
@@ -106,18 +102,17 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("La salle de réunion n\'est pas disponible",lReturn);
+        assertEquals("La salle de réunion n\'est pas disponible",mReturn);
 
     }
 
     @DisplayName("Case 3 : Meeting start before Reference start and Meeting end before Reference start")
     @Test
     public void givenNewMeeting_whenBeforeReference_thenCreateMeeting() {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.action_add_meeting))
                 .thenReturn("Réunion ajoutée");
@@ -131,18 +126,17 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("Réunion ajoutée",lReturn);
+        assertEquals("Réunion ajoutée",mReturn);
 
     }
 
     @DisplayName("Case 4 : Meeting start before Reference start and Meeting end same Reference end")
     @Test
     public void givenNewMeeting_whenEndSameReferenceStart_thenCreateMeeting()  {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.action_add_meeting))
                 .thenReturn("Réunion ajoutée");
@@ -156,11 +150,11 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("Réunion ajoutée",lReturn);
+        assertEquals("Réunion ajoutée",mReturn);
 
     }
 
@@ -168,7 +162,6 @@ public class AddMeetingTest {
             "Meeting end before Reference end and after Reference start")
     @Test
     public void givenNewMeeting_whenEndDuringReference_thenFail() {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
                 .thenReturn("La salle de réunion n\'est pas disponible");
@@ -182,17 +175,16 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("La salle de réunion n\'est pas disponible",lReturn);
+        assertEquals("La salle de réunion n\'est pas disponible",mReturn);
     }
 
     @DisplayName("Case 6 : Meeting start before Reference start and Meeting end after Reference end")
     @Test
     public void givenNewMeeting_whenReferenceDuringNewMeeting_thenFail() {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
                 .thenReturn("La salle de réunion n\'est pas disponible");
@@ -206,18 +198,17 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("La salle de réunion n\'est pas disponible",lReturn);
+        assertEquals("La salle de réunion n\'est pas disponible",mReturn);
 
     }
 
     @DisplayName("Case 7 : Meeting start after Reference start and Meeting end before Reference end")
     @Test
     public void givenNewMeeting_whenNewMeetingDuringReference_thenFail() {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
                 .thenReturn("La salle de réunion n\'est pas disponible");
@@ -231,18 +222,17 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("La salle de réunion n\'est pas disponible",lReturn);
+        assertEquals("La salle de réunion n\'est pas disponible",mReturn);
 
     }
     @DisplayName("Case 8 : Meeting start after Reference start and before Reference end and" +
             "Meeting end after Reference end")
     @Test
     public void givenNewMeeting_whenReferenceEndDuringNewMeeting_thenFail() {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.err_meeting_room_not_free))
                 .thenReturn("La salle de réunion n\'est pas disponible");
@@ -256,18 +246,17 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("La salle de réunion n\'est pas disponible",lReturn);
+        assertEquals("La salle de réunion n\'est pas disponible",mReturn);
 
     }
 
     @DisplayName("Case 9 : Meeting start = Reference end and Meeting end after Reference end")
     @Test
     public void givenNewMeeting_whenStartSameReferenceEnd_thenCreateMeeting() {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.action_add_meeting))
                 .thenReturn("Réunion ajoutée");
@@ -281,18 +270,17 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("Réunion ajoutée",lReturn);
+        assertEquals("Réunion ajoutée",mReturn);
 
     }
 
     @DisplayName("Case 10 : Meeting start and end after Reference end")
     @Test
     public void givenNewMeeting_whenAfterReference_thenCreateMeeting() {
-        String lReturn = null;
 
         when(contextMock.getString(R.string.action_add_meeting))
                 .thenReturn("Réunion ajoutée");
@@ -306,11 +294,11 @@ public class AddMeetingTest {
 
         try {
             mApi.addMeeting(lMeeting);
-            lReturn = contextMock.getString(R.string.action_add_meeting);
+            mReturn = contextMock.getString(R.string.action_add_meeting);
         } catch (MeetingApiServiceException pE) {
-            lReturn = "La salle de réunion n\'est pas disponible";
+            mReturn = "La salle de réunion n\'est pas disponible";
         }
-        assertEquals("Réunion ajoutée",lReturn);
+        assertEquals("Réunion ajoutée",mReturn);
 
     }
 
@@ -362,5 +350,4 @@ public class AddMeetingTest {
 
         assertDoesNotThrow(lExecutable);
     }
-
 }

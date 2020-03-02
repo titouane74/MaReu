@@ -32,7 +32,7 @@ public class ListFragment extends BaseFragment implements MeetingRecyclerViewAda
     @Override
     protected int getFragmentLayout() { return R.layout.fragment_list; }
 
-    @Override
+    @Override //onCreateView
     protected void configureDesign(View pView) {
         mRecyclerView = (RecyclerView) pView;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

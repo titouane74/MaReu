@@ -35,7 +35,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     private OnRecyclerViewListener mCallback;
 
     /**
-     * Inteface permettant de gérer les callbacks vers la MainActivity
+     * Interface permettant de gérer les callbacks vers la MainActivity
      */
     public interface OnRecyclerViewListener {
         void onItemClicked(View pView);
@@ -53,6 +53,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     public MeetingRecyclerViewAdapter(Context pContext, Enum pOrder) {
         mContext = pContext;
         //Test et chargement uniquement pour les tests de la soutenance/demo
+/*
         if (!sApiService.getIsExecutedOneTimeForTest()) {
             try {
                 sApiService.addFakeValidMeetingsLongList();
@@ -61,6 +62,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             }
             sApiService.setIsExecutedOneTimeForTest(true);
         }
+*/
         SortOrFilter lSortOrFilter = new SortOrFilter();
 
         mMeetings = sApiService.getMeetings();

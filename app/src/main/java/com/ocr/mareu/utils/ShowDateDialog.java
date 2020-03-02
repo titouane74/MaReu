@@ -19,7 +19,7 @@ public class ShowDateDialog extends DialogFragment {
 
     /**
      * Affichage du calendrier pour l'application du filtre par date
-     * @param pContext
+     * @param pContext : context : context
      */
     public static Calendar showCalendarDialog(Context pContext, ListFragment pListFragment) {
 

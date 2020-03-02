@@ -9,7 +9,7 @@ import com.ocr.mareu.service.MeetingApiService;
 public class DI {
 
     /**
-     * Constructor
+     * Constructor du Dependencies Injection
      */
     private DI(){}
 

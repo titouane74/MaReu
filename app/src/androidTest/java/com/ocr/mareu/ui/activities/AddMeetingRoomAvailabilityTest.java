@@ -65,7 +65,6 @@ public class AddMeetingRoomAvailabilityTest {
         mApi = addReferenceMeeting(mApi,mCalDate,mDiffDay,0,3);
         onView(withId(R.id.activity_list_rv)).check(withItemCount(1));
 
-
         mDiffDay = 0;
     }
 

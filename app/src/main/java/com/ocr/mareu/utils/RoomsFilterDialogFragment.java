@@ -25,6 +25,9 @@ public class RoomsFilterDialogFragment extends DialogFragment {
 
     private OnDialogRoomsListener mCallback;
 
+    /**
+     * Interface permettant de gérer les callbacks vers la MainActivity
+     */
     public interface OnDialogRoomsListener {
         void onRoomsOkClicked(List<Room> lRoomsSelected);
     }

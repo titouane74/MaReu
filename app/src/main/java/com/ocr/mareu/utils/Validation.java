@@ -22,7 +22,9 @@ public class Validation {
     public static final String CST_DATETIME = "DATETIME";
     public static final String CST_ROOM = "ROOM";
 
-
+    /**
+     * Regex de validation d'une adresse mail
+     */
     public static final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
 
             "^[a-zA-Z0-9À-ÿ_!#$%&'*+/=?`{|}~^.-]{1,256}" +

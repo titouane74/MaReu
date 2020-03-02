@@ -7,8 +7,6 @@ import androidx.test.espresso.ViewAssertion;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.junit.runner.Description;
-
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;

@@ -33,6 +33,10 @@ public class Room  {
     public Integer getColorRoom() { return mColorRoom; }
 
 
+    /**
+     * Récupère le nom de la salle de réunion sous forme de chaîne de caractères
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {

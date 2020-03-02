@@ -36,8 +36,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class MeetingApiServiceTest {
 
     private MeetingApiService mApi;
-    private List<Meeting> mMeetings;
-    private List<Room> mRooms;
 
     @Mock
     Context contextMock;
@@ -49,7 +47,6 @@ public class MeetingApiServiceTest {
         assertThat(mApi, notNullValue());
 
         mApi.initializeRooms(contextMock);
-        mRooms = mApi.getRooms();
     }
 
     @AfterEach
@@ -82,6 +79,8 @@ public class MeetingApiServiceTest {
 
     @Test
     public void getMeetingsWithSuccess() throws MeetingApiServiceException {
+        List<Meeting> lMeetings;
+
         List<Meeting> lMeetingListExpected = MeetingUtils.add2FakeMeetingsExpected();
         int nbMeetingExpected = lMeetingListExpected.size();
 
@@ -92,29 +91,25 @@ public class MeetingApiServiceTest {
         //Après ajout on doit avoir le nombre attendu
         //add2FakeMeeting utilise la méthode addMeeting qui ajoute les réunions
         mApi = MeetingUtils.add2FakeMeetings(mApi);
-        mMeetings = mApi.getMeetings();
-        nbGetMeetings = mMeetings.size();
+        lMeetings = mApi.getMeetings();
+        nbGetMeetings = lMeetings.size();
         assertEquals(nbMeetingExpected,nbGetMeetings);
 
-        assertEquals(lMeetingListExpected.get(0).getRoom().getNameRoom(),mMeetings.get(0).getRoom().getNameRoom());
-        assertEquals(lMeetingListExpected.get(0).getStart(),mMeetings.get(0).getStart());
+        assertEquals(lMeetingListExpected.get(0).getRoom().getNameRoom(),lMeetings.get(0).getRoom().getNameRoom());
+        assertEquals(lMeetingListExpected.get(0).getStart(),lMeetings.get(0).getStart());
 
-        assertEquals(lMeetingListExpected.get(1).getRoom().getNameRoom(),mMeetings.get(1).getRoom().getNameRoom());
-        assertEquals(lMeetingListExpected.get(1).getStart(),mMeetings.get(1).getStart());
+        assertEquals(lMeetingListExpected.get(1).getRoom().getNameRoom(),lMeetings.get(1).getRoom().getNameRoom());
+        assertEquals(lMeetingListExpected.get(1).getStart(),lMeetings.get(1).getStart());
 
     }
 
     @Test
-    public void deleteMeetingWithSuccess() {
+    public void deleteMeetingWithSuccess() throws MeetingApiServiceException {
         int initialNbMeeting = mApi.getMeetings().size();
         assertEquals(0,initialNbMeeting);
 
         Meeting lMeetingToDelete = MeetingUtils.generate1Meeting();
-        try {
             mApi.addMeeting(lMeetingToDelete);
-        } catch (MeetingApiServiceException pE) {
-            pE.printStackTrace();
-        }
 
         assertEquals(initialNbMeeting + 1, mApi.getMeetings().size());
 
@@ -136,9 +131,8 @@ public class MeetingApiServiceTest {
 
     @Test
     public void extractRoomSelecteWithSuccess() {
-        Room lRoomExtracted = null;
 
-        lRoomExtracted = mApi.extractRoomSelected("POSEIDON");
+        Room lRoomExtracted = mApi.extractRoomSelected("POSEIDON");
         assertEquals("POSEIDON",lRoomExtracted.getNameRoom());
 
     }
